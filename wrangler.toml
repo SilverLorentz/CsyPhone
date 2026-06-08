@@ -4,3 +4,6 @@
 name = "sully-frontend"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-04-05"
+[vars]
+VITE_CSYOS_BACKEND_URL = "https://csy.liusilver2007.workers.dev"
+VITE_CSYOS_BACKEND_TOKEN = "skip"
