@@ -1,0 +1,32 @@
+export const LOVE_SHOW_COPY = {
+    appName: '心动放送',
+    seasonName: '唯一心动线',
+    audienceWind: '心动风向',
+    windReveal: '风向揭晓',
+    todayWind: '今日风向',
+    hotList: '心动广场',
+    notice: '放送通知',
+    mission: '隐藏心令',
+    missionAlt: '心动任务',
+    directorRecord: '镜头记录',
+    famousMomentReplay: '名场面回放',
+    castArchive: '心动档案',
+    offCamera: '镜头之外',
+    memoryEcho: '心动回声',
+    openingScene: '初见片段',
+    interviewRoom: '单采间',
+    welcomeTitle: '欢迎来到《唯一心动线》',
+    welcomeSubtitle: 'Love stays on air',
+    liveStatus: '今日心动放送中',
+    choiceHint: '镜头正在记录你的选择',
+    audienceHint: '观众正在起哄，但决定权始终在你手里',
+    windRule: '风向只会推近关系，不会替你决定心动归属',
+} as const;
+
+export const LOVE_SHOW_FORBIDDEN_CP_PHRASES = [
+    '谁和谁最配',
+    '嘉宾 CP 榜',
+    'A/B CP 排名',
+    '嘉宾互选心动对象',
+    '嘉宾之间的恋爱线投票',
+] as const;

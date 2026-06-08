@@ -1,0 +1,147 @@
+.floating-lyrics {
+    position: absolute;
+    left: 50%;
+    z-index: 52;
+    width: min(340px, 88vw);
+    pointer-events: none;
+}
+
+.floating-lyrics--top {
+    top: max(52px, calc(var(--safe-top, env(safe-area-inset-top)) + 48px));
+}
+
+.floating-lyrics--center {
+    top: 50%;
+}
+
+.floating-lyrics--bottom {
+    bottom: max(
+        80px,
+        calc(var(--safe-bottom, env(safe-area-inset-bottom)) + 72px)
+    );
+}
+
+.floating-lyrics-scroll {
+    position: relative;
+    height: 104px;
+    overflow: hidden;
+    padding: 0 16px;
+    pointer-events: auto;
+    touch-action: manipulation;
+    cursor: pointer;
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.92) 18%,
+        rgba(0, 0, 0, 0.92) 82%,
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.92) 18%,
+        rgba(0, 0, 0, 0.92) 82%,
+        transparent 100%
+    );
+}
+
+.floating-lyrics-track {
+    display: flex;
+    flex-direction: column;
+    padding: 34px 0;
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.floating-lyric-line {
+    text-align: center;
+    padding: 3px 0;
+    opacity: 0.3;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.floating-lyric-text {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--lyric-color-idle, rgba(255, 255, 255, 0.42));
+    line-height: 1.35;
+    transition:
+        color 0.3s ease,
+        font-size 0.3s ease,
+        transform 0.3s ease;
+}
+
+.floating-lyric-translation {
+    display: block;
+    font-size: 11px;
+    color: var(--lyric-color-translation, rgba(255, 255, 255, 0.24));
+    margin-top: 1px;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.floating-lyric-line--active {
+    opacity: 1;
+    transform: scale(1.04);
+}
+
+.floating-lyric-line--active .floating-lyric-text {
+    color: var(--lyric-color-active, #fff);
+    font-size: 16px;
+    font-weight: 700;
+    text-shadow: 0 0 12px var(--lyric-color-glow, rgba(255, 255, 255, 0.3));
+}
+
+.floating-lyric-line--active .floating-lyric-translation {
+    color: var(
+        --lyric-color-active-translation,
+        rgba(255, 255, 255, 0.6)
+    );
+}
+
+.floating-lyrics-toolbar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+    pointer-events: auto;
+}
+
+.floating-lyrics-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.fl-tool-btn {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.45);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 10px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.1s ease;
+    font-family: inherit;
+}
+
+.fl-tool-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transform: scale(0.96);
+}
+
+.fl-tool-btn--close {
+    padding: 4px 8px;
+}

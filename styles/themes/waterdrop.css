@@ -1,0 +1,459 @@
+/* =====================================================================
+   拟态水滴 (Waterdrop 3D Glass) Theme
+   High-transparency frosted glass + 3D depth + specular highlights
+   ===================================================================== */
+
+/* ===== Hide default tail (replaced by pill shape) ===== */
+.theme-waterdrop .sully-bubble-tail {
+    display: none !important;
+}
+
+/* ===== Core Bubble — High-Transparency 3D Glass ===== */
+/* NOTE: background, border-radius, color, padding are WITHOUT !important
+   so that Bubble Workshop (ThemeMaker) inline styles can override them. */
+.theme-waterdrop .sully-bubble-ai,
+.theme-waterdrop .sully-bubble-user {
+    position: relative;
+    padding: 14px 22px;
+    /* ULTRA TRANSPARENT — nearly clear glass */
+    background: linear-gradient(168deg,
+            rgba(230, 235, 240, 0.08) 0%,
+            rgba(215, 220, 225, 0.05) 25%,
+            rgba(210, 215, 220, 0.06) 55%,
+            rgba(215, 220, 225, 0.04) 85%,
+            rgba(225, 230, 235, 0.03) 100%);
+    /* Minimal blur — maximum clarity */
+    backdrop-filter: blur(4px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(4px) saturate(130%) !important;
+    /* === MAXIMUM 3D — extreme highlight/shadow contrast === */
+    box-shadow:
+        /* Inner top highlight — intense white glow */
+        inset 0 10px 20px rgba(255, 255, 255, 0.85),
+        /* Inner top — razor-sharp bright edge */
+        inset 0 2px 4px rgba(255, 255, 255, 0.95),
+        /* Inner bottom — deep dark depth */
+        inset 0 -10px 20px rgba(0, 0, 0, 0.35),
+        /* Inner bottom — crisp dark rim */
+        inset 0 -2px 5px rgba(0, 0, 0, 0.30),
+        /* Inner left — strong light edge */
+        inset 6px 0 14px rgba(255, 255, 255, 0.35),
+        /* Inner right — strong dark edge */
+        inset -6px 0 14px rgba(0, 0, 0, 0.20),
+        /* Outer: tight contact shadow */
+        0 5px 10px rgba(0, 0, 0, 0.22),
+        /* Outer: broad diffuse shadow */
+        0 14px 32px rgba(0, 0, 0, 0.20),
+        /* Outer: bottom caustics glow */
+        0 22px 36px -8px rgba(200, 200, 210, 0.12) !important;
+    /* 3D Border — maximum bright/dark contrast */
+    border: none !important;
+    border-top: 2px solid rgba(255, 255, 255, 0.85) !important;
+    border-left: 1.5px solid rgba(255, 255, 255, 0.55) !important;
+    border-right: 1.5px solid rgba(0, 0, 0, 0.20) !important;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.30) !important;
+    /* Pill shape — no !important so Workshop can override */
+    border-radius: 26px;
+    /* Text styling — no !important so Workshop can override */
+    color: #1a1a2e;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    /* Spacing */
+    min-height: 46px;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    /* Smooth transitions */
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+/* ===== ::before — Broad Upper Gloss Band ===== */
+.theme-waterdrop .sully-bubble-ai::before,
+.theme-waterdrop .sully-bubble-user::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 10%;
+    width: 70%;
+    height: 42%;
+    border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+    background: linear-gradient(178deg,
+            rgba(255, 255, 255, 0.50) 0%,
+            rgba(255, 255, 255, 0.15) 35%,
+            rgba(255, 255, 255, 0.0) 75%);
+    pointer-events: none;
+    filter: blur(1.5px);
+    mix-blend-mode: overlay;
+    z-index: 20;
+}
+
+/* ===== ::after — Dual Specular Highlight Dots ===== */
+.theme-waterdrop .sully-bubble-ai::after,
+.theme-waterdrop .sully-bubble-user::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 18%;
+    width: 10px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.90);
+    pointer-events: none;
+    /* Primary glint glow + Secondary offset glint */
+    box-shadow:
+        0 0 6px 2px rgba(255, 255, 255, 0.85),
+        0 0 12px rgba(255, 255, 255, 0.4),
+        20px 5px 0 -1.5px rgba(255, 255, 255, 0.40),
+        20px 5px 5px 0px rgba(255, 255, 255, 0.20);
+    transform: rotate(-12deg);
+    z-index: 20;
+}
+
+/* ===== Header Bar — Matching High-Transparency Glass ===== */
+.theme-waterdrop .sully-chat-header {
+    background: linear-gradient(180deg,
+            rgba(220, 225, 230, 0.18) 0%,
+            rgba(200, 205, 210, 0.12) 100%) !important;
+    backdrop-filter: blur(18px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.60) !important;
+    box-shadow:
+        inset 0 4px 10px rgba(255, 255, 255, 0.50),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.10),
+        0 6px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ===== Input Area — Matching High-Transparency Glass ===== */
+.theme-waterdrop .sully-chat-input {
+    background: linear-gradient(0deg,
+            rgba(220, 225, 230, 0.18) 0%,
+            rgba(200, 205, 210, 0.12) 100%) !important;
+    backdrop-filter: blur(18px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.65) !important;
+    box-shadow:
+        inset 0 -4px 10px rgba(255, 255, 255, 0.45),
+        inset 0 2px 6px rgba(0, 0, 0, 0.08),
+        0 -6px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+.theme-waterdrop .sully-chat-input input,
+.theme-waterdrop .sully-chat-input textarea {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.50) !important;
+    border-top-color: rgba(255, 255, 255, 0.70) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.12) !important;
+    border-radius: 20px !important;
+    box-shadow:
+        inset 0 3px 6px rgba(0, 0, 0, 0.06),
+        inset 0 -1px 3px rgba(255, 255, 255, 0.30);
+    color: #1a1a2e !important;
+}
+
+/* ===== Transfer Card ===== */
+.theme-waterdrop .sully-transfer-card {
+    background: linear-gradient(165deg,
+            rgba(240, 200, 80, 0.25) 0%,
+            rgba(230, 170, 50, 0.20) 40%,
+            rgba(240, 190, 70, 0.22) 100%) !important;
+    backdrop-filter: blur(14px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(150%) !important;
+    border: none !important;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.70) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.40) !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.12) !important;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.20) !important;
+    border-radius: 24px !important;
+    box-shadow:
+        inset 0 6px 14px rgba(255, 255, 255, 0.55),
+        inset 0 -4px 12px rgba(0, 0, 0, 0.18),
+        0 6px 16px rgba(0, 0, 0, 0.12),
+        0 14px 24px -4px rgba(240, 180, 50, 0.12) !important;
+}
+
+.theme-waterdrop .sully-transfer-top,
+.theme-waterdrop .sully-transfer-bottom {
+    background: transparent !important;
+    border: none !important;
+}
+
+.theme-waterdrop .sully-transfer-bottom span {
+    color: #1a1a2e !important;
+    mix-blend-mode: normal !important;
+}
+
+/* ===== Cards (XHS / Social / Forward) ===== */
+.theme-waterdrop .sully-card-container {
+    background: linear-gradient(165deg,
+            rgba(220, 225, 230, 0.18) 0%,
+            rgba(200, 205, 210, 0.13) 50%,
+            rgba(210, 215, 220, 0.15) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: none !important;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.65) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.40) !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.12) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.18) !important;
+    border-radius: 22px !important;
+    box-shadow:
+        inset 0 5px 12px rgba(255, 255, 255, 0.50),
+        inset 0 -4px 10px rgba(0, 0, 0, 0.15),
+        0 8px 18px rgba(0, 0, 0, 0.10) !important;
+}
+
+/* ===== Text Contrast ===== */
+.theme-waterdrop .sully-bubble-ai a,
+.theme-waterdrop .sully-bubble-user a {
+    color: #3730a3 !important;
+    text-decoration: underline !important;
+    font-weight: bold;
+}
+
+.theme-waterdrop .sully-card-container .text-slate-500,
+.theme-waterdrop .sully-card-container .text-slate-600 {
+    color: #334155 !important;
+}
+
+.theme-waterdrop .sully-card-container .text-slate-800,
+.theme-waterdrop .sully-card-container .text-slate-700 {
+    color: #0f172a !important;
+}
+
+/* ===== System Message Pill ===== */
+.theme-waterdrop .sully-system-pill {
+    background: linear-gradient(165deg,
+            rgba(220, 225, 230, 0.16) 0%,
+            rgba(200, 205, 210, 0.12) 100%) !important;
+    backdrop-filter: blur(12px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(130%) !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.60) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
+    box-shadow:
+        inset 0 3px 8px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.12),
+        0 4px 10px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ===== Interaction Pill (戳了戳) ===== */
+.theme-waterdrop .sully-interaction-pill {
+    background: linear-gradient(165deg,
+            rgba(220, 225, 230, 0.16) 0%,
+            rgba(200, 205, 210, 0.12) 100%) !important;
+    backdrop-filter: blur(12px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(130%) !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.60) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
+    box-shadow:
+        inset 0 3px 8px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.12),
+        0 4px 10px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ===== Image Messages ===== */
+.theme-waterdrop .sully-image-msg {
+    border: 2px solid rgba(255, 255, 255, 0.40) !important;
+    border-radius: 22px !important;
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.08),
+        inset 0 2px 4px rgba(255, 255, 255, 0.20) !important;
+}
+
+/* ===== Typing Indicator ===== */
+.theme-waterdrop .sully-typing-bubble {
+    background: linear-gradient(168deg,
+            rgba(220, 225, 230, 0.16) 0%,
+            rgba(200, 205, 210, 0.12) 50%,
+            rgba(210, 215, 220, 0.14) 100%) !important;
+    backdrop-filter: blur(14px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+    border: none !important;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.65) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 22px !important;
+    box-shadow:
+        inset 0 5px 12px rgba(255, 255, 255, 0.45),
+        inset 0 -3px 10px rgba(0, 0, 0, 0.12),
+        0 6px 14px rgba(0, 0, 0, 0.08) !important;
+}
+
+.theme-waterdrop .sully-typing-tail {
+    display: none !important;
+}
+
+/* ===================================================================
+   ICON BUTTONS — 3D Glass Treatment for all interactive elements
+   =================================================================== */
+
+/* ===== Plus Button (round, left of input) ===== */
+.theme-waterdrop .sully-chat-input button.rounded-full {
+    background: linear-gradient(168deg,
+            rgba(220, 225, 230, 0.20) 0%,
+            rgba(190, 195, 200, 0.15) 100%) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.70) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.18) !important;
+    box-shadow:
+        inset 0 3px 6px rgba(255, 255, 255, 0.55),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+        0 3px 8px rgba(0, 0, 0, 0.10) !important;
+    color: #334155 !important;
+}
+
+/* ===== Emoji Button (inside input field) ===== */
+.theme-waterdrop .sully-chat-input .text-slate-400 {
+    color: #475569 !important;
+}
+
+/* ===== Action Panel Container (bg-slate-50 h-72) ===== */
+.theme-waterdrop .sully-chat-input>div.bg-slate-50,
+.theme-waterdrop .sully-chat-input>div.border-t {
+    background: linear-gradient(180deg,
+            rgba(210, 215, 220, 0.12) 0%,
+            rgba(195, 200, 205, 0.08) 100%) !important;
+    backdrop-filter: blur(14px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.50) !important;
+}
+
+/* ===== Action Grid Icon Boxes (w-14 h-14 rounded-2xl) ===== */
+.theme-waterdrop .sully-chat-input div[class*="rounded-2xl"][class*="w-14"] {
+    background: linear-gradient(168deg,
+            rgba(220, 225, 230, 0.22) 0%,
+            rgba(195, 200, 205, 0.16) 100%) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border: none !important;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.70) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.35) !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.10) !important;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.18) !important;
+    box-shadow:
+        inset 0 4px 8px rgba(255, 255, 255, 0.55),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.15),
+        0 4px 10px rgba(0, 0, 0, 0.08) !important;
+    color: #475569 !important;
+}
+
+/* ===== Emoji Grid Items ===== */
+.theme-waterdrop .sully-chat-input button.aspect-square {
+    background: linear-gradient(168deg,
+            rgba(220, 225, 230, 0.18) 0%,
+            rgba(200, 205, 210, 0.12) 100%) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.60) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow:
+        inset 0 3px 6px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.10),
+        0 3px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ===== Emoji Add Button (dashed border) ===== */
+.theme-waterdrop .sully-chat-input button.border-dashed {
+    background: rgba(220, 225, 230, 0.10) !important;
+    border-color: rgba(255, 255, 255, 0.50) !important;
+}
+
+/* ===== Categories Bar (emoji tab bar) ===== */
+.theme-waterdrop .sully-chat-input div.bg-white.border-b {
+    background: linear-gradient(180deg,
+            rgba(215, 220, 225, 0.15) 0%,
+            rgba(200, 205, 210, 0.10) 100%) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.40) !important;
+}
+
+/* ===== Category Pills ===== */
+.theme-waterdrop .sully-chat-input button.rounded-full.bg-slate-100 {
+    background: rgba(220, 225, 230, 0.18) !important;
+    border: 1px solid rgba(255, 255, 255, 0.40) !important;
+    border-top-color: rgba(255, 255, 255, 0.55) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.10) !important;
+    box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.40),
+        inset 0 -1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ===== Character Selection Cards ===== */
+.theme-waterdrop .sully-chat-input div[class*="rounded-\\[20px\\]"] {
+    background: linear-gradient(168deg,
+            rgba(220, 225, 230, 0.18) 0%,
+            rgba(200, 205, 210, 0.12) 100%) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.55) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow:
+        inset 0 3px 6px rgba(255, 255, 255, 0.40),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.08),
+        0 4px 10px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ===== Theme Selection Buttons ===== */
+.theme-waterdrop .sully-chat-input button.rounded-2xl.border {
+    background: linear-gradient(168deg,
+            rgba(220, 225, 230, 0.18) 0%,
+            rgba(200, 205, 210, 0.12) 100%) !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.55) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow:
+        inset 0 2px 5px rgba(255, 255, 255, 0.40),
+        inset 0 -1px 3px rgba(0, 0, 0, 0.08),
+        0 3px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ===== Header Back Button & AI Trigger Button ===== */
+.theme-waterdrop .sully-chat-header button {
+    background: linear-gradient(168deg,
+            rgba(220, 225, 230, 0.18) 0%,
+            rgba(200, 205, 210, 0.12) 100%) !important;
+    border: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.55) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow:
+        inset 0 2px 5px rgba(255, 255, 255, 0.45),
+        inset 0 -1px 3px rgba(0, 0, 0, 0.10),
+        0 2px 6px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ===== Header Avatar ===== */
+.theme-waterdrop .sully-chat-header img.rounded-xl {
+    border: 1.5px solid rgba(255, 255, 255, 0.50) !important;
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.10),
+        inset 0 1px 3px rgba(255, 255, 255, 0.30) !important;
+}
+
+/* ===== Selection Mode Buttons ===== */
+.theme-waterdrop .sully-chat-input .bg-white\/50 {
+    background: linear-gradient(180deg,
+            rgba(215, 220, 225, 0.15) 0%,
+            rgba(200, 205, 210, 0.10) 100%) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* ===== Input Field Container ===== */
+.theme-waterdrop .sully-chat-input div.bg-slate-100.rounded-\[24px\] {
+    background: rgba(220, 225, 230, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    border-top-color: rgba(255, 255, 255, 0.65) !important;
+    border-bottom-color: rgba(0, 0, 0, 0.10) !important;
+    box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.05),
+        inset 0 -1px 3px rgba(255, 255, 255, 0.25) !important;
+}
+
+/* ===== Token Badge ===== */
+.theme-waterdrop .sully-chat-header .bg-slate-100 {
+    background: rgba(220, 225, 230, 0.18) !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+}

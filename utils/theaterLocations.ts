@@ -1,0 +1,148 @@
+/**
+ * Theater Preset Locations — 预设场景地点
+ * 12 个精心设计的场景，每个都有详细的氛围描述供导演引擎使用。
+ */
+
+import type { TheaterLocation } from '../types';
+
+export const PRESET_LOCATIONS: TheaterLocation[] = [
+    {
+        id: 'cafe',
+        name: '街角咖啡厅',
+        nameEn: 'Corner Café',
+        description: '暖黄色灯光的独立咖啡馆，角落有一排落地窗可以看到街道。墙上挂着一些本地艺术家的画，空气里漂浮着研磨咖啡豆的香气。靠窗有一张双人小桌，桌上放着今天的手写菜单。午后的阳光斜斜地照进来，在木质地板上画出暖色的光影。',
+        tags: ['daily', 'quiet', 'indoor'],
+        bgImage: '/assets/theater/cafe.png',
+        bgGradient: 'linear-gradient(135deg, #3d2b1f 0%, #78593a 50%, #c49b6c 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'park',
+        name: '城市公园',
+        nameEn: 'City Park',
+        description: '占地不大的城市公园，有一条绕湖的碎石小路。湖边种着垂柳，长椅散落在树荫下。有人在遛狗，有小孩在放风筝。草地上有几组野餐的年轻人。空气里有青草和泥土的气息，远处传来冰淇淋车的音乐。',
+        tags: ['daily', 'outdoor', 'quiet'],
+        bgImage: '/assets/theater/park.png',
+        bgGradient: 'linear-gradient(135deg, #2d5016 0%, #5a8a3c 50%, #a8d870 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'mall_cinema',
+        name: '商场电影院',
+        nameEn: 'Cinema',
+        description: '大型购物中心顶层的电影院，散场后的走廊灯光昏暗。爆米花的味道弥漫在空调冷气里。海报墙上是即将上映的新片预告。自动扶梯缓缓运转，商场的背景音乐若有若无。电影院门口有一台扭蛋机和一排夹娃娃机。',
+        tags: ['crowded', 'indoor', 'daily'],
+        bgImage: '/assets/theater/cinema.png',
+        bgGradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'seaside',
+        name: '海边栈道',
+        nameEn: 'Seaside Boardwalk',
+        description: '面朝大海的木质栈道，两侧有简单的金属围栏。海风吹着头发，空气咸湿。远处有几条渔船的剪影。栈道上有零散的行人在散步，有人靠着围栏看海。脚下木板被海水侵蚀的痕迹清晰可见。日落时分，海面会变成橘红色。',
+        tags: ['romantic', 'outdoor', 'quiet'],
+        bgImage: '/assets/theater/seaside.png',
+        bgGradient: 'linear-gradient(135deg, #0c2461 0%, #1e90ff 40%, #f0a500 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'rooftop',
+        name: '天台',
+        nameEn: 'Rooftop',
+        description: '居民楼的天台，能看到整个城市的天际线。四周有生锈的铁栏杆，角落里有人种了几盆植物。地面是粗糙的水泥，有一些旧的塑料椅子。风很大，吹得衣服猎猎作响。远处的霓虹灯招牌忽明忽暗，城市的噪音在这个高度变成了低沉的嗡嗡声。',
+        tags: ['romantic', 'outdoor', 'quiet'],
+        bgImage: '/assets/theater/rooftop.png',
+        bgGradient: 'linear-gradient(135deg, #141E30 0%, #243B55 50%, #4a69bd 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'convenience',
+        name: '24小时便利店',
+        nameEn: '24h Store',
+        description: '灯火通明的便利店，白色荧光灯照得一切都很清晰。关东煮的热气在收银台旁边升腾。货架整齐排列，冰柜里的饮料发出持续的嗡嗡声。深夜时只有一个戴眼镜的店员在翻杂志。门口的自动门感应器偶尔误触，"叮咚"一声。',
+        tags: ['daily', 'indoor'],
+        bgImage: '/assets/theater/convenience.png',
+        bgGradient: 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 50%, #00b09b 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'amusement',
+        name: '游乐场',
+        nameEn: 'Amusement Park',
+        description: '色彩斑斓的小型游乐场，摩天轮在夜空中缓慢转动。旋转木马的音乐盒旋律悠扬。棉花糖摊位前排着几个小朋友。射击游戏摊位的老板在揽客。空气里混合着糖炒栗子和烤肠的味道。霓虹灯把地面照成彩色。',
+        tags: ['crowded', 'outdoor', 'adventure'],
+        bgImage: '/assets/theater/amusement.png',
+        bgGradient: 'linear-gradient(135deg, #ff6a88 0%, #ff99ac 40%, #fcb045 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'library',
+        name: '图书馆',
+        nameEn: 'Library',
+        description: '大学附近的公共图书馆，木质书架高耸。阅览区的桌椅间距很近，有人在低头写字，有人在笔记本电脑前发呆。空调开得很足，有点冷。窗外的树影投在书页上。安静到能听见翻书的声音和时钟的滴答声。偶尔有人的手机震动，引来周围人的侧目。',
+        tags: ['quiet', 'indoor'],
+        bgImage: '/assets/theater/library.png',
+        bgGradient: 'linear-gradient(135deg, #8B7355 0%, #D2B48C 50%, #F5DEB3 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'night_market',
+        name: '夜市',
+        nameEn: 'Night Market',
+        description: '人头攒动的露天夜市，一条长街两侧是各种小摊。烧烤摊的烟雾缭绕，臭豆腐的味道顺风飘来。有人在直播，有情侣在拍照。地上有些油腻，走路要小心。远处传来驻唱歌手翻唱的流行歌曲。灯笼和LED灯带把整条街照得通亮。',
+        tags: ['crowded', 'outdoor', 'daily'],
+        bgImage: '/assets/theater/nightmarket.png',
+        bgGradient: 'linear-gradient(135deg, #e44d26 0%, #f16529 40%, #ffd700 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'izakaya',
+        name: '小酒馆',
+        nameEn: 'Izakaya',
+        description: '藏在巷子里的居酒屋，门帘上写着"营业中"。吧台只有六个位置，木质吧台被磨得发亮。老板是个不太说话的中年男人。背景音乐是爵士乐。酒柜里摆着各种清酒和威士忌。灯光很暗，每张桌上有一盏小蜡烛。角落里有人在小声说话。',
+        tags: ['romantic', 'quiet', 'indoor'],
+        bgImage: '/assets/theater/izakaya.png',
+        bgGradient: 'linear-gradient(135deg, #2c1810 0%, #5c3a28 50%, #8b6544 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'flower_shop',
+        name: '花店',
+        nameEn: 'Flower Shop',
+        description: '街道拐角的小花店，门口摆着今日鲜花的黑板价目表。走进去满眼都是色彩——玫瑰、向日葵、雏菊、绣球。空气里是浓郁的花香混合泥土的味道。老板娘在后面修剪花枝，剪刀"咔嚓"的声音。冰柜里放着需要保鲜的进口花材。',
+        tags: ['romantic', 'quiet', 'indoor'],
+        bgImage: '/assets/theater/flowershop.png',
+        bgGradient: 'linear-gradient(135deg, #ff758c 0%, #ff7eb3 40%, #c9ffbf 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+    {
+        id: 'home',
+        name: '家里',
+        nameEn: 'Home',
+        description: '熟悉的房间，沙发上堆着几个抱枕，茶几上有还没洗的杯子。电视开着但没人在看。厨房传来冰箱压缩机的声音。窗帘半拉着，外面的城市光线透进来。地上有一双拖鞋和一些快递纸箱。墙上的时钟在走，空调遥控器掉在沙发缝里。',
+        tags: ['quiet', 'indoor', 'daily'],
+        bgImage: '/assets/theater/home.png',
+        bgGradient: 'linear-gradient(135deg, #ffeaa7 0%, #dfe6e9 50%, #b2bec3 100%)',
+        isPreset: true,
+        visitCount: 0,
+    },
+];
+
+/**
+ * Get a fresh copy of preset locations with reset visit counts.
+ */
+export function getPresetLocations(): TheaterLocation[] {
+    return PRESET_LOCATIONS.map(loc => ({ ...loc, visitCount: 0, lastVisitTime: undefined }));
+}

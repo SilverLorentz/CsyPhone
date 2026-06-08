@@ -1,0 +1,30 @@
+                {/* ── WORKSHOP TAB ── */}
+                {activeTab === 'workshop' && (
+                    <div className="flex-1 overflow-y-auto no-scrollbar relative" style={{ background: 'linear-gradient(175deg, #0C0B0F 0%, #111015 45%, #0D0C11 100%)' }}>
+                        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+                            <img src="/images/collage/mood-collage.png" alt="" className="absolute -top-6 -right-10 w-72 opacity-[0.03] mix-blend-screen" style={{ filter: 'invert(1)', transform: 'rotate(8deg)' }} />
+                            <img src="/images/collage/flower-cosmos.png" alt="" className="absolute top-[16%] -left-14 w-44 opacity-[0.04] mix-blend-screen" style={{ filter: 'invert(1)', transform: 'rotate(-25deg)' }} />
+                            <img src="/images/collage/butterfly-sparkle.png" alt="" className="absolute bottom-[6%] -right-10 w-56 opacity-[0.035] mix-blend-screen" style={{ filter: 'invert(1)', transform: 'rotate(15deg)' }} />
+                        </div>
+                        <div className="relative z-10 px-5 pt-16 pb-20">
+                            <div className="text-center mb-2 relative">
+                                <div className="absolute top-0 right-1 w-9 h-11 border border-dashed border-white/[0.04] rounded-sm flex flex-col items-center justify-center gap-0.5 pointer-events-none select-none">
+                                    <div className="w-5 h-5 rounded-full border border-white/[0.03]" />
+                                    <span className="text-[4px] text-white/[0.05] tracking-widest font-mono">POST</span>
+                                </div>
+                                <h2 className="text-[36px] font-bold text-white/80 tracking-[0.5em] leading-none" style={{ fontFamily: "'Ma Shan Zheng', 'Noto Serif SC', serif" }}>拾 念</h2>
+                                <p className="text-[9px] text-white/20 mt-3 tracking-[0.25em] italic leading-relaxed" style={{ fontFamily: "'Noto Serif SC', serif" }}>有些事不说，心里也记得住</p>
+                            </div>
+                            <div className="flex justify-center gap-2 overflow-x-auto no-scrollbar mt-6 mb-10 -mx-5 px-5">
+                                {characters.map(c => (
+                                    <button key={c.id} onClick={() => { setSelectedCharId(c.id); haptic.light(); }}
+                                        className={`shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[10px] font-medium transition-all ${selectedCharId === c.id ? 'bg-white/90 text-[#1E1E20] shadow-[0_4px_20px_rgba(255,255,255,0.12)]' : 'bg-white/[0.04] text-white/35 border border-white/[0.06] hover:bg-white/[0.08]'}`}>
+                                        <img src={c.avatar} alt={c.name} className="w-4 h-4 rounded-full object-cover" />
+                                        {c.name}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="relative">
+                                <span className="absolute -top-3 right-4 text-[8px] text-white/[0.06] italic tracking-[0.15em] select-none pointer-events-none" style={{ fontFamily: "Georgia, serif", transform: 'rotate(2deg)' }}>Good night</span>
+                                <span className="absolute top-[44%] -left-1 text-[7px] text-white/[0.05] tracking-[0.3em] select-none pointer-events-none" style={{ fontFamily: "Georgia, serif", writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>falls.</span>
+                                <span className="absolute bottom-[18%] right-2 text-[7px] text-white/[0.04] italic tracking-[0.2em] select-none pointer-events-none" style={{ fontFamily: "'Noto Serif SC', serif", transform: 'rotate(-1deg)' }}>只是被时间温柔收藏</span>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover, interactive-widget=resizes-content" />
+  <title>Csy-OS</title>
+
+  <!-- PWA Settings -->
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Csy-OS" />
+  <meta name="application-name" content="Csy-OS" />
+
+  <!-- Updated Icons -->
+  <link rel="icon" type="image/webp" href="/icons/icon-96.webp" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.webp" />
+
+  <!-- Preconnect: 提前建立到外部域名的 TCP/TLS 连接 -->
+  <link rel="preconnect" href="https://fonts.loli.net" />
+  <link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+  <link rel="preconnect" href="https://sharkpan.xyz" crossorigin />
+  <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
+  <!-- Preload launch screen icon -->
+  <link rel="preload" as="image" href="/icons/icon-256.webp" />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/huiwen-splash-poem.woff2" crossorigin />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.loli.net/css2?family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Launch Screen Styles (inline for instant render) -->
+  <style>
+    #launch-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #fdf6f0 0%, #fce8e6 30%, #f5e6f0 60%, #eee8f5 100%);
+      font-family: 'Quicksand', -apple-system, sans-serif;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    #launch-screen.fade-out {
+      opacity: 0;
+      transform: scale(1.05);
+      pointer-events: none;
+    }
+
+    /* 猫咪图标 */
+    .launch-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 30px;
+      object-fit: cover;
+      filter: drop-shadow(0 8px 24px rgba(244, 143, 177, 0.35));
+      animation: launch-icon-enter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
+                 launch-float 3s ease-in-out 0.8s infinite;
+      opacity: 0;
+      transform: scale(0.5) translateY(20px);
+    }
+
+    /* 呼吸光环 */
+    .launch-glow {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(248, 187, 208, 0.5) 0%, rgba(206, 147, 216, 0.2) 40%, transparent 70%);
+      animation: launch-glow-breathe 3s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    /* 应用名 */
+    .launch-title {
+      margin-top: 24px;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: rgba(120, 100, 120, 0.7);
+      opacity: 0;
+      animation: launch-fade-up 0.6s ease-out 0.4s forwards;
+    }
+
+    /* 跳动圆点加载 */
+    .launch-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 32px;
+      opacity: 0;
+      animation: launch-fade-up 0.5s ease-out 0.6s forwards;
+    }
+    .launch-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(244, 143, 177, 0.7);
+    }
+    .launch-dot:nth-child(1) { animation: launch-dot-bounce 1.2s ease-in-out 0.7s infinite; }
+    .launch-dot:nth-child(2) { animation: launch-dot-bounce 1.2s ease-in-out 0.85s infinite; }
+    .launch-dot:nth-child(3) { animation: launch-dot-bounce 1.2s ease-in-out 1.0s infinite; }
+
+    /* Keyframes */
+    @keyframes launch-icon-enter {
+      0%   { opacity: 0; transform: scale(0.5) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes launch-float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    @keyframes launch-glow-breathe {
+      0%   { transform: scale(0.85); opacity: 0.5; }
+      100% { transform: scale(1.15); opacity: 0.9; }
+    }
+    @keyframes launch-fade-up {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes launch-dot-bounce {
+      0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+      40%           { transform: translateY(-12px); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <!-- 启动画面：React 挂载后自动被替换 -->
+    <div id="launch-screen">
+      <div class="launch-glow"></div>
+      <img class="launch-icon" src="/icons/icon-256.webp" alt="Csy-OS" />
+      <div class="launch-title">Csy-OS</div>
+      <div class="launch-dots">
+        <div class="launch-dot"></div>
+        <div class="launch-dot"></div>
+        <div class="launch-dot"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>

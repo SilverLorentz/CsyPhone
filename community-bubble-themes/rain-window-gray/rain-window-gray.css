@@ -1,0 +1,461 @@
+/*
+  Rain Window Gray / 雨窗灰调
+  Copy this whole file into 气泡工坊 -> CSS 增强模式.
+
+  Image URLs are already filled in. Replace the three variables below if you want
+  to use your own image host links. Keep the url("...") wrapper.
+*/
+
+:root {
+  --rw-chat-bg: url("https://i.postimg.cc/mDLCmLgh/Camera-1040g3k831jc2vf7q2ifg5oe99pok0u32319te3g.jpg");
+  --rw-key: url("https://i.postimg.cc/Hnj5C6MN/com-xingin-xhs-20260428212816.png");
+  --rw-rain-texture: url("https://i.postimg.cc/T1hmXtmM/Camera-1040g34o31eshc8695sa05o29o37gbks9qa9uok8.jpg");
+
+  --rw-ink: #252629;
+  --rw-muted: #6f7274;
+  --rw-line: rgba(236, 236, 232, 0.22);
+  --rw-paper-ai: rgba(245, 245, 241, 0.74);
+  --rw-paper-user: rgba(203, 205, 202, 0.70);
+  --rw-panel: rgba(22, 23, 25, 0.52);
+  --rw-panel-soft: rgba(244, 244, 240, 0.12);
+  --rw-shadow: rgba(0, 0, 0, 0.30);
+}
+
+/* ------------------------------------------------------------------
+   Full Chat Surface
+   ------------------------------------------------------------------ */
+
+.sully-chat-container {
+  isolation: isolate !important;
+  background-color: #17181a !important;
+  background-image:
+    linear-gradient(180deg, rgba(5, 6, 7, 0.18), rgba(5, 6, 7, 0.72)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.18)),
+    var(--rw-chat-bg) !important;
+  background-size: cover, cover, cover !important;
+  background-position: center, center, center !important;
+  background-attachment: local !important;
+  color: var(--rw-ink) !important;
+}
+
+.sully-chat-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 9%, rgba(255, 255, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.12), transparent 26%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    var(--rw-rain-texture);
+  background-size: cover, cover, 84px 84px, cover;
+  background-position: center;
+  mix-blend-mode: screen;
+  opacity: 0.34;
+}
+
+.sully-chat-container::after {
+  content: "";
+  position: absolute;
+  top: 112px;
+  right: 10px;
+  z-index: 0;
+  width: 108px;
+  height: 108px;
+  pointer-events: none;
+  background-image: var(--rw-key);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 188px 188px;
+  opacity: 0.24;
+  filter: grayscale(1) saturate(0.2) contrast(0.82) drop-shadow(0 10px 22px rgba(0, 0, 0, 0.34));
+  transform: rotate(-18deg);
+}
+
+.sully-chat-container > .flex-1.overflow-y-auto {
+  position: relative !important;
+  z-index: 1 !important;
+  background: transparent !important;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+
+.sully-chat-container a {
+  color: #4b5660 !important;
+  text-decoration-color: rgba(75, 86, 96, 0.34) !important;
+}
+
+/* ------------------------------------------------------------------
+   Header
+   ------------------------------------------------------------------ */
+
+.sully-chat-header {
+  min-height: 88px !important;
+  background:
+    linear-gradient(180deg, rgba(31, 32, 34, 0.74), rgba(31, 32, 34, 0.44)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 46%, rgba(255, 255, 255, 0.06)) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow:
+    inset 0 -1px 0 rgba(0, 0, 0, 0.22),
+    0 14px 34px rgba(0, 0, 0, 0.22) !important;
+  backdrop-filter: blur(20px) saturate(78%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(78%) !important;
+}
+
+.sully-chat-header,
+.sully-chat-header .font-bold,
+.sully-chat-header .text-slate-800,
+.sully-chat-header .text-slate-500,
+.sully-chat-header .text-slate-400 {
+  color: rgba(246, 246, 242, 0.88) !important;
+}
+
+.sully-chat-header .text-slate-400,
+.sully-chat-header .text-slate-500 {
+  color: rgba(230, 230, 224, 0.52) !important;
+}
+
+.sully-chat-header img.rounded-xl {
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 13px !important;
+  filter: grayscale(0.55) saturate(0.55) contrast(0.94) !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.24) !important;
+}
+
+.sully-chat-header button {
+  color: rgba(246, 246, 242, 0.82) !important;
+  background: rgba(255, 255, 255, 0.075) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 6px 18px rgba(0, 0, 0, 0.16) !important;
+  backdrop-filter: blur(14px) saturate(75%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(75%) !important;
+}
+
+/* ------------------------------------------------------------------
+   Input Bar and Panels
+   ------------------------------------------------------------------ */
+
+.sully-chat-input {
+  background:
+    linear-gradient(0deg, rgba(21, 22, 24, 0.76), rgba(31, 32, 34, 0.56)),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 -18px 38px rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(22px) saturate(76%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(76%) !important;
+}
+
+.sully-chat-input input,
+.sully-chat-input textarea,
+.sully-chat-input .bg-slate-100.rounded-\[24px\] {
+  color: rgba(246, 246, 242, 0.88) !important;
+  background: rgba(247, 247, 242, 0.105) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.10),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.20) !important;
+  backdrop-filter: blur(12px) saturate(80%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(80%) !important;
+}
+
+.sully-chat-input input::placeholder,
+.sully-chat-input textarea::placeholder {
+  color: rgba(236, 236, 230, 0.34) !important;
+}
+
+.sully-chat-input button {
+  color: rgba(238, 238, 232, 0.78) !important;
+}
+
+.sully-chat-input button.rounded-full,
+.sully-chat-input button.rounded-2xl,
+.sully-chat-input button.aspect-square,
+.sully-chat-input div[class*="rounded-2xl"][class*="w-14"] {
+  background: rgba(241, 241, 236, 0.10) !important;
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.18) !important;
+}
+
+.sully-chat-input > div.bg-slate-50,
+.sully-chat-input > div.border-t,
+.sully-chat-input div.bg-white.border-b,
+.sully-chat-input .bg-white\/50 {
+  background: rgba(20, 21, 23, 0.70) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(238, 238, 232, 0.76) !important;
+  backdrop-filter: blur(18px) saturate(74%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(74%) !important;
+}
+
+.sully-chat-input .text-slate-300,
+.sully-chat-input .text-slate-400,
+.sully-chat-input .text-slate-500,
+.sully-chat-input .text-slate-600 {
+  color: rgba(230, 230, 224, 0.58) !important;
+}
+
+/* ------------------------------------------------------------------
+   Message Layout
+   ------------------------------------------------------------------ */
+
+.sully-msg-timestamp span {
+  color: rgba(236, 236, 230, 0.54) !important;
+  background: rgba(16, 17, 19, 0.34) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 999px !important;
+  padding: 3px 9px !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+}
+
+.sully-bubble-tail,
+.sully-typing-tail {
+  display: none !important;
+}
+
+.sully-bubble-ai,
+.sully-bubble-user,
+.sully-voice-bubble,
+.sully-typing-bubble {
+  position: relative !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+    0 10px 24px rgba(0, 0, 0, 0.20) !important;
+  backdrop-filter: blur(16px) saturate(70%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(70%) !important;
+}
+
+.sully-bubble-ai::before,
+.sully-bubble-user::before,
+.sully-voice-bubble::before,
+.sully-typing-bubble::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.12) 38%, rgba(0, 0, 0, 0.05)),
+    var(--rw-rain-texture);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.58;
+  mix-blend-mode: screen;
+}
+
+.sully-bubble-user::before {
+  opacity: 0.52;
+}
+
+.sully-voice-bubble::before,
+.sully-typing-bubble::before {
+  opacity: 0.54;
+}
+
+.sully-bubble-ai::after,
+.sully-bubble-user::after,
+.sully-voice-bubble::after,
+.sully-typing-bubble::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.13), transparent 18%, transparent 78%, rgba(0, 0, 0, 0.08)),
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.22), transparent 30%);
+}
+
+.sully-bubble-ai {
+  background: var(--rw-paper-ai) !important;
+}
+
+.sully-bubble-user {
+  background: var(--rw-paper-user) !important;
+}
+
+.sully-bubble-ai > .relative,
+.sully-bubble-user > .relative,
+.sully-bubble-ai .leading-relaxed,
+.sully-bubble-user .leading-relaxed {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+.sully-bubble-ai .leading-relaxed {
+  color: #242527 !important;
+}
+
+.sully-bubble-user .leading-relaxed {
+  color: #151617 !important;
+}
+
+.sully-bubble-ai .leading-relaxed,
+.sully-bubble-user .leading-relaxed {
+  line-height: 1.72 !important;
+  letter-spacing: 0 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+}
+
+.sully-bubble-ai [class*="text-"],
+.sully-bubble-user [class*="text-"] {
+  color: inherit !important;
+}
+
+.sully-bubble-ai button,
+.sully-bubble-user button {
+  position: relative !important;
+  z-index: 4 !important;
+  background: rgba(0, 0, 0, 0.055) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Small silver-key stamp on the first visible assistant bubble in a sequence. */
+.sully-bubble-ai::marker {
+  content: none;
+}
+
+.sully-bubble-ai + .sully-bubble-ai {
+  margin-top: 2px !important;
+}
+
+/* ------------------------------------------------------------------
+   Voice, Typing, System, and Interaction Pills
+   ------------------------------------------------------------------ */
+
+.sully-voice-bubble {
+  color: rgba(29, 30, 32, 0.88) !important;
+  background: rgba(226, 226, 220, 0.72) !important;
+}
+
+.sully-voice-bubble > * {
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+.sully-typing-bubble {
+  background: rgba(238, 238, 232, 0.72) !important;
+  color: rgba(41, 42, 44, 0.78) !important;
+}
+
+.sully-system-pill,
+.sully-interaction-pill {
+  color: rgba(235, 235, 229, 0.68) !important;
+  background: rgba(16, 17, 19, 0.38) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 8px 22px rgba(0, 0, 0, 0.18) !important;
+  backdrop-filter: blur(14px) saturate(72%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(72%) !important;
+}
+
+/* ------------------------------------------------------------------
+   Cards, Transfers, Images
+   ------------------------------------------------------------------ */
+
+.sully-card-container,
+.sully-transfer-card {
+  background: rgba(236, 236, 230, 0.76) !important;
+  color: #242527 !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  border-radius: 22px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 12px 28px rgba(0, 0, 0, 0.22) !important;
+  backdrop-filter: blur(14px) saturate(72%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(72%) !important;
+}
+
+.sully-transfer-top,
+.sully-transfer-bottom {
+  background: transparent !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.sully-card-container .text-slate-400,
+.sully-card-container .text-slate-500,
+.sully-card-container .text-slate-600,
+.sully-transfer-card .text-white\/70,
+.sully-transfer-card .text-white\/80 {
+  color: rgba(43, 44, 46, 0.64) !important;
+}
+
+.sully-card-container .text-slate-700,
+.sully-card-container .text-slate-800,
+.sully-transfer-card .text-white {
+  color: #222326 !important;
+}
+
+.sully-image-msg {
+  border-radius: 22px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  filter: grayscale(0.35) saturate(0.72) contrast(0.94) !important;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ------------------------------------------------------------------
+   Desktop Hover Polish
+   ------------------------------------------------------------------ */
+
+@media (hover: hover) {
+  .sully-bubble-ai:hover,
+  .sully-bubble-user:hover,
+  .sully-voice-bubble:hover,
+  .sully-card-container:hover,
+  .sully-transfer-card:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.34),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.10),
+      0 14px 30px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .sully-chat-header button:hover,
+  .sully-chat-input button:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .sully-chat-container::after {
+    top: 104px;
+    right: 2px;
+    width: 84px;
+    height: 84px;
+    background-size: 146px 146px;
+    opacity: 0.19;
+  }
+
+  .sully-bubble-ai,
+  .sully-bubble-user,
+  .sully-voice-bubble {
+    border-radius: 18px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sully-bubble-ai,
+  .sully-bubble-user,
+  .sully-voice-bubble,
+  .sully-card-container,
+  .sully-transfer-card,
+  .sully-chat-header button,
+  .sully-chat-input button {
+    transition: none !important;
+  }
+}

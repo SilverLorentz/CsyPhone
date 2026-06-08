@@ -1,0 +1,374 @@
+/* =====================================================================
+   毛玻璃 (Glassmorphism) Theme
+   12px 高斯模糊 + 15% 透明白 — 无色玻璃 + 边缘发光光晕
+   ===================================================================== */
+
+/* ===== Hide default tail (replaced by pill shape) ===== */
+.theme-glassmorphism .sully-bubble-tail {
+    display: none !important;
+}
+
+/* ===== Core Bubble — Frosted Glass with Glow ===== */
+/* NOTE: background, border-radius, color, padding are WITHOUT !important
+   so that Bubble Workshop (ThemeMaker) inline styles can override them. */
+.theme-glassmorphism .sully-bubble-ai,
+.theme-glassmorphism .sully-bubble-user {
+    position: relative;
+    padding: 14px 22px;
+    /* 10% transparent white — ultra light glass panel */
+    background: rgba(255, 255, 255, 0.10);
+    /* 12px gaussian blur */
+    backdrop-filter: blur(12px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(130%) !important;
+    /* Glow edge halo — strengthened */
+    box-shadow:
+        /* Inner glow — top edge light refraction */
+        inset 0 1px 2px rgba(255, 255, 255, 0.80),
+        /* Inner glow — bottom subtle */
+        inset 0 -1px 1px rgba(255, 255, 255, 0.25),
+        /* Outer glow — soft white halo */
+        0 0 16px rgba(255, 255, 255, 0.50),
+        /* Outer glow — broader diffuse */
+        0 0 32px rgba(255, 255, 255, 0.25),
+        /* Subtle drop shadow for depth */
+        0 4px 14px rgba(0, 0, 0, 0.08) !important;
+    /* Thin glowing border */
+    border: 1px solid rgba(255, 255, 255, 0.50) !important;
+    /* Pill shape — no !important so Workshop can override */
+    border-radius: 22px;
+    /* Text — no !important so Workshop can override */
+    color: #1a1a2e;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+    /* Spacing */
+    min-height: 46px;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    /* Smooth transitions */
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+/* ===== Header Bar — Frosted Glass Glow ===== */
+.theme-glassmorphism .sully-chat-header {
+    background: rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(12px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(130%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45) !important;
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.70),
+        0 0 20px rgba(255, 255, 255, 0.18),
+        0 4px 14px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* ===== Input Area — Frosted Glass Glow ===== */
+.theme-glassmorphism .sully-chat-input {
+    background: rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(12px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(130%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.45) !important;
+    box-shadow:
+        inset 0 -1px 2px rgba(255, 255, 255, 0.70),
+        0 0 20px rgba(255, 255, 255, 0.18),
+        0 -4px 14px rgba(0, 0, 0, 0.05) !important;
+}
+
+.theme-glassmorphism .sully-chat-input input,
+.theme-glassmorphism .sully-chat-input textarea {
+    background: rgba(255, 255, 255, 0.20) !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    border-radius: 20px !important;
+    box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.05),
+        0 0 8px rgba(255, 255, 255, 0.18);
+    color: #1a1a2e !important;
+}
+
+/* ===== Transfer Card — Glass Glow ===== */
+.theme-glassmorphism .sully-transfer-card {
+    background: rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(12px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(130%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.50) !important;
+    border-radius: 22px !important;
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.75),
+        0 0 18px rgba(255, 255, 255, 0.22),
+        0 4px 14px rgba(0, 0, 0, 0.08) !important;
+}
+
+.theme-glassmorphism .sully-transfer-top,
+.theme-glassmorphism .sully-transfer-bottom {
+    background: transparent !important;
+    border: none !important;
+}
+
+.theme-glassmorphism .sully-transfer-bottom span {
+    color: #1a1a2e !important;
+    mix-blend-mode: normal !important;
+}
+
+/* ===== Cards (XHS / Social / Forward) ===== */
+.theme-glassmorphism .sully-card-container {
+    background: rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(12px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(130%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    border-radius: 20px !important;
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.70),
+        0 0 16px rgba(255, 255, 255, 0.20),
+        0 4px 12px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ===== Text Contrast ===== */
+.theme-glassmorphism .sully-bubble-ai a,
+.theme-glassmorphism .sully-bubble-user a {
+    color: #3730a3 !important;
+    text-decoration: underline !important;
+    font-weight: bold;
+}
+
+.theme-glassmorphism .sully-card-container .text-slate-500,
+.theme-glassmorphism .sully-card-container .text-slate-600 {
+    color: #334155 !important;
+}
+
+.theme-glassmorphism .sully-card-container .text-slate-800,
+.theme-glassmorphism .sully-card-container .text-slate-700 {
+    color: #0f172a !important;
+}
+
+/* ===== System Message Pill ===== */
+.theme-glassmorphism .sully-system-pill {
+    background: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(10px) saturate(115%) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(115%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.40),
+        0 0 10px rgba(255, 255, 255, 0.10),
+        0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* ===== Interaction Pill (戳了戳) ===== */
+.theme-glassmorphism .sully-interaction-pill {
+    background: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(10px) saturate(115%) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(115%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.40),
+        0 0 10px rgba(255, 255, 255, 0.10),
+        0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* ===== Image Messages ===== */
+.theme-glassmorphism .sully-image-msg {
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 20px !important;
+    box-shadow:
+        0 0 12px rgba(255, 255, 255, 0.12),
+        0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* ===== Typing Indicator ===== */
+.theme-glassmorphism .sully-typing-bubble {
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(12px) saturate(120%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(120%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 22px !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.50),
+        0 0 12px rgba(255, 255, 255, 0.12),
+        0 4px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.theme-glassmorphism .sully-typing-tail {
+    display: none !important;
+}
+
+/* ===================================================================
+   ICON BUTTONS — Glass Glow for all interactive elements
+   =================================================================== */
+
+/* ===== Plus Button (round, left of input) ===== */
+.theme-glassmorphism .sully-chat-input button.rounded-full {
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.45),
+        0 0 10px rgba(255, 255, 255, 0.10),
+        0 2px 6px rgba(0, 0, 0, 0.04) !important;
+    color: #334155 !important;
+}
+
+/* ===== Emoji Button ===== */
+.theme-glassmorphism .sully-chat-input .text-slate-400 {
+    color: #475569 !important;
+}
+
+/* ===== Action Panel Container ===== */
+.theme-glassmorphism .sully-chat-input>div.bg-slate-50,
+.theme-glassmorphism .sully-chat-input>div.border-t {
+    background: rgba(255, 255, 255, 0.10) !important;
+    backdrop-filter: blur(12px) saturate(115%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(115%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.20) !important;
+}
+
+/* ===== Action Grid Icon Boxes ===== */
+.theme-glassmorphism .sully-chat-input div[class*="rounded-2xl"][class*="w-14"] {
+    background: rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.50),
+        0 0 10px rgba(255, 255, 255, 0.10),
+        0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    color: #475569 !important;
+}
+
+/* ===== Emoji Grid Items ===== */
+.theme-glassmorphism .sully-chat-input button.aspect-square {
+    background: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.35),
+        0 0 8px rgba(255, 255, 255, 0.08),
+        0 2px 6px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* ===== Emoji Add Button (dashed border) ===== */
+.theme-glassmorphism .sully-chat-input button.border-dashed {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.30) !important;
+}
+
+/* ===== Categories Bar (emoji tab bar) ===== */
+.theme-glassmorphism .sully-chat-input div.bg-white.border-b {
+    background: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.20) !important;
+}
+
+/* ===== Category Pills ===== */
+.theme-glassmorphism .sully-chat-input button.rounded-full.bg-slate-100 {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.40),
+        0 0 6px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ===== Character Selection Cards ===== */
+.theme-glassmorphism .sully-chat-input div[class*="rounded-\\[20px\\]"] {
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.40),
+        0 0 10px rgba(255, 255, 255, 0.10),
+        0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* ===== Theme Selection Buttons ===== */
+.theme-glassmorphism .sully-chat-input button.rounded-2xl.border {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.35),
+        0 0 8px rgba(255, 255, 255, 0.08),
+        0 2px 6px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* ===== Header Back Button & AI Trigger Button ===== */
+.theme-glassmorphism .sully-chat-header button {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.40),
+        0 0 8px rgba(255, 255, 255, 0.10),
+        0 2px 6px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* ===== Header Avatar ===== */
+.theme-glassmorphism .sully-chat-header img.rounded-xl {
+    border: 1px solid rgba(255, 255, 255, 0.30) !important;
+    box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.12),
+        0 2px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* ===== Selection Mode Buttons ===== */
+.theme-glassmorphism .sully-chat-input .bg-white\/50 {
+    background: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* ===== Input Field Container ===== */
+.theme-glassmorphism .sully-chat-input div.bg-slate-100.rounded-\[24px\] {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow:
+        inset 0 1px 3px rgba(0, 0, 0, 0.04),
+        0 0 6px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ===== Token Badge ===== */
+.theme-glassmorphism .sully-chat-header .bg-slate-100 {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+/* ===================================================================
+   HOVER EFFECTS (Desktop Only)
+   =================================================================== */
+@media (hover: hover) {
+
+    /* Bubbles: subtle lift and stronger glow */
+    .theme-glassmorphism .sully-bubble-ai:hover,
+    .theme-glassmorphism .sully-bubble-user:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            inset 0 1px 1px rgba(255, 255, 255, 0.70),
+            inset 0 -1px 1px rgba(255, 255, 255, 0.20),
+            0 0 16px rgba(255, 255, 255, 0.25),
+            0 0 32px rgba(255, 255, 255, 0.12),
+            0 6px 16px rgba(0, 0, 0, 0.08) !important;
+        border-color: rgba(255, 255, 255, 0.45) !important;
+    }
+
+    /* Interactive Buttons: brightened background and halo */
+    .theme-glassmorphism .sully-chat-header button:hover,
+    .theme-glassmorphism .sully-chat-input button.rounded-full:hover,
+    .theme-glassmorphism .sully-chat-input button.aspect-square:hover,
+    .theme-glassmorphism .sully-chat-input button.rounded-2xl.border:hover {
+        background: rgba(255, 255, 255, 0.22) !important;
+        box-shadow:
+            inset 0 1px 1px rgba(255, 255, 255, 0.55),
+            0 0 14px rgba(255, 255, 255, 0.20),
+            0 4px 10px rgba(0, 0, 0, 0.06) !important;
+        border-color: rgba(255, 255, 255, 0.40) !important;
+    }
+
+    /* Action Panel Icons: scale up and glow */
+    .theme-glassmorphism .sully-chat-input div[class*="rounded-2xl"][class*="w-14"]:hover {
+        transform: scale(1.05);
+        background: rgba(255, 255, 255, 0.25) !important;
+        box-shadow:
+            inset 0 1px 1px rgba(255, 255, 255, 0.65),
+            0 0 18px rgba(255, 255, 255, 0.25),
+            0 4px 12px rgba(0, 0, 0, 0.08) !important;
+        border-color: rgba(255, 255, 255, 0.50) !important;
+        transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+}

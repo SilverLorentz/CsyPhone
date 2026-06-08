@@ -1,0 +1,332 @@
+.dynamic-island {
+    position: absolute;
+    top: max(8px, calc(var(--safe-top, env(safe-area-inset-top)) + 2px));
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 55;
+    pointer-events: none;
+    transition: box-shadow 0.8s ease;
+}
+
+.di-capsule {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px 4px 4px;
+    background: rgba(0, 0, 0, 0.88);
+    border-radius: 24px;
+    cursor: pointer;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    user-select: none;
+    pointer-events: auto;
+}
+
+.di-capsule-cover {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: di-spin 8s linear infinite;
+}
+
+.di-capsule-cover--paused {
+    animation-play-state: paused;
+}
+
+.di-capsule-cover-note {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.di-capsule-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.di-capsule-title {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.di-capsule-title-text {
+    display: inline-block;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding-right: 18px;
+    animation: di-marquee 8s linear infinite;
+}
+
+.di-capsule-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 16px;
+    padding: 0 4px;
+    cursor: pointer;
+}
+
+.di-bar {
+    width: 2.5px;
+    border-radius: 2px;
+    background: #1ed760;
+    animation: di-bar-bounce 0.6s ease-in-out infinite alternate;
+}
+
+.di-bar:nth-child(1) {
+    height: 6px;
+    animation-delay: 0s;
+}
+
+.di-bar:nth-child(2) {
+    height: 12px;
+    animation-delay: 0.15s;
+}
+
+.di-bar:nth-child(3) {
+    height: 8px;
+    animation-delay: 0.3s;
+}
+
+.di-capsule-play-btn {
+    color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px;
+    cursor: pointer;
+}
+
+.di-expanded {
+    background: rgba(0, 0, 0, 0.92);
+    border-radius: 28px;
+    padding: 8px 16px 14px;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.4),
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.08);
+    color: #fff;
+    user-select: none;
+    pointer-events: auto;
+}
+
+.di-expanded-handle {
+    display: flex;
+    justify-content: center;
+    padding: 4px 0 8px;
+    cursor: pointer;
+}
+
+.di-expanded-handle-bar {
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.di-expanded-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.di-expanded-cover {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.di-expanded-cover--spinning {
+    animation: di-spin 12s linear infinite;
+    border-radius: 50%;
+}
+
+.di-expanded-cover-note {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 20px;
+}
+
+.di-expanded-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.di-expanded-name {
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.di-expanded-artist {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.di-expanded-progress {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.di-expanded-progress-fill {
+    height: 100%;
+    background: #1ed760;
+    border-radius: 2px;
+    transition: width 0.3s linear;
+}
+
+.di-expanded-time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 3px;
+    padding: 0 2px;
+}
+
+.di-expanded-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 10px;
+}
+
+.di-ctrl-btn {
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.15s, transform 0.1s;
+}
+
+.di-ctrl-btn:active {
+    transform: scale(0.9);
+    color: #fff;
+}
+
+.di-ctrl-play {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.di-ctrl-play:active {
+    transform: scale(0.92);
+}
+
+.di-expanded-open {
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 10px;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.15s;
+}
+
+.di-expanded-open:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.di-expanded-extras {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.di-expanded-lyric-toggle {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 4px 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease,
+        transform 0.1s ease;
+}
+
+.di-expanded-lyric-toggle--active {
+    background: rgba(30, 215, 96, 0.2);
+    color: rgba(255, 255, 255, 0.92);
+    box-shadow: inset 0 0 0 1px rgba(30, 215, 96, 0.28);
+}
+
+.di-expanded-lyric-toggle:active {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: scale(0.96);
+}
+
+@keyframes di-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes di-bar-bounce {
+    from {
+        height: 4px;
+    }
+
+    to {
+        height: 14px;
+    }
+}
+
+@keyframes di-marquee {
+    0%,
+    30% {
+        transform: translateX(0);
+    }
+
+    70%,
+    100% {
+        transform: translateX(calc(-100% + 80px));
+    }
+}
+

@@ -1,0 +1,338 @@
+.memory-record-share-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
+    background: rgba(7, 7, 10, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: memory-record-share-fade-in 0.18s ease;
+}
+
+@keyframes memory-record-share-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.memory-record-share-modal {
+    width: min(420px, 100%);
+    max-height: 92svh;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 26px;
+    background: rgba(19, 18, 23, 0.96);
+    box-shadow: 0 32px 74px rgba(0, 0, 0, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    padding: 16px;
+    color: #fff8e8;
+    font-family: var(--app-font, "Quicksand", sans-serif), -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    animation: memory-record-share-rise 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes memory-record-share-rise {
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.memory-record-share-card-preview {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto minmax(188px, 1fr) auto auto auto;
+    row-gap: 13px;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 19px;
+    background: #111015;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    isolation: isolate;
+}
+
+.memory-record-share-card-backdrop {
+    position: absolute;
+    inset: -30px;
+    width: calc(100% + 60px);
+    height: calc(100% + 60px);
+    object-fit: cover;
+    filter: blur(22px) saturate(1.12);
+    opacity: 0.34;
+}
+
+.memory-record-share-card-wash {
+    position: absolute;
+    inset: 0;
+    opacity: 0.8;
+}
+
+.memory-record-share-card-wash::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 68% 16%, rgba(255, 233, 192, 0.22) 0, rgba(255, 233, 192, 0) 34%),
+        linear-gradient(180deg, rgba(11, 10, 15, 0.22) 0%, rgba(11, 10, 15, 0.08) 40%, rgba(11, 10, 15, 0.82) 100%);
+}
+
+.memory-record-share-card-frame {
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 19px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.memory-record-share-card-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.20em;
+}
+
+.memory-record-share-card-header span:last-child {
+    color: rgba(255, 248, 226, 0.88);
+    letter-spacing: 0;
+}
+
+.memory-record-share-card-stage {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    height: clamp(190px, 52vw, 226px);
+}
+
+.memory-record-share-card-disc {
+    position: absolute;
+    top: 24px;
+    right: clamp(8px, 5vw, 24px);
+    width: clamp(154px, 44vw, 188px);
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: radial-gradient(circle at center, #0f0f12 0 21%, #222026 22% 23%, #0c0b10 24% 46%, #2b2930 47% 48%, #0b0a0e 49% 100%);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.42), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.memory-record-share-card-cover-shell {
+    position: relative;
+    z-index: 1;
+    width: clamp(198px, 54vw, 230px);
+    aspect-ratio: 1;
+    border-radius: 27px;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.44);
+}
+
+.memory-record-share-card-cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #211f2e 0%, #b98f73 54%, #d8cab6 100%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.memory-record-share-card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.memory-record-share-card-cover span {
+    color: rgba(255, 255, 255, 0.76);
+    font-family: var(--app-font, "Quicksand", sans-serif), Georgia, serif;
+    font-size: 62px;
+    text-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+}
+
+.memory-record-share-card-copy {
+    position: relative;
+    z-index: 1;
+    text-align: left;
+    min-width: 0;
+}
+
+.memory-record-share-card-copy h3 {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: #fff7dc;
+    font-size: clamp(24px, 7vw, 29px);
+    font-weight: 850;
+    line-height: 1.08;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.memory-record-share-card-copy div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 8px;
+    min-width: 0;
+}
+
+.memory-record-share-card-copy p,
+.memory-record-share-card-copy span {
+    margin: 0;
+    overflow: hidden;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.memory-record-share-card-copy p {
+    max-width: min(230px, 62%);
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.memory-record-share-card-copy span {
+    max-width: min(126px, 38%);
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.memory-record-share-card-lyrics {
+    position: relative;
+    z-index: 1;
+    min-height: 46px;
+    border-left: 2px solid rgba(255, 239, 198, 0.62);
+    padding: 4px 0 4px 14px;
+    color: rgba(255, 250, 235, 0.86);
+    font-size: 13.5px;
+    font-weight: 650;
+    line-height: 1.55;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.22);
+    background: linear-gradient(90deg, rgba(255, 239, 198, 0.08), rgba(255, 239, 198, 0));
+}
+
+.memory-record-share-card-lyrics p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.memory-record-share-card-footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    min-width: 0;
+}
+
+.memory-record-share-card-footer span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.memory-record-share-modal-copy {
+    padding: 17px 4px 0;
+    text-align: center;
+}
+
+.memory-record-share-modal-copy h2 {
+    margin: 0;
+    color: #fff7df;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+.memory-record-share-modal-copy p {
+    max-width: 330px;
+    margin: 7px auto 0;
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.memory-record-share-modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.memory-record-share-modal-btn {
+    width: 100%;
+    min-height: 44px;
+    border: 0;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 800;
+    transition: transform 0.12s ease, opacity 0.12s ease, background 0.12s ease;
+}
+
+.memory-record-share-modal-btn:active {
+    transform: scale(0.97);
+}
+
+.memory-record-share-modal-btn:disabled {
+    cursor: default;
+    opacity: 0.58;
+}
+
+.memory-record-share-modal-btn--primary {
+    background: #f2d290;
+    color: #241814;
+    box-shadow: 0 12px 26px rgba(242, 210, 144, 0.18);
+}
+
+.memory-record-share-modal-btn--secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.66);
+}
+
+@media (max-width: 380px) {
+    .memory-record-share-modal {
+        border-radius: 22px;
+        padding: 12px;
+    }
+
+    .memory-record-share-card-preview {
+        row-gap: 10px;
+        padding: 15px;
+    }
+
+    .memory-record-share-card-stage {
+        height: 182px;
+    }
+
+    .memory-record-share-card-copy h3 {
+        font-size: 24px;
+    }
+
+    .memory-record-share-card-lyrics {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+}

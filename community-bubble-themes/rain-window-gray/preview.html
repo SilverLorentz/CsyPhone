@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>雨窗灰调主题预览</title>
+  <link rel="stylesheet" href="./rain-window-gray.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: start center;
+      padding: 18px;
+      background: #111214;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", sans-serif;
+    }
+
+    .phone-preview {
+      width: min(430px, calc(100vw - 36px));
+      height: 860px;
+      max-height: calc(100vh - 36px);
+      overflow: hidden;
+      border-radius: 28px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sully-chat-container {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sully-chat-header {
+      display: flex;
+      align-items: end;
+      min-height: 92px;
+      padding: 36px 16px 14px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 12px;
+    }
+
+    .icon-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      font-size: 18px;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ddd, #888);
+      flex: 0 0 auto;
+    }
+
+    .title-wrap {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .font-bold {
+      font-weight: 700;
+    }
+
+    .text-slate-800 {
+      color: #1f2937;
+    }
+
+    .text-slate-500 {
+      color: #64748b;
+    }
+
+    .text-slate-400 {
+      color: #94a3b8;
+    }
+
+    .messages {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 14px 22px;
+    }
+
+    .sully-msg-timestamp {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 18px;
+      font-size: 11px;
+    }
+
+    .row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .row.user {
+      justify-content: flex-end;
+    }
+
+    .bubble-wrap {
+      max-width: 72%;
+    }
+
+    .sully-bubble-ai,
+    .sully-bubble-user {
+      padding: 10px 14px;
+      font-size: 15px;
+      white-space: pre-wrap;
+    }
+
+    .leading-relaxed {
+      line-height: 1.65;
+      overflow-wrap: break-word;
+    }
+
+    .sully-voice-bubble {
+      min-width: 160px;
+      min-height: 40px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .voice-bars {
+      display: flex;
+      align-items: end;
+      gap: 3px;
+      height: 16px;
+    }
+
+    .voice-bars span {
+      width: 3px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .voice-bars span:nth-child(1) { height: 8px; }
+    .voice-bars span:nth-child(2) { height: 15px; }
+    .voice-bars span:nth-child(3) { height: 11px; }
+
+    .sully-system-pill,
+    .sully-interaction-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      margin: 16px 0;
+    }
+
+    .sully-card-container,
+    .sully-transfer-card {
+      width: 230px;
+      padding: 14px;
+      font-size: 13px;
+    }
+
+    .sully-image-msg {
+      width: 170px;
+      height: 230px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sully-chat-input {
+      flex-shrink: 0;
+      position: relative;
+      z-index: 40;
+      padding: 10px 12px 14px;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sully-chat-input textarea {
+      flex: 1;
+      min-height: 38px;
+      resize: none;
+      border-radius: 20px;
+      padding: 9px 12px;
+      font: inherit;
+      outline: none;
+    }
+
+    .send-button {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <main class="phone-preview">
+    <section class="sully-chat-container">
+      <header class="sully-chat-header">
+        <div class="header-row">
+          <button class="icon-button" aria-label="返回">‹</button>
+          <div class="avatar"></div>
+          <div class="title-wrap">
+            <div class="font-bold text-slate-800">Sully</div>
+            <div class="text-slate-400" style="font-size: 10px;">Online · 雨窗灰调预览</div>
+          </div>
+          <button class="icon-button" aria-label="更多">…</button>
+        </div>
+      </header>
+
+      <div class="messages flex-1 overflow-y-auto">
+        <div class="sully-msg-timestamp"><span>今天 21:50</span></div>
+
+        <div class="center">
+          <div class="sully-system-pill">SYSTEM · 雨声很轻</div>
+        </div>
+
+        <div class="row ai">
+          <div class="avatar"></div>
+          <div class="bubble-wrap">
+            <div class="sully-bubble-ai">
+              <div class="leading-relaxed">窗外一直下雨。这里是低饱和灰调气泡，文字要能长时间阅读，不刺眼，也不能被玻璃纹理吃掉。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row user">
+          <div class="bubble-wrap">
+            <div class="sully-bubble-user">
+              <div class="leading-relaxed">我想要那种冷一点、安静一点的聊天界面，像隔着雨窗写信。</div>
+            </div>
+          </div>
+          <div class="avatar"></div>
+        </div>
+
+        <div class="row ai">
+          <div class="avatar"></div>
+          <div class="bubble-wrap">
+            <div class="sully-voice-bubble">
+              <div class="voice-bars"><span></span><span></span><span></span></div>
+              <div style="margin-left: auto; font-size: 12px;">0:08</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="center">
+          <div class="sully-interaction-pill">轻轻碰了碰窗玻璃</div>
+        </div>
+
+        <div class="row ai">
+          <div class="avatar"></div>
+          <div class="bubble-wrap">
+            <img
+              class="sully-image-msg"
+              src="https://i.postimg.cc/gjrRPghf/Camera-XHS-17765123198081040g008319lbicldnc6g5nq4j1v0bnutciogh8o.jpg"
+              alt="雨窗灰调图片消息预览"
+            />
+          </div>
+        </div>
+
+        <div class="row ai">
+          <div class="avatar"></div>
+          <div class="bubble-wrap">
+            <div class="sully-card-container">
+              <div class="font-bold text-slate-800">卡片消息</div>
+              <div class="text-slate-500" style="margin-top: 6px; line-height: 1.6;">卡片也会被压成灰白纸片质感，保持低饱和。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row user">
+          <div class="bubble-wrap">
+            <div class="sully-transfer-card">
+              <div class="font-bold">转账卡片</div>
+              <div style="font-size: 26px; margin-top: 8px;">¥52.00</div>
+            </div>
+          </div>
+          <div class="avatar"></div>
+        </div>
+      </div>
+
+      <footer class="sully-chat-input">
+        <div class="input-row">
+          <button class="icon-button">＋</button>
+          <textarea placeholder="Message"></textarea>
+          <button class="send-button">↗</button>
+        </div>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

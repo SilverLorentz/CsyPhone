@@ -1,0 +1,97 @@
+.sully-global-input-effect {
+  position: fixed;
+  width: 148px;
+  height: 148px;
+  z-index: 58;
+  pointer-events: none !important;
+  opacity: var(--sully-input-effect-opacity, 0.85);
+  transform: translate(-50%, -50%) scale(var(--sully-input-effect-scale, 1));
+  transform-origin: center;
+  filter:
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.85))
+    drop-shadow(0 0 18px rgba(170, 210, 255, 0.36));
+  animation: sully-input-effect-pop var(--sully-input-effect-duration, 950ms) cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  contain: layout paint style;
+}
+
+.sully-global-input-effect__asset {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  animation: sully-input-effect-spin var(--sully-input-effect-duration, 950ms) ease-out both;
+}
+
+.sully-global-input-effect__spark {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background:
+    linear-gradient(90deg, transparent 44%, rgba(255,255,255,0.92) 48%, rgba(255,255,255,0.92) 52%, transparent 56%),
+    linear-gradient(0deg, transparent 44%, rgba(255,255,255,0.92) 48%, rgba(255,255,255,0.92) 52%, transparent 56%);
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.85));
+  opacity: 0;
+  animation: sully-input-effect-spark var(--sully-input-effect-duration, 950ms) ease-out both;
+}
+
+.sully-global-input-effect__spark--a {
+  left: 12%;
+  top: 20%;
+}
+
+.sully-global-input-effect__spark--b {
+  right: 12%;
+  bottom: 18%;
+  animation-delay: var(--sully-input-effect-spark-delay, 90ms);
+}
+
+@keyframes sully-input-effect-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(calc(var(--sully-input-effect-scale, 1) * 0.72));
+  }
+  18% {
+    opacity: var(--sully-input-effect-opacity, 0.85);
+  }
+  72% {
+    opacity: calc(var(--sully-input-effect-opacity, 0.85) * 0.72);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(calc(var(--sully-input-effect-scale, 1) * 1.12));
+  }
+}
+
+@keyframes sully-input-effect-spin {
+  from {
+    transform: rotate(var(--sully-input-effect-spin-from, -14deg));
+  }
+  to {
+    transform: rotate(var(--sully-input-effect-spin-to, 34deg));
+  }
+}
+
+@keyframes sully-input-effect-spark {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(0deg);
+  }
+  28% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25) rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sully-global-input-effect,
+  .sully-global-input-effect__asset,
+  .sully-global-input-effect__spark {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+  }
+}

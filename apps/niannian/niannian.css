@@ -1,0 +1,1414 @@
+.nn-app {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: #382d2b;
+    background: linear-gradient(180deg, #fff7ec 0%, #eef8f7 100%);
+    font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.nn-loading {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 12px;
+    color: #7d625b;
+    font-size: 13px;
+}
+
+.nn-topbar {
+    position: absolute;
+    top: max(34px, calc(env(safe-area-inset-top) + 28px));
+    left: 12px;
+    right: 12px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.nn-icon-btn,
+.nn-primary-btn,
+.nn-session-list button,
+.nn-scene,
+.nn-choice-review-hotspot,
+.nn-status-orb,
+.nn-history-toggle,
+.nn-history-row,
+.nn-history-close,
+.nn-history-current,
+.nn-dialogue-nav,
+.nn-options button,
+.nn-beat-toggle button,
+.nn-beat-remove,
+.nn-beat-add button,
+.nn-send-btn,
+.nn-fate-tab {
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+}
+
+.nn-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    color: #5f4a44;
+    background: rgba(255, 255, 255, 0.74);
+    box-shadow: 0 8px 26px rgba(111, 86, 75, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+    pointer-events: auto;
+}
+
+.nn-brand {
+    display: grid;
+    justify-items: center;
+    min-width: 0;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.58);
+    box-shadow: 0 8px 28px rgba(111, 86, 75, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(18px);
+}
+
+.nn-brand span {
+    color: #5f433f;
+    font-size: 17px;
+    font-weight: 900;
+    line-height: 1.1;
+}
+
+.nn-setup {
+    height: 100%;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
+    gap: 14px;
+    padding: max(76px, calc(env(safe-area-inset-top) + 68px)) 16px 22px;
+}
+
+.nn-setup-panel,
+.nn-session-list {
+    border: 1px solid rgba(146, 116, 94, 0.18);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.68);
+    box-shadow: 0 18px 48px rgba(125, 94, 74, 0.16);
+    backdrop-filter: blur(18px);
+}
+
+.nn-setup-panel {
+    display: grid;
+    gap: 13px;
+    padding: 16px;
+}
+
+.nn-section-title {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.nn-section-title h1 {
+    margin: 0;
+    color: #604743;
+    font-size: 22px;
+    line-height: 1.15;
+}
+
+.nn-section-title p {
+    margin: 5px 0 0;
+    color: rgba(96, 71, 67, 0.62);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.nn-setup label {
+    display: grid;
+    gap: 6px;
+    min-width: 0;
+}
+
+.nn-setup label span {
+    color: rgba(96, 71, 67, 0.68);
+    font-size: 11px;
+    font-weight: 850;
+}
+
+.nn-setup input,
+.nn-setup select,
+.nn-setup textarea {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid rgba(133, 103, 88, 0.2);
+    border-radius: 10px;
+    color: #493835;
+    background: rgba(255, 255, 255, 0.64);
+    outline: none;
+}
+
+.nn-setup input,
+.nn-setup select {
+    height: 40px;
+    padding: 0 11px;
+}
+
+.nn-setup textarea {
+    min-height: 82px;
+    resize: vertical;
+    padding: 10px 11px;
+    line-height: 1.55;
+}
+
+.nn-setup input::placeholder,
+.nn-setup textarea::placeholder {
+    color: rgba(96, 71, 67, 0.34);
+}
+
+.nn-setup-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.nn-primary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    border-radius: 12px;
+    color: #5d372f;
+    background: linear-gradient(180deg, #ffe8bb 0%, #f5ca8d 100%);
+    box-shadow: 0 12px 24px rgba(175, 120, 70, 0.18);
+    font-weight: 900;
+}
+
+.nn-session-list {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding: 14px;
+}
+
+.nn-session-list h2 {
+    margin: 0 0 5px;
+    color: #604743;
+    font-size: 14px;
+}
+
+.nn-session-list button {
+    display: grid;
+    gap: 4px;
+    padding: 10px;
+    border: 1px solid rgba(133, 103, 88, 0.16);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.62);
+    text-align: left;
+}
+
+.nn-session-list button span {
+    color: rgba(96, 71, 67, 0.62);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.nn-stage {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.nn-scene {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+    text-align: left;
+    background-color: var(--nn-bg-b, #ffc9a3);
+    background-image:
+        linear-gradient(180deg, rgba(45, 30, 24, 0.08) 0%, rgba(255, 247, 235, 0.08) 48%, rgba(255, 245, 235, 0.7) 100%),
+        var(--nn-scene-image),
+        linear-gradient(135deg, var(--nn-bg-a, #fff1c7) 0%, var(--nn-bg-b, #ffc9a3) 48%, var(--nn-bg-c, #c8e9ff) 100%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.nn-vn-layer {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    z-index: 12;
+    display: grid;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.nn-vn-layer > * {
+    pointer-events: auto;
+}
+
+.nn-vn-layer.is-dialogue {
+    bottom: max(20px, calc(env(safe-area-inset-bottom) + 16px));
+}
+
+.nn-vn-layer.is-choice {
+    bottom: max(10px, calc(env(safe-area-inset-bottom) + 8px));
+}
+
+.nn-vn-layer.is-choice.is-reviewing {
+    bottom: max(20px, calc(env(safe-area-inset-bottom) + 16px));
+}
+
+.nn-choice-review-hotspot {
+    position: absolute;
+    top: max(116px, calc(env(safe-area-inset-top) + 108px));
+    bottom: max(104px, calc(env(safe-area-inset-bottom) + 100px));
+    left: 0;
+    z-index: 11;
+    width: 34%;
+    padding: 0;
+    background: transparent;
+}
+
+.nn-scene::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 250, 242, 0.18) 54%, rgba(255, 247, 240, 0.86) 100%),
+        radial-gradient(ellipse at center, transparent 0%, transparent 62%, rgba(67, 45, 37, 0.18) 100%);
+    pointer-events: none;
+}
+
+.nn-scene-label {
+    position: absolute;
+    left: 14px;
+    bottom: max(214px, calc(env(safe-area-inset-bottom) + 214px));
+    z-index: 2;
+    max-width: calc(100% - 28px);
+    padding: 5px 9px;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 8px;
+    color: rgba(74, 54, 46, 0.7);
+    background: rgba(255, 248, 238, 0.34);
+    box-shadow: 0 8px 22px rgba(75, 52, 42, 0.1);
+    backdrop-filter: blur(10px);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0;
+    pointer-events: none;
+}
+
+.nn-dialogue-card {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    width: 100%;
+    min-height: 138px;
+    padding: 14px 16px 32px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 18px 18px 10px 10px;
+    color: #3d302e;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 18px 48px rgba(117, 84, 64, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    text-align: left;
+}
+
+.nn-vn-layer.is-dialogue .nn-dialogue-card {
+    cursor: pointer;
+}
+
+.nn-vn-layer.is-choice .nn-dialogue-card {
+    min-height: 112px;
+}
+
+.nn-dialogue-card.is-narrator {
+    min-height: 108px;
+    padding-top: 18px;
+    background: rgba(255, 252, 246, 0.76);
+    border-color: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 14px 38px rgba(117, 84, 64, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.nn-dialogue-speaker {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 8px;
+    max-width: min(76%, 260px);
+    min-width: 0;
+}
+
+.nn-dialogue-card.is-right .nn-dialogue-speaker {
+    justify-self: end;
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+.nn-dialogue-avatar {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.82);
+    border-radius: 999px;
+    background: linear-gradient(135deg, #fff0cd, #d8ecf0);
+    box-shadow: 0 8px 18px rgba(106, 83, 73, 0.16);
+}
+
+.nn-dialogue-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nn-dialogue-avatar span {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    color: #6d554f;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.nn-dialogue-copy {
+    min-width: 0;
+}
+
+.nn-dialogue-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 950;
+    line-height: 1.2;
+}
+
+.nn-dialogue-copy p {
+    margin: 0;
+    color: #342b2a;
+    font-size: 16px;
+    font-weight: 650;
+    line-height: 1.72;
+    white-space: pre-wrap;
+}
+
+.nn-dialogue-card.is-narrator p {
+    color: rgba(58, 47, 45, 0.72);
+    font-size: 15px;
+    font-weight: 520;
+    line-height: 1.82;
+}
+
+.nn-continue {
+    position: absolute;
+    right: 18px;
+    bottom: 10px;
+    color: rgba(96, 71, 67, 0.54);
+    font-size: 18px;
+    line-height: 1;
+    animation: nn-continue-pulse 1.2s ease-in-out infinite;
+}
+
+.nn-dialogue-pager {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    display: inline-grid;
+    grid-template-columns: 28px minmax(34px, auto) 28px;
+    align-items: center;
+    gap: 6px;
+    transform: translateX(-50%);
+    color: rgba(96, 71, 67, 0.54);
+    font-size: 10px;
+    font-weight: 850;
+    line-height: 1;
+}
+
+.nn-dialogue-nav {
+    display: inline-grid;
+    width: 28px;
+    height: 24px;
+    place-items: center;
+    border-radius: 999px;
+    color: rgba(89, 62, 56, 0.72);
+    background: rgba(255, 247, 236, 0.72);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+.nn-dialogue-nav:disabled {
+    cursor: default;
+    color: rgba(89, 62, 56, 0.24);
+    background: rgba(132, 107, 92, 0.06);
+}
+
+.nn-status-orb {
+    position: absolute;
+    top: max(92px, calc(env(safe-area-inset-top) + 84px));
+    right: 12px;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    width: 62px;
+    height: 62px;
+    padding: 6px;
+    border-radius: 999px;
+    color: #6d3f2c;
+    background:
+        radial-gradient(circle at 34% 20%, rgba(255, 255, 255, 0.9) 0 18%, transparent 40%),
+        linear-gradient(135deg, rgba(255, 247, 221, 0.9), rgba(231, 205, 157, 0.82));
+    box-shadow:
+        0 14px 36px rgba(111, 86, 75, 0.2),
+        inset 0 0 0 1px rgba(133, 84, 46, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(18px);
+}
+
+.nn-status-orb span {
+    margin-top: -2px;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: 0.08em;
+}
+
+.nn-status-orb strong {
+    margin-top: -8px;
+    color: #5c3324;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.nn-status-orb.is-expanded strong {
+    font-size: 10px;
+    letter-spacing: 0;
+}
+
+.nn-history-toggle {
+    position: absolute;
+    top: max(94px, calc(env(safe-area-inset-top) + 86px));
+    left: 12px;
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 88px;
+    height: 42px;
+    padding: 0 10px;
+    border-radius: 999px;
+    color: #5d433b;
+    background: rgba(255, 250, 241, 0.76);
+    box-shadow: 0 12px 30px rgba(111, 86, 75, 0.17), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(18px);
+}
+
+.nn-history-toggle span {
+    font-size: 12px;
+    font-weight: 950;
+    letter-spacing: 0;
+}
+
+.nn-history-toggle strong {
+    display: inline-grid;
+    min-width: 20px;
+    height: 20px;
+    place-items: center;
+    padding: 0 5px;
+    border-radius: 999px;
+    color: #6b3a28;
+    background: rgba(241, 203, 142, 0.76);
+    font-size: 11px;
+    line-height: 1;
+}
+
+.nn-history-toggle.is-open {
+    color: #6b3a28;
+    background: rgba(255, 241, 214, 0.9);
+}
+
+.nn-history-panel {
+    position: absolute;
+    top: max(150px, calc(env(safe-area-inset-top) + 142px));
+    left: 10px;
+    z-index: 24;
+    display: grid;
+    gap: 10px;
+    width: min(372px, calc(100% - 20px));
+    max-height: min(62vh, 520px);
+    overflow: hidden;
+    padding: 12px;
+    border: 1px solid rgba(129, 86, 61, 0.24);
+    border-radius: 16px;
+    color: #453431;
+    background: rgba(255, 250, 241, 0.88);
+    box-shadow: 0 22px 54px rgba(82, 57, 45, 0.23), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(24px);
+}
+
+.nn-history-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.nn-history-head div {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.nn-history-head span {
+    color: #5f3d2d;
+    font-family: "KaiTi", "STKaiti", "Songti SC", serif;
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.nn-history-head strong {
+    overflow: hidden;
+    color: rgba(80, 54, 45, 0.56);
+    font-size: 11px;
+    font-weight: 850;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nn-history-close {
+    display: grid;
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border-radius: 999px;
+    color: rgba(84, 58, 50, 0.55);
+    background: rgba(115, 78, 59, 0.08);
+    font-size: 20px;
+    line-height: 1;
+}
+
+.nn-history-list {
+    display: grid;
+    gap: 7px;
+    max-height: min(46vh, 374px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 2px;
+    scrollbar-width: thin;
+}
+
+.nn-history-row {
+    appearance: none;
+    -webkit-appearance: none;
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    width: 100%;
+    height: max-content;
+    min-height: 64px;
+    padding: 8px 9px;
+    border: 1px solid rgba(124, 86, 64, 0.14);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.58);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+    text-align: left;
+}
+
+.nn-history-row.is-user {
+    background: rgba(237, 246, 255, 0.62);
+}
+
+.nn-history-row.is-character {
+    background: rgba(255, 241, 239, 0.66);
+}
+
+.nn-history-row.is-active {
+    border-color: rgba(169, 91, 76, 0.42);
+    background: rgba(255, 236, 208, 0.84);
+    box-shadow: 0 10px 22px rgba(124, 86, 64, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.74);
+}
+
+.nn-history-turn {
+    align-self: start;
+    display: inline-grid;
+    flex: 0 0 54px;
+    width: 54px;
+    min-height: 24px;
+    place-items: center;
+    padding: 0 6px;
+    border-radius: 999px;
+    color: rgba(91, 62, 50, 0.64);
+    background: rgba(121, 88, 70, 0.08);
+    font-size: 10px;
+    font-weight: 950;
+    white-space: nowrap;
+}
+
+.nn-history-copy {
+    display: grid;
+    flex: 1 1 auto;
+    gap: 4px;
+    min-width: 0;
+}
+
+.nn-history-copy strong {
+    overflow: hidden;
+    color: rgba(68, 45, 39, 0.68);
+    font-size: 11px;
+    font-weight: 950;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nn-history-copy em {
+    display: block;
+    color: #3c302d;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 690;
+    line-height: 1.45;
+}
+
+.nn-history-current {
+    min-height: 36px;
+    border-radius: 12px;
+    color: #5d372f;
+    background: linear-gradient(180deg, #ffe7b9 0%, #f1c786 100%);
+    font-size: 12px;
+    font-weight: 950;
+}
+
+.nn-history-current:disabled {
+    cursor: default;
+    color: rgba(91, 68, 64, 0.42);
+    background: rgba(245, 232, 214, 0.7);
+}
+
+.nn-history-empty {
+    padding: 20px 8px;
+    color: rgba(91, 68, 64, 0.46);
+    font-size: 12px;
+    font-weight: 850;
+    text-align: center;
+}
+
+.nn-fate-book {
+    position: absolute;
+    top: max(160px, calc(env(safe-area-inset-top) + 152px));
+    right: 10px;
+    z-index: 22;
+    display: grid;
+    grid-template-columns: 15px minmax(0, 1fr);
+    width: min(348px, calc(100% - 20px));
+    max-height: min(68vh, 560px);
+    overflow: hidden;
+    border: 1px solid rgba(125, 78, 39, 0.32);
+    border-radius: 14px 9px 9px 14px;
+    color: #4e3528;
+    background:
+        linear-gradient(90deg, rgba(104, 63, 33, 0.18), transparent 22px),
+        radial-gradient(circle at 18% 14%, rgba(132, 86, 45, 0.11) 0 1px, transparent 2px),
+        radial-gradient(circle at 78% 20%, rgba(132, 86, 45, 0.09) 0 1px, transparent 2px),
+        linear-gradient(135deg, rgba(255, 249, 229, 0.96), rgba(237, 218, 176, 0.92));
+    box-shadow:
+        0 20px 50px rgba(87, 58, 36, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.44);
+}
+
+.nn-fate-spine {
+    position: relative;
+    background:
+        radial-gradient(circle at 50% 12%, rgba(255, 235, 181, 0.24) 0 9%, transparent 18%),
+        radial-gradient(circle at 50% 88%, rgba(59, 26, 14, 0.2) 0 10%, transparent 20%),
+        linear-gradient(180deg, rgba(93, 47, 27, 0.92), rgba(142, 82, 42, 0.88));
+}
+
+.nn-fate-spine::after {
+    position: absolute;
+    inset: 12px 5px;
+    border-radius: 999px;
+    content: "";
+    background: rgba(255, 240, 198, 0.22);
+}
+
+.nn-fate-pages {
+    position: relative;
+    min-width: 0;
+    max-height: min(68vh, 560px);
+    overflow-y: auto;
+    padding: 13px 13px 15px;
+    background:
+        repeating-linear-gradient(0deg, rgba(116, 78, 42, 0.035) 0 1px, transparent 1px 28px),
+        radial-gradient(circle at 20% 18%, rgba(126, 76, 39, 0.08), transparent 34%),
+        linear-gradient(180deg, rgba(255, 250, 233, 0.94), rgba(246, 232, 196, 0.9));
+}
+
+.nn-fate-pages::before {
+    position: absolute;
+    inset: 8px 8px auto;
+    height: 1px;
+    content: "";
+    background: linear-gradient(90deg, transparent, rgba(113, 73, 38, 0.28), transparent);
+}
+
+.nn-fate-head {
+    display: grid;
+    gap: 2px;
+    justify-items: center;
+    margin-bottom: 9px;
+}
+
+.nn-fate-head span {
+    color: #573522;
+    font-family: "KaiTi", "STKaiti", "Songti SC", serif;
+    font-size: 21px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+}
+
+.nn-fate-layout {
+    position: relative;
+    display: block;
+    min-height: 214px;
+    padding-right: 23px;
+}
+
+.nn-fate-tabs {
+    position: absolute;
+    top: 18px;
+    right: 0;
+    z-index: 2;
+    display: grid;
+    align-content: start;
+    gap: 5px;
+}
+
+.nn-fate-tab {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 21px;
+    min-height: 43px;
+    padding: 0;
+    border: 1px solid rgba(132, 82, 42, 0.13);
+    border-left: 0;
+    border-radius: 0 7px 7px 0;
+    color: rgba(102, 67, 41, 0.5);
+    background:
+        linear-gradient(90deg, rgba(235, 204, 149, 0.54), rgba(255, 244, 214, 0.7));
+    box-shadow: 2px 3px 8px rgba(88, 55, 34, 0.06);
+}
+
+.nn-fate-tab::before {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    width: 1px;
+    content: "";
+    background: rgba(106, 68, 36, 0.16);
+}
+
+.nn-fate-tab.is-active {
+    color: rgba(87, 48, 30, 0.8);
+    background:
+        linear-gradient(90deg, rgba(224, 185, 125, 0.58), rgba(255, 236, 194, 0.86));
+    box-shadow: 2px 4px 10px rgba(88, 55, 34, 0.09);
+}
+
+.nn-fate-tab .nn-fate-seal {
+    width: auto;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    color: currentColor;
+    background: transparent;
+    font-size: 11px;
+    line-height: 1;
+}
+
+.nn-fate-tab:focus-visible {
+    outline: 2px solid rgba(139, 37, 29, 0.42);
+    outline-offset: 2px;
+}
+
+.nn-fate-section {
+    position: relative;
+    display: grid;
+    gap: 8px;
+    padding: 10px 10px 11px;
+    border: 1px solid rgba(132, 82, 42, 0.16);
+    border-radius: 9px;
+    background: rgba(255, 252, 241, 0.52);
+}
+
+.nn-fate-section.is-active-page {
+    min-height: 214px;
+}
+
+.nn-fate-section header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.nn-fate-seal {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(151, 42, 32, 0.48);
+    border-radius: 5px;
+    color: rgba(139, 37, 29, 0.82);
+    font-family: "KaiTi", "STKaiti", serif;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.nn-fate-section h3 {
+    margin: 0;
+    color: #5b3927;
+    font-family: "KaiTi", "STKaiti", "Songti SC", serif;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+}
+
+.nn-fate-section dl {
+    display: grid;
+    gap: 5px;
+    margin: 0;
+}
+
+.nn-fate-row {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 8px;
+    align-items: start;
+    padding: 5px 0;
+    border-top: 1px dotted rgba(108, 72, 42, 0.22);
+}
+
+.nn-fate-row:first-child {
+    border-top: 0;
+}
+
+.nn-fate-row dt {
+    color: rgba(80, 50, 32, 0.54);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.nn-fate-row dd {
+    margin: 0;
+    color: #3f2c22;
+    font-size: 12px;
+    font-weight: 780;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.nn-options {
+    display: grid;
+    gap: 8px;
+    max-height: min(32vh, 230px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.nn-options button {
+    display: block;
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 999px;
+    color: #513f3b;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 10px 28px rgba(111, 86, 75, 0.13);
+    backdrop-filter: blur(18px);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.45;
+    text-align: left;
+}
+
+.nn-input-panel {
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 18px 18px 12px 12px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 16px 38px rgba(111, 86, 75, 0.16);
+    backdrop-filter: blur(20px);
+}
+
+.nn-beat-list {
+    display: grid;
+    gap: 8px;
+    max-height: min(34vh, 270px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 2px;
+    scrollbar-width: none;
+}
+
+.nn-beat-list::-webkit-scrollbar {
+    display: none;
+}
+
+.nn-beat-card {
+    display: grid;
+    gap: 7px;
+    padding: 8px;
+    border: 1px solid rgba(121, 88, 70, 0.12);
+    border-radius: 12px;
+    background: rgba(255, 250, 244, 0.56);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+.nn-beat-card.is-speech {
+    border-color: rgba(188, 101, 103, 0.22);
+    background: rgba(255, 243, 241, 0.64);
+}
+
+.nn-beat-card.is-action {
+    border-color: rgba(121, 88, 70, 0.12);
+    background: rgba(246, 239, 228, 0.58);
+}
+
+.nn-beat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.nn-beat-toggle {
+    display: inline-flex;
+    gap: 3px;
+    padding: 2px;
+    border-radius: 999px;
+    background: rgba(119, 86, 72, 0.08);
+}
+
+.nn-beat-toggle button,
+.nn-beat-remove,
+.nn-beat-add button {
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+}
+
+.nn-beat-toggle button {
+    min-width: 44px;
+    height: 25px;
+    padding: 0 9px;
+    border-radius: 999px;
+    color: rgba(91, 68, 64, 0.62);
+    background: transparent;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.nn-beat-toggle button.is-active {
+    color: #5d372f;
+    background: #f6d196;
+}
+
+.nn-beat-remove {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    color: rgba(91, 68, 64, 0.38);
+    background: rgba(119, 86, 72, 0.07);
+    font-size: 18px;
+    line-height: 1;
+}
+
+.nn-beat-input-shell {
+    position: relative;
+    min-width: 0;
+}
+
+.nn-beat-card textarea {
+    width: 100%;
+    min-height: 44px;
+    max-height: 110px;
+    resize: none;
+    border: 0;
+    outline: none;
+    color: #3d302e;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 620;
+    line-height: 1.58;
+    scrollbar-width: none;
+}
+
+.nn-beat-card textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.nn-beat-card.is-speech textarea {
+    padding: 0 22px;
+}
+
+.nn-beat-card textarea::placeholder {
+    color: rgba(93, 70, 65, 0.38);
+}
+
+.nn-beat-quote {
+    position: absolute;
+    top: -2px;
+    color: rgba(181, 94, 96, 0.48);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.nn-beat-quote.is-open {
+    left: 0;
+}
+
+.nn-beat-quote.is-close {
+    right: 0;
+}
+
+.nn-input-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 44px;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.nn-beat-add {
+    display: flex;
+    gap: 7px;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.nn-beat-add::-webkit-scrollbar {
+    display: none;
+}
+
+.nn-beat-add button {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding: 0 13px;
+    border-radius: 13px;
+    color: rgba(91, 68, 64, 0.68);
+    background: rgba(245, 232, 214, 0.72);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.nn-send-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    color: #5d372f;
+    background: linear-gradient(180deg, #ffe6b5 0%, #f3c988 100%);
+}
+
+.nn-send-btn:disabled {
+    cursor: default;
+    opacity: 0.48;
+}
+
+.nn-dialogue-card.is-loading {
+    position: relative;
+    min-height: 86px;
+}
+
+.nn-loading-dots {
+    display: inline-flex;
+    gap: 5px;
+    justify-self: start;
+}
+
+.nn-loading-dots i {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(96, 71, 67, 0.48);
+    animation: nn-loading-bounce 1s ease-in-out infinite;
+}
+
+.nn-loading-dots i:nth-child(2) {
+    animation-delay: 0.14s;
+}
+
+.nn-loading-dots i:nth-child(3) {
+    animation-delay: 0.28s;
+}
+
+.nn-error-card {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    max-height: min(52vh, 420px);
+    overflow: hidden;
+    padding: 14px;
+    border: 1px solid rgba(152, 55, 43, 0.26);
+    border-radius: 18px 18px 12px 12px;
+    color: #4a2f2b;
+    background: rgba(255, 246, 240, 0.9);
+    box-shadow: 0 18px 48px rgba(117, 84, 64, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(22px);
+}
+
+.nn-error-card header {
+    display: grid;
+    gap: 4px;
+}
+
+.nn-error-card header span {
+    color: rgba(139, 43, 33, 0.72);
+    font-size: 11px;
+    font-weight: 950;
+}
+
+.nn-error-card header strong {
+    color: #6f2e27;
+    font-size: 15px;
+    line-height: 1.35;
+}
+
+.nn-error-card p {
+    margin: 0;
+    color: rgba(64, 44, 39, 0.78);
+    font-size: 13px;
+    font-weight: 720;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.nn-error-card details {
+    min-width: 0;
+    color: rgba(64, 44, 39, 0.72);
+    font-size: 12px;
+}
+
+.nn-error-card summary {
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.nn-error-card pre {
+    max-height: 170px;
+    overflow: auto;
+    margin: 8px 0 0;
+    padding: 10px;
+    border-radius: 10px;
+    color: #4f3530;
+    background: rgba(92, 45, 39, 0.08);
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    font-size: 11px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.nn-error-actions {
+    display: flex;
+    gap: 8px;
+    min-width: 0;
+}
+
+.nn-error-actions button {
+    min-height: 38px;
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 950;
+}
+
+.nn-error-retry {
+    flex: 1;
+    color: #5d312b;
+    background: linear-gradient(180deg, #ffe0bb 0%, #f0b879 100%);
+}
+
+.nn-error-edit {
+    flex: 0 0 auto;
+    padding: 0 13px;
+    color: rgba(81, 59, 52, 0.72);
+    background: rgba(245, 232, 214, 0.72);
+}
+
+@keyframes nn-continue-pulse {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.48;
+    }
+    50% {
+        transform: translateY(3px);
+        opacity: 0.92;
+    }
+}
+
+@keyframes nn-loading-bounce {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.32;
+    }
+    50% {
+        transform: translateY(-4px);
+        opacity: 0.82;
+    }
+}
+
+@media (max-width: 680px) {
+    .nn-setup {
+        grid-template-columns: 1fr;
+    }
+
+    .nn-setup-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nn-scene-label {
+        bottom: max(202px, calc(env(safe-area-inset-bottom) + 198px));
+    }
+
+    .nn-dialogue-card {
+        min-height: 132px;
+        padding: 14px 14px 30px;
+        border-radius: 16px 16px 10px 10px;
+    }
+
+    .nn-vn-layer {
+        left: 10px;
+        right: 10px;
+        gap: 8px;
+    }
+
+    .nn-vn-layer.is-dialogue {
+        bottom: max(14px, calc(env(safe-area-inset-bottom) + 12px));
+    }
+
+    .nn-vn-layer.is-choice {
+        bottom: max(8px, calc(env(safe-area-inset-bottom) + 6px));
+    }
+
+    .nn-vn-layer.is-choice.is-reviewing {
+        bottom: max(14px, calc(env(safe-area-inset-bottom) + 12px));
+    }
+
+    .nn-vn-layer.is-choice .nn-dialogue-card {
+        min-height: 104px;
+    }
+
+    .nn-dialogue-card.is-narrator {
+        min-height: 102px;
+    }
+
+    .nn-vn-layer.is-choice .nn-dialogue-card.is-narrator {
+        min-height: 96px;
+    }
+
+    .nn-dialogue-avatar {
+        width: 42px;
+        height: 42px;
+    }
+
+    .nn-dialogue-copy p {
+        font-size: 15px;
+        line-height: 1.66;
+    }
+
+    .nn-dialogue-pager {
+        bottom: 7px;
+        grid-template-columns: 26px minmax(32px, auto) 26px;
+    }
+
+    .nn-dialogue-nav {
+        width: 26px;
+        height: 23px;
+    }
+
+    .nn-fate-book {
+        top: max(148px, calc(env(safe-area-inset-top) + 140px));
+        width: calc(100% - 20px);
+        max-height: min(68vh, 466px);
+    }
+
+    .nn-history-toggle {
+        top: max(92px, calc(env(safe-area-inset-top) + 84px));
+        height: 40px;
+        min-width: 82px;
+    }
+
+    .nn-history-panel {
+        top: max(144px, calc(env(safe-area-inset-top) + 136px));
+        max-height: min(60vh, 452px);
+        padding: 10px;
+    }
+
+    .nn-history-list {
+        max-height: min(43vh, 328px);
+    }
+
+    .nn-history-row {
+        min-height: 62px;
+        padding: 8px;
+    }
+
+    .nn-history-turn {
+        flex-basis: 50px;
+        width: 50px;
+    }
+
+    .nn-fate-pages {
+        max-height: min(68vh, 466px);
+        padding: 12px 11px 14px;
+    }
+
+    .nn-fate-row {
+        grid-template-columns: 48px minmax(0, 1fr);
+    }
+
+    .nn-options button {
+        padding: 10px 13px;
+        font-size: 12px;
+    }
+
+    .nn-input-panel {
+        padding: 8px;
+    }
+
+    .nn-input-actions {
+        grid-template-columns: minmax(0, 1fr) 42px;
+    }
+
+    .nn-beat-list {
+        max-height: min(36vh, 250px);
+    }
+}

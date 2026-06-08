@@ -1,0 +1,3754 @@
+/**
+ * Theater 520 — 约会主题样式
+ * 热粉甜蜜 + 毛玻璃 + 花瓣飘落 + 微动画
+ */
+
+/* ── Root Variables ── */
+.theater-app {
+    --theater-pink: #FF6B9D;
+    --theater-rose: #C44569;
+    --theater-blush: #fff0f5;
+    --theater-gold: #ffd700;
+    --theater-dark: #1a0a12;
+    --theater-glass: rgba(255, 255, 255, 0.08);
+    --theater-glass-border: rgba(255, 255, 255, 0.12);
+    /* Entry palette — Hot Pink Sweet */
+    --te-hotpink: #FF2D78;
+    --te-pink: #FF7EB3;
+    --te-rose: #E8456B;
+    --te-blush: #FFF0F6;
+    --te-cream: #FFFBFE;
+    --te-lavender: #E8D5F5;
+    --te-gold: #FFD89B;
+    --te-text: #4A2040;
+    --te-text-sub: #B88DA0;
+    --te-glass: rgba(255, 255, 255, 0.55);
+    --te-glass-border: rgba(255, 130, 180, 0.2);
+    /* Legacy (used by map/session) */
+    --t-oxblood: #5E1E2B;
+    --t-oak: #D2BCA8;
+    --t-plaster: #DADCDD;
+    --t-concrete: #9C9D9B;
+    --t-obsidian: #202020;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--theater-dark);
+    color: #fff;
+}
+
+/* ── Map Screen ── */
+
+.theater-map {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(255, 240, 246, 0.9) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 90%, rgba(232, 213, 245, 0.5) 0%, transparent 50%),
+        linear-gradient(175deg, #FFFBFE 0%, #FFF0F6 20%, #FFE4EF 45%, #F8D8ED 65%, #EDD5F3 100%);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Very light paper-grain overlay for print/ticket texture */
+.theater-map-paper-texture {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.018;
+    background-image:
+        repeating-linear-gradient(0deg,   transparent, transparent 2px, rgba(180, 130, 160, 0.12) 2px, rgba(180, 130, 160, 0.12) 3px),
+        repeating-linear-gradient(90deg,  transparent, transparent 3px, rgba(180, 130, 160, 0.08) 3px, rgba(180, 130, 160, 0.08) 4px);
+}
+
+/* Decorative thin rule under session info */
+.theater-map-rule {
+    width: 60%;
+    max-width: 200px;
+    height: 1px;
+    margin: 2px auto 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 45, 120, 0.18), rgba(232, 213, 245, 0.25), transparent);
+    border-radius: 1px;
+}
+
+.theater-map-header {
+    flex-shrink: 0;
+    padding: 52px 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 10;
+}
+
+.theater-map-title {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, var(--te-hotpink) 0%, #E8456B 55%, var(--te-pink) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 1px 4px rgba(255, 45, 120, 0.10));
+}
+
+.theater-map-subtitle {
+    font-size: 9px;
+    color: var(--te-text-sub);
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    margin-top: 3px;
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+/* ── Entry Screen (Select / Timelines) ── */
+
+.theater-entry-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(255, 240, 246, 0.9) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 90%, rgba(232, 213, 245, 0.5) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 70%, rgba(255, 220, 235, 0.4) 0%, transparent 50%),
+        linear-gradient(175deg, #FFFBFE 0%, #FFF0F6 20%, #FFE4EF 45%, #F8D8ED 65%, #EDD5F3 100%);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+
+/* Invitation letter card layer */
+.theater-entry-letter {
+    position: relative;
+    margin: 0 16px;
+    padding: 0 0 24px;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+        0 8px 40px rgba(255, 180, 210, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(255, 200, 220, 0.1);
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Watermark "Je t'aime" background text */
+.theater-entry-watermark {
+    position: absolute;
+    top: -10px;
+    left: -15px;
+    right: -15px;
+    font-family: 'Pinyon Script', cursive;
+    font-size: 110px;
+    color: rgba(255, 45, 120, 0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    text-align: center;
+    line-height: 1.2;
+    overflow: hidden;
+}
+
+/* Love stamp decoration */
+.theater-entry-stamp {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 42px;
+    height: 42px;
+    opacity: 0.35;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Top bar — outside letter card */
+.theater-entry-topbar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 48px 20px 12px;
+    position: relative;
+    z-index: 5;
+}
+.theater-entry-topbar-label {
+    font-size: 9px;
+    letter-spacing: 5px;
+    font-weight: 500;
+    color: var(--te-text-sub);
+    opacity: 0.6;
+}
+
+.theater-entry-back {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 45, 120, 0.12);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--te-hotpink);
+    transition: border-color 0.2s, transform 0.15s;
+}
+.theater-entry-back:active {
+    border-color: rgba(255, 45, 120, 0.35);
+    transform: scale(0.92);
+}
+
+/* Hero section */
+.theater-entry-hero {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 28px 20px 20px;
+    position: relative;
+}
+.theater-entry-hero-number {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 54px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--te-hotpink) 0%, var(--te-pink) 60%, #E8A0C0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    filter: drop-shadow(0 2px 12px rgba(255, 45, 120, 0.15));
+    animation: te-hero-glow 4s ease-in-out infinite;
+}
+.theater-entry-hero-subtitle {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 8px;
+    color: var(--te-text);
+    margin-top: 8px;
+    opacity: 0.8;
+}
+.theater-entry-hero-line {
+    width: 40px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--te-hotpink), var(--te-pink), transparent);
+    margin: 14px auto 0;
+    opacity: 0.35;
+    border-radius: 1px;
+}
+
+/* Eyebrow — INVITATION with side lines */
+.theater-entry-hero-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    color: var(--te-text-sub);
+    margin-bottom: 6px;
+    opacity: 0.55;
+}
+.theater-entry-hero-eyebrow::before,
+.theater-entry-hero-eyebrow::after {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 45, 120, 0.2), transparent);
+}
+
+.theater-entry-hero-tagline {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    color: var(--te-text-sub);
+    margin-top: 12px;
+    line-height: 1.8;
+    opacity: 0.5;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ═══════════════════════════════════════════
+   摘星楼海报画廊 — Poster Gallery
+   ═══════════════════════════════════════════ */
+
+/* Carousel container */
+.theater-gallery-carousel {
+    display: flex;
+    gap: 14px;
+    padding: 20px 28px 28px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    align-items: center;
+    /* GPU layer promotion — eliminates scroll repaint flicker */
+    transform: translateZ(0);
+    will-change: scroll-position;
+}
+.theater-gallery-carousel::-webkit-scrollbar { display: none; }
+.theater-gallery-carousel--center { justify-content: center; }
+/* Disable snap during auto-scroll to prevent snap-vs-rAF jitter */
+.theater-gallery-carousel--autoscroll { scroll-snap-type: none; }
+
+/* ── Poster Card ── */
+.theater-gallery-poster {
+    flex-shrink: 0;
+    width: 160px;
+    height: 240px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    scroll-snap-align: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    background-color: #000;
+    /* Photo-paper edge */
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 8px 24px rgba(200, 100, 130, 0.15);
+    /* Staggered float-up entry */
+    animation: te-poster-appear 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition: transform 0.2s cubic-bezier(.4,0,.2,1),
+                box-shadow 0.25s ease;
+    /* Perf: isolate repaint boundary + GPU promote */
+    contain: layout style paint;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+.theater-gallery-poster:nth-child(1) { animation-delay: 0.05s; }
+.theater-gallery-poster:nth-child(2) { animation-delay: 0.15s; }
+.theater-gallery-poster:nth-child(3) { animation-delay: 0.25s; }
+.theater-gallery-poster:nth-child(4) { animation-delay: 0.35s; }
+.theater-gallery-poster:nth-child(5) { animation-delay: 0.45s; }
+.theater-gallery-poster:nth-child(6) { animation-delay: 0.55s; }
+
+/* Press feedback */
+.theater-gallery-poster:active {
+    transform: scale(0.96);
+    filter: brightness(0.92);
+    box-shadow: 0 4px 16px rgba(200, 100, 130, 0.22);
+}
+
+/* ── Love-stamp 邮戳 (hidden by default) ── */
+.theater-gallery-poster-stamp {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    z-index: 3;
+    opacity: 0;
+    transform: scale(0.7) rotate(-8deg);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(.34,1.56,.64,1);
+    pointer-events: none;
+    filter: drop-shadow(0 1px 3px rgba(255, 45, 120, 0.2));
+}
+
+/* ── Focused State (档案选中) ── */
+.theater-gallery-poster--focused {
+    border-color: rgba(255, 45, 120, 0.4);
+    box-shadow:
+        0 0 0 2px rgba(255, 45, 120, 0.12),
+        0 8px 28px rgba(255, 45, 120, 0.18);
+    transition: transform 0.2s cubic-bezier(.4,0,.2,1),
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+}
+
+/* Stamp reveals on focus */
+.theater-gallery-poster--focused .theater-gallery-poster-stamp {
+    opacity: 1;
+    transform: scale(1) rotate(-6deg);
+}
+
+/* CTA brightens on focus */
+.theater-gallery-poster--focused .theater-gallery-poster-action {
+    color: #fff;
+    background: linear-gradient(90deg, rgba(255, 45, 120, 0.25), rgba(255, 200, 220, 0.2));
+    border-radius: 10px;
+    padding: 4px 10px;
+    margin-left: -10px;
+}
+.theater-gallery-poster--focused .theater-gallery-poster-action svg {
+    opacity: 1;
+    animation: te-poster-arrow-nudge 2s ease-in-out infinite;
+}
+
+/* Name glow on focus */
+.theater-gallery-poster--focused .theater-gallery-poster-name {
+    text-shadow: 0 2px 12px rgba(255, 45, 120, 0.35), 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Full-bleed background image ── */
+.theater-gallery-poster-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    /* Prevent image decode flash */
+    image-rendering: auto;
+    backface-visibility: hidden;
+}
+.theater-gallery-poster:active .theater-gallery-poster-bg {
+    transform: scale(1.04);
+}
+
+/* ── Bottom gradient info overlay ── */
+.theater-gallery-poster-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    padding: 32px 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    background: linear-gradient(to top, rgba(20, 5, 10, 0.75) 0%, rgba(20, 5, 10, 0.35) 55%, transparent 100%);
+}
+
+.theater-gallery-poster-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    line-height: 1.3;
+    transition: text-shadow 0.35s ease;
+}
+
+.theater-gallery-poster-desc {
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.65);
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Minimalist CTA — text + arrow, no heavy button */
+.theater-gallery-poster-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    transition: color 0.2s, background 0.35s, padding 0.35s, margin 0.35s;
+}
+.theater-gallery-poster:active .theater-gallery-poster-action {
+    color: #fff;
+}
+.theater-gallery-poster-action svg {
+    opacity: 0.7;
+    transition: transform 0.25s, opacity 0.2s;
+}
+.theater-gallery-poster:active .theater-gallery-poster-action svg {
+    transform: translateX(3px);
+    opacity: 1;
+}
+
+/* ── Gallery Keyframes ── */
+@keyframes te-poster-appear {
+    from { opacity: 0; transform: translateY(28px) scale(0.92); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+@keyframes te-poster-arrow-nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+}
+
+/* ── Selection Transition — 命定之人 ── */
+
+/* Chosen card: scale up + pink destiny glow */
+.theater-gallery-poster--selecting {
+    animation: te-poster-select 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+    z-index: 10;
+    border-color: rgba(255, 45, 120, 0.55) !important;
+    box-shadow:
+        0 0 0 3px rgba(255, 45, 120, 0.2),
+        0 12px 40px rgba(255, 45, 120, 0.3) !important;
+    pointer-events: none;
+}
+.theater-gallery-poster--selecting .theater-gallery-poster-stamp {
+    opacity: 1 !important;
+    transform: scale(1.1) rotate(-4deg) !important;
+}
+.theater-gallery-poster--selecting .theater-gallery-poster-bg {
+    transform: scale(1.06);
+}
+.theater-gallery-poster--selecting .theater-gallery-poster-action {
+    color: #fff !important;
+    background: linear-gradient(90deg, rgba(255, 45, 120, 0.35), rgba(255, 180, 210, 0.3)) !important;
+    border-radius: 10px;
+    padding: 4px 10px;
+    margin-left: -10px;
+}
+.theater-gallery-poster--selecting .theater-gallery-poster-name {
+    text-shadow: 0 2px 16px rgba(255, 45, 120, 0.5), 0 1px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Siblings fade out + shrink away */
+.theater-gallery-poster--dismissing {
+    animation: te-poster-dismiss 0.5s cubic-bezier(0.4, 0, 1, 1) forwards !important;
+    pointer-events: none;
+}
+
+@keyframes te-poster-select {
+    0%   { transform: scale(1);    opacity: 1; }
+    40%  { transform: scale(1.06); opacity: 1; }
+    100% { transform: scale(1.04); opacity: 1; }
+}
+@keyframes te-poster-dismiss {
+    0%   { transform: scale(1);    opacity: 1;    }
+    100% { transform: scale(0.88); opacity: 0.12; }
+}
+
+/* Double-ring avatar badge (reused by timelines screen) */
+.theater-entry-char-ring {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    padding: 2.5px;
+    background: linear-gradient(135deg, rgba(255, 45, 120, 0.25), rgba(255, 126, 179, 0.2), rgba(232, 213, 245, 0.3));
+    box-shadow: 0 2px 10px rgba(255, 45, 120, 0.1);
+    position: relative;
+}
+.theater-entry-char-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: inset 0 0 0 1px rgba(255, 126, 179, 0.15);
+}
+.theater-entry-char-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--te-text);
+    letter-spacing: 0.5px;
+}
+
+/* Footer */
+.theater-entry-footer {
+    flex-shrink: 0;
+    padding: 0 0 32px;
+}
+
+/* Ornament */
+.theater-entry-ornament {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 32px;
+}
+.theater-entry-ornament::before,
+.theater-entry-ornament::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 45, 120, 0.15), transparent);
+}
+.theater-entry-ornament-text {
+    font-size: 8px;
+    letter-spacing: 5px;
+    color: var(--te-text-sub);
+    font-weight: 400;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0.5;
+}
+
+/* Divider */
+.theater-entry-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 45, 120, 0.1), transparent);
+    margin: 4px 0;
+}
+
+/* New timeline button */
+.theater-entry-new-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-radius: 16px;
+    background: var(--te-glass);
+    backdrop-filter: blur(12px);
+    border: 1px dashed rgba(255, 45, 120, 0.3);
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s, box-shadow 0.25s;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+.theater-entry-new-btn:active {
+    transform: scale(0.98);
+    border-color: rgba(255, 45, 120, 0.55);
+    box-shadow: 0 4px 16px rgba(255, 45, 120, 0.1);
+}
+.theater-entry-new-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(255, 45, 120, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Timeline cards */
+.theater-tl-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: var(--te-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--te-glass-border);
+    border-left: 3px solid var(--te-hotpink);
+    transition: transform 0.15s, box-shadow 0.25s;
+    box-shadow: 0 2px 12px rgba(255, 45, 120, 0.04);
+}
+.theater-tl-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 4px 20px rgba(255, 45, 120, 0.1);
+}
+
+.theater-tl-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.theater-tl-icon.origin { background: rgba(255, 45, 120, 0.1); }
+.theater-tl-icon.forked { background: rgba(232, 213, 245, 0.5); }
+
+.theater-tl-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--te-text);
+    letter-spacing: 0.2px;
+}
+.theater-tl-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 3px;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--te-text-sub);
+}
+.theater-tl-meta-dot {
+    width: 2px; height: 2px; border-radius: 50%;
+    background: rgba(184, 141, 160, 0.4);
+}
+.theater-tl-preview {
+    font-size: 11px;
+    color: var(--te-text-sub);
+    margin-top: 3px;
+    font-weight: 300;
+    opacity: 0.6;
+}
+
+/* ── Worldlines Screen · 520 Love Radio Ticket ── */
+.theater-worldlines-root {
+    --wl-paper: #fffaf6;
+    --wl-aqua: #bfeaf0;
+    --wl-rouge: #e94778;
+    --wl-gold: #f2cc8f;
+    --wl-ink: #37283f;
+    --wl-mauve: #80699b;
+    --wl-shadow: rgba(128, 105, 155, 0.14);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    color: var(--wl-ink);
+    background:
+        linear-gradient(rgba(255, 250, 246, 0.78), rgba(255, 250, 246, 0.78)),
+        url('/images/paper-texture.jpg'),
+        radial-gradient(circle at 12% 8%, rgba(191, 234, 240, 0.58) 0, transparent 28%),
+        radial-gradient(circle at 88% 16%, rgba(242, 204, 143, 0.28) 0, transparent 24%),
+        radial-gradient(circle at 26% 82%, rgba(233, 71, 120, 0.13) 0, transparent 30%),
+        linear-gradient(168deg, #fffefd 0%, #fffaf6 40%, #f8fbfb 70%, #fff3f6 100%);
+    background-size: auto, 520px 520px, auto, auto, auto, auto;
+    background-blend-mode: normal, soft-light, normal, normal, normal, normal;
+}
+
+.theater-worldlines-root::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.42;
+    background-image:
+        linear-gradient(rgba(55, 40, 63, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(55, 40, 63, 0.018) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.65) 50%, transparent 100%);
+}
+
+.theater-worldlines-root::after {
+    content: '';
+    position: absolute;
+    right: -58px;
+    top: 112px;
+    z-index: 0;
+    width: 218px;
+    height: 278px;
+    pointer-events: none;
+    background: url('/images/theater-worldlines/blue-ribbon-garden.png') center / contain no-repeat;
+    opacity: 0.075;
+    filter: saturate(0.9);
+}
+
+.theater-worldlines-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.theater-worldlines-wave {
+    position: absolute;
+    border-radius: 999px;
+    border: 1px solid rgba(191, 234, 240, 0.22);
+    filter: blur(0.6px);
+}
+
+.theater-worldlines-wave.wave-a {
+    width: 130px;
+    height: 130px;
+    left: 50%;
+    top: 122px;
+    transform: translateX(-50%);
+    opacity: 0.18;
+    box-shadow:
+        0 0 0 15px rgba(191, 234, 240, 0.10),
+        0 0 0 30px rgba(233, 71, 120, 0.025);
+}
+
+.theater-worldlines-wave.wave-b {
+    width: 102px;
+    height: 102px;
+    left: 50%;
+    top: 136px;
+    transform: translateX(-50%);
+    opacity: 0.14;
+    border-color: rgba(233, 71, 120, 0.18);
+    box-shadow: 0 0 0 14px rgba(242, 204, 143, 0.08);
+}
+
+.theater-worldlines-signal {
+    position: absolute;
+    display: none;
+    width: 72px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(233, 71, 120, 0.32), rgba(191, 234, 240, 0.55), transparent);
+    transform: rotate(-8deg);
+}
+
+.theater-worldlines-signal.signal-a { top: 154px; left: 28px; }
+.theater-worldlines-signal.signal-b { top: 392px; right: 18px; transform: rotate(7deg); }
+
+.theater-worldlines-topbar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 48px 20px 10px;
+    position: relative;
+    z-index: 2;
+}
+
+.theater-worldlines-back {
+    color: var(--wl-rouge);
+    border-color: rgba(233, 71, 120, 0.14);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow:
+        0 8px 22px rgba(128, 105, 155, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.theater-worldlines-event-label {
+    padding: 7px 11px 6px;
+    border-radius: 999px;
+    color: rgba(55, 40, 63, 0.46);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 2.8px;
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(191, 234, 240, 0.55);
+    box-shadow: 0 8px 22px rgba(128, 105, 155, 0.07);
+}
+
+.theater-worldlines-hero {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    text-align: center;
+    padding: 18px 22px 18px;
+}
+
+.theater-worldlines-hero::after {
+    content: '';
+    position: absolute;
+    right: 72px;
+    bottom: 14px;
+    z-index: 0;
+    width: 58px;
+    height: 78px;
+    pointer-events: none;
+    background: url('/images/theater-worldlines/pink-lace-bow.png') center / contain no-repeat;
+    opacity: 0.18;
+    transform: rotate(10deg);
+    filter: drop-shadow(0 8px 12px rgba(233, 71, 120, 0.10));
+}
+
+.theater-worldlines-avatar-wrap,
+.theater-worldlines-char-name,
+.theater-worldlines-title,
+.theater-worldlines-title-sub {
+    position: relative;
+    z-index: 1;
+}
+
+.theater-worldlines-avatar-wrap {
+    position: relative;
+    width: 78px;
+    height: 78px;
+    margin: 0 auto;
+    padding: 4px;
+    border-radius: 50%;
+    background:
+        linear-gradient(#fff, #fff) padding-box,
+        conic-gradient(from 210deg, rgba(191, 234, 240, 0.8), rgba(233, 71, 120, 0.52), rgba(242, 204, 143, 0.7), rgba(191, 234, 240, 0.8)) border-box;
+    border: 1px solid transparent;
+    box-shadow:
+        0 14px 34px rgba(128, 105, 155, 0.16),
+        0 0 0 8px rgba(255, 255, 255, 0.42);
+}
+
+.theater-worldlines-avatar-signal {
+    position: absolute;
+    inset: -13px;
+    border-radius: 50%;
+    border: 1px solid rgba(191, 234, 240, 0.46);
+    opacity: 0.74;
+    pointer-events: none;
+}
+
+.theater-worldlines-avatar-signal::before,
+.theater-worldlines-avatar-signal::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: inherit;
+    border: 1px dashed rgba(233, 71, 120, 0.18);
+}
+
+.theater-worldlines-avatar-signal::after {
+    inset: -9px;
+    border-color: rgba(242, 204, 143, 0.22);
+}
+
+.theater-worldlines-char-name {
+    margin-top: 18px;
+    color: var(--wl-ink);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 9px;
+    text-indent: 9px;
+}
+
+.theater-worldlines-title {
+    margin-top: 14px;
+    color: rgba(55, 40, 63, 0.44);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-indent: 8px;
+}
+
+.theater-worldlines-title-sub {
+    margin: 8px auto 0;
+    width: fit-content;
+    max-width: 100%;
+    padding: 5px 13px 4px;
+    border-radius: 999px;
+    color: rgba(233, 71, 120, 0.58);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 2.4px;
+    background: rgba(255, 255, 255, 0.52);
+    border: 1px solid rgba(242, 204, 143, 0.28);
+}
+
+.theater-worldlines-list {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 4px 20px calc(112px + var(--safe-bottom, 0px));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+.theater-worldlines-new-ticket,
+.theater-tl-card {
+    position: relative;
+    isolation: isolate;
+    border-radius: 12px;
+    transform: translateZ(0);
+}
+
+.theater-worldlines-new-ticket::before,
+.theater-worldlines-new-ticket::after,
+.theater-tl-card::before,
+.theater-tl-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fffaf6;
+    transform: translateY(-50%);
+    box-shadow:
+        inset 0 2px 5px rgba(128, 105, 155, 0.13),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.88),
+        0 0 0 1px rgba(255, 255, 255, 0.72);
+}
+
+.theater-worldlines-new-ticket::before,
+.theater-tl-card::before { left: -9px; }
+.theater-worldlines-new-ticket::after,
+.theater-tl-card::after { right: -9px; }
+
+.theater-worldlines-new-ticket {
+    width: 100%;
+    min-height: 104px;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "code stub"
+        "icon copy";
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 12px;
+    padding: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid rgba(191, 234, 240, 0.78);
+    border-radius: 10px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.86) 48%, rgba(235, 250, 253, 0.78)),
+        linear-gradient(92deg, rgba(255, 255, 255, 0.82) 0%, transparent 42%, rgba(242, 204, 143, 0.13) 100%),
+        url('/images/paper-texture.jpg'),
+        radial-gradient(circle at 96% 0%, rgba(242, 204, 143, 0.22), transparent 36%);
+    background-size: auto, auto, 420px 420px, auto;
+    background-blend-mode: normal, normal, soft-light, normal;
+    box-shadow:
+        0 2px 0 rgba(255, 255, 255, 0.78),
+        0 5px 0 rgba(191, 234, 240, 0.12),
+        0 18px 30px rgba(128, 105, 155, 0.15),
+        0 34px 52px rgba(233, 71, 120, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.96),
+        inset 0 -1px 0 rgba(128, 105, 155, 0.08);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.16s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+}
+
+.theater-worldlines-new-ticket:active {
+    transform: translateY(1px) scale(0.985);
+    border-color: rgba(233, 71, 120, 0.42);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.72),
+        0 12px 24px rgba(128, 105, 155, 0.13),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92),
+        inset 0 -1px 0 rgba(128, 105, 155, 0.08);
+}
+
+.theater-worldlines-ticket-code {
+    position: relative;
+    inset: auto;
+    grid-area: code;
+    width: max-content;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(233, 71, 120, 0.58);
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+    transform: none;
+    padding: 5px 8px 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(233, 71, 120, 0.16);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+}
+
+.theater-worldlines-ticket-code::before,
+.theater-worldlines-ticket-code::after {
+    content: none;
+}
+
+.theater-worldlines-ticket-code::before { top: -9px; }
+.theater-worldlines-ticket-code::after { bottom: -9px; }
+
+.theater-worldlines-new-ticket .theater-worldlines-ticket-stub {
+    position: relative;
+    inset: auto;
+    grid-area: stub;
+    justify-self: end;
+    width: max-content;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(233, 71, 120, 0.62);
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+    padding: 5px 9px 4px;
+    border-radius: 999px;
+    border: 1px solid rgba(191, 234, 240, 0.32);
+    background: rgba(247, 253, 254, 0.72);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+    text-align: center;
+}
+
+.theater-worldlines-new-ticket .theater-worldlines-ticket-stub::after {
+    content: none;
+}
+
+.theater-worldlines-new-icon {
+    grid-area: icon;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wl-rouge);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    background: linear-gradient(145deg, rgba(191, 234, 240, 0.58), rgba(255, 255, 255, 0.72));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.92),
+        inset 0 -8px 14px rgba(128, 105, 155, 0.06),
+        0 10px 18px rgba(191, 234, 240, 0.24),
+        0 2px 0 rgba(255, 255, 255, 0.72);
+}
+
+.theater-worldlines-new-copy {
+    grid-area: copy;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    padding-right: 0;
+    text-align: left;
+}
+
+.theater-worldlines-new-title {
+    color: var(--wl-ink);
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.theater-worldlines-new-sub {
+    margin-top: 4px;
+    color: rgba(55, 40, 63, 0.42);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 2.2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.theater-worldlines-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(55, 40, 63, 0.28);
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-indent: 3px;
+    margin: 2px 4px -2px;
+}
+
+.theater-worldlines-divider::before,
+.theater-worldlines-divider::after {
+    content: '';
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, transparent, rgba(233, 71, 120, 0.18), rgba(191, 234, 240, 0.24), transparent);
+}
+
+.theater-worldlines-root .theater-tl-card {
+    display: block;
+    min-height: 118px;
+    padding: 0;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 250, 252, 0.82) 52%, rgba(255, 246, 250, 0.74)),
+        linear-gradient(92deg, rgba(255, 255, 255, 0.80) 0%, transparent 40%, rgba(242, 204, 143, 0.10) 100%),
+        url('/images/paper-texture.jpg'),
+        radial-gradient(circle at 92% 12%, rgba(191, 234, 240, 0.22), transparent 35%);
+    background-size: auto, auto, 420px 420px, auto;
+    background-blend-mode: normal, normal, soft-light, normal;
+    border: 1px solid rgba(233, 71, 120, 0.15);
+    border-radius: 10px;
+    box-shadow:
+        0 2px 0 rgba(255, 255, 255, 0.78),
+        0 4px 0 rgba(242, 204, 143, 0.10),
+        0 16px 28px rgba(128, 105, 155, 0.12),
+        0 30px 48px rgba(233, 71, 120, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92),
+        inset 0 -1px 0 rgba(128, 105, 155, 0.07);
+    backdrop-filter: blur(16px) saturate(1.08);
+    -webkit-backdrop-filter: blur(16px) saturate(1.08);
+    transition: transform 0.15s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+}
+
+.theater-tl-serial {
+    position: absolute;
+    left: 14px;
+    top: 13px;
+    z-index: 1;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(233, 71, 120, 0.58);
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+    transform: none;
+    padding: 5px 8px 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(233, 71, 120, 0.16);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.76);
+}
+
+.theater-tl-serial::before,
+.theater-tl-serial::after {
+    content: none;
+}
+
+.theater-tl-serial::before { top: -9px; }
+.theater-tl-serial::after { bottom: -9px; }
+
+.theater-worldlines-root .theater-tl-card:active {
+    transform: scale(0.988);
+}
+
+.theater-worldlines-root .theater-tl-card--active:active {
+    transform: translateY(0) scale(0.988);
+}
+
+.theater-worldlines-root .theater-tl-card::before,
+.theater-worldlines-root .theater-tl-card::after {
+    background: linear-gradient(168deg, #fffefd 0%, #fffaf6 60%, #f8fbfb 100%);
+}
+
+.theater-worldlines-root .theater-tl-card--active {
+    border-color: rgba(233, 71, 120, 0.38);
+    transform: translateY(-1px);
+    box-shadow:
+        0 2px 0 rgba(255, 255, 255, 0.78),
+        0 5px 0 rgba(191, 234, 240, 0.14),
+        0 20px 38px rgba(128, 105, 155, 0.17),
+        0 0 0 1px rgba(191, 234, 240, 0.34),
+        0 0 26px rgba(233, 71, 120, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.94),
+        inset 0 -1px 0 rgba(128, 105, 155, 0.07);
+}
+
+.theater-worldlines-root .theater-tl-card--active .theater-tl-body::after {
+    content: 'ON AIR 520';
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: rgba(233, 71, 120, 0.66);
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 1.6px;
+    padding: 3px 7px 2px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(242, 204, 143, 0.34);
+}
+
+.theater-tl-main {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 42px 58px 16px 16px;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theater-worldlines-root .theater-tl-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    color: var(--wl-rouge);
+    border: 1px solid rgba(255, 255, 255, 0.66);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(255, 231, 239, 0.52));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -7px 13px rgba(128, 105, 155, 0.05),
+        0 9px 16px rgba(233, 71, 120, 0.09),
+        0 2px 0 rgba(255, 255, 255, 0.74);
+}
+
+.theater-worldlines-root .theater-tl-icon.forked {
+    color: rgba(55, 40, 63, 0.54);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(191, 234, 240, 0.42));
+}
+
+.theater-tl-body {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    padding-right: 8px;
+}
+
+.theater-tl-body::before {
+    content: '';
+    position: absolute;
+    right: -66px;
+    top: -58px;
+    z-index: 0;
+    width: 148px;
+    height: 190px;
+    pointer-events: none;
+    background: url('/images/theater-worldlines/blue-ribbon-garden.png') center / contain no-repeat;
+    opacity: 0.055;
+    transform: rotate(-5deg);
+}
+
+.theater-worldlines-root .theater-tl-card--active .theater-tl-body::before {
+    opacity: 0.075;
+}
+
+.theater-worldlines-root .theater-tl-label,
+.theater-worldlines-root .theater-tl-meta,
+.theater-worldlines-root .theater-tl-preview,
+.theater-worldlines-root .theater-tl-card--active .theater-tl-body::after {
+    position: relative;
+    z-index: 1;
+}
+
+.theater-worldlines-root .theater-tl-label {
+    max-width: calc(100% - 76px);
+    overflow: hidden;
+    color: var(--wl-ink);
+    font-size: 15px;
+    font-weight: 850;
+    letter-spacing: 0.2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.theater-worldlines-root .theater-tl-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    margin-top: 6px;
+    color: rgba(55, 40, 63, 0.52);
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.theater-worldlines-root .theater-tl-meta span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.theater-worldlines-root .theater-tl-meta-dot {
+    width: 3px;
+    height: 3px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(233, 71, 120, 0.28);
+}
+
+.theater-worldlines-root .theater-tl-preview {
+    max-width: 100%;
+    overflow: hidden;
+    margin-top: 7px;
+    color: rgba(55, 40, 63, 0.38);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.35;
+    opacity: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.theater-worldlines-root .theater-tl-delete {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    z-index: 2;
+    width: 38px;
+    min-height: 0;
+    height: 38px;
+    margin: 0;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border: 1px solid rgba(233, 71, 120, 0.12);
+    border-radius: 999px;
+    color: rgba(55, 40, 63, 0.34);
+    background: rgba(255, 255, 255, 0.58);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theater-worldlines-root .theater-tl-delete svg {
+    transition: transform 0.15s ease;
+}
+
+.theater-worldlines-root .theater-tl-delete:active {
+    color: var(--wl-rouge);
+    background: rgba(255, 245, 248, 0.72);
+}
+
+.theater-worldlines-root .theater-tl-delete:active svg {
+    transform: scale(0.88);
+}
+
+.theater-worldlines-empty {
+    position: relative;
+    margin-top: 4px;
+    padding: 30px 20px 28px;
+    text-align: center;
+    border-radius: 10px;
+    color: rgba(55, 40, 63, 0.56);
+    background: rgba(255, 255, 255, 0.56);
+    border: 1px dashed rgba(191, 234, 240, 0.72);
+    box-shadow: 0 14px 34px rgba(128, 105, 155, 0.10);
+}
+
+.theater-worldlines-empty::before,
+.theater-worldlines-empty::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fffaf6;
+    transform: translateY(-50%);
+}
+
+.theater-worldlines-empty::before { left: -9px; }
+.theater-worldlines-empty::after { right: -9px; }
+
+.theater-worldlines-empty-stamp {
+    width: fit-content;
+    margin: 0 auto 12px;
+    padding: 5px 10px 4px;
+    border-radius: 999px;
+    color: rgba(233, 71, 120, 0.56);
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    border: 1px solid rgba(233, 71, 120, 0.14);
+    background: rgba(255, 255, 255, 0.56);
+}
+
+.theater-worldlines-empty-title {
+    color: var(--wl-ink);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.theater-worldlines-empty-copy {
+    margin: 7px auto 0;
+    max-width: 220px;
+    color: rgba(55, 40, 63, 0.42);
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+@media (max-width: 380px) {
+    .theater-worldlines-list {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .theater-worldlines-char-name {
+        font-size: 20px;
+        letter-spacing: 7px;
+        text-indent: 7px;
+    }
+    .theater-worldlines-root .theater-tl-label {
+        font-size: 14px;
+        max-width: calc(100% - 68px);
+    }
+    .theater-tl-main {
+        gap: 10px;
+        padding: 42px 54px 16px 14px;
+    }
+    .theater-worldlines-root .theater-tl-delete {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+.theater-time-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 253, 252, 0.75);
+    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    border: 1px solid rgba(255, 220, 235, 0.55);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--te-text);
+    letter-spacing: 0.6px;
+    box-shadow:
+        0 2px 10px rgba(255, 180, 210, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* SVG icon inside time badge */
+.theater-time-slot-icon {
+    flex-shrink: 0;
+    opacity: 0.75;
+    transition: color 0.3s;
+}
+
+/* ── Time-slot color variants ── */
+.theater-time-badge--morning {
+    border-color: rgba(255, 180, 80, 0.35);
+    box-shadow: 0 2px 10px rgba(255, 180, 80, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.theater-time-badge--morning .theater-time-slot-icon { color: #E8963A; }
+
+.theater-time-badge--afternoon {
+    border-color: rgba(255, 140, 100, 0.30);
+    box-shadow: 0 2px 10px rgba(255, 140, 100, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.theater-time-badge--afternoon .theater-time-slot-icon { color: #E87040; }
+
+.theater-time-badge--evening {
+    border-color: rgba(200, 120, 180, 0.30);
+    box-shadow: 0 2px 10px rgba(200, 120, 180, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.theater-time-badge--evening .theater-time-slot-icon { color: #B86AA0; }
+
+.theater-time-badge--night {
+    border-color: rgba(140, 150, 255, 0.35);
+    box-shadow: 0 2px 10px rgba(140, 150, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.theater-time-badge--night .theater-time-slot-icon { color: #7A8CF0; }
+
+.theater-time-icon {
+    font-size: 13px;
+    animation: theater-pulse 3s ease-in-out infinite;
+}
+
+/* ── Map Session Info + Tagline ── */
+
+.theater-map-session-info {
+    padding: 4px 20px 0;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--te-text-sub);
+    letter-spacing: 1.5px;
+    opacity: 0.65;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.theater-map-session-dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--te-hotpink);
+    opacity: 0.6;
+    flex-shrink: 0;
+}
+.theater-map-tagline {
+    padding: 6px 20px 2px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--te-text-sub);
+    opacity: 0.58;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+}
+
+/* ── Ticket Stub Cards ── */
+
+.theater-card-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px 40px;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+.theater-card-scroll::-webkit-scrollbar { display: none; }
+
+.theater-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Ticket card */
+.theater-ticket {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    background: rgba(255, 253, 252, 0.88);
+    border: 1px solid rgba(255, 225, 238, 0.7);
+    box-shadow:
+        0 2px 12px rgba(255, 180, 210, 0.10),
+        0 0.5px 0 rgba(255, 255, 255, 0.8) inset;
+    transition: transform 0.22s cubic-bezier(.4,0,.2,1), box-shadow 0.28s ease;
+    -webkit-tap-highlight-color: transparent;
+    animation: te-card-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    position: relative;
+}
+.theater-ticket:nth-child(1) { animation-delay: 0.03s; }
+.theater-ticket:nth-child(2) { animation-delay: 0.09s; }
+.theater-ticket:nth-child(3) { animation-delay: 0.15s; }
+.theater-ticket:nth-child(4) { animation-delay: 0.21s; }
+.theater-ticket:nth-child(5) { animation-delay: 0.27s; }
+.theater-ticket:nth-child(6) { animation-delay: 0.33s; }
+.theater-ticket:nth-child(7) { animation-delay: 0.39s; }
+.theater-ticket:nth-child(8) { animation-delay: 0.45s; }
+.theater-ticket:nth-child(9) { animation-delay: 0.51s; }
+.theater-ticket:nth-child(10) { animation-delay: 0.57s; }
+.theater-ticket:nth-child(11) { animation-delay: 0.63s; }
+.theater-ticket:nth-child(12) { animation-delay: 0.69s; }
+
+.theater-ticket:active {
+    transform: scale(0.97) translateY(1px);
+    box-shadow:
+        0 6px 24px rgba(255, 160, 200, 0.20),
+        0 0.5px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+/* Visited state — gentle rose glow */
+.theater-ticket--visited {
+    border-color: rgba(255, 45, 120, 0.18);
+    box-shadow:
+        0 2px 14px rgba(255, 45, 120, 0.08),
+        0 0.5px 0 rgba(255, 255, 255, 0.8) inset;
+}
+
+/* Image area */
+.theater-ticket-img {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 14px 14px 0 0;
+}
+
+/* Pink-lavender tint unifier — sits on top of background */
+.theater-ticket-img-tint {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(135deg, rgba(255, 200, 220, 0.10), rgba(220, 200, 240, 0.08));
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+.theater-ticket-img-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+}
+.theater-ticket:active .theater-ticket-img-bg {
+    transform: scale(1.05);
+}
+.theater-ticket-img-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(0deg,
+        rgba(58, 18, 42, 0.72) 0%,
+        rgba(58, 18, 42, 0.25) 40%,
+        rgba(255, 230, 245, 0.04) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px 10px;
+}
+.theater-ticket-loc-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(50, 15, 40, 0.45);
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+}
+.theater-ticket-loc-en {
+    font-size: 8px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+.theater-ticket-visited {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 3;
+    font-size: 8px;
+    font-weight: 600;
+    color: var(--te-hotpink);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 45, 120, 0.15);
+    padding: 2px 8px;
+    border-radius: 8px;
+    letter-spacing: 0.3px;
+}
+
+/* Tear line — enhanced notch feel */
+.theater-ticket-tear {
+    position: relative;
+    height: 18px;
+    display: flex;
+    align-items: center;
+}
+.theater-ticket-tear-line {
+    flex: 1;
+    height: 0;
+    border-top: 1.5px dashed rgba(200, 150, 170, 0.22);
+    margin: 0 5px;
+}
+.theater-ticket-notch {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(175deg, #FFFBFE, #FFF0F6, #FFE4EF);
+    flex-shrink: 0;
+    box-shadow: inset 0 1px 3px rgba(200, 150, 170, 0.12);
+}
+.theater-ticket-notch-l {
+    margin-left: -8px;
+}
+.theater-ticket-notch-r {
+    margin-right: -8px;
+}
+
+/* Info area — enriched ticket stub bottom */
+.theater-ticket-info {
+    padding: 7px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.theater-ticket-info-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.theater-ticket-scene {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    color: var(--te-text);
+    opacity: 0.32;
+    font-family: 'Inter', monospace;
+}
+.theater-ticket-visit-badge {
+    font-size: 8px;
+    font-weight: 600;
+    color: var(--te-hotpink);
+    background: rgba(255, 45, 120, 0.08);
+    border: 1px solid rgba(255, 45, 120, 0.14);
+    padding: 1.5px 7px;
+    border-radius: 8px;
+    letter-spacing: 0.3px;
+}
+.theater-ticket-custom-badge {
+    font-size: 8px;
+    font-weight: 600;
+    color: #B08CC0;
+    background: rgba(200, 180, 220, 0.12);
+    border: 1px solid rgba(200, 180, 220, 0.20);
+    padding: 1.5px 7px;
+    border-radius: 8px;
+}
+
+/* Scene hint — short mood text */
+.theater-ticket-hint {
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--te-text-sub);
+    opacity: 0.55;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
+
+.theater-ticket-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.theater-ticket-tag {
+    font-size: 9px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 8px;
+    background: rgba(255, 45, 120, 0.07);
+    border: 1px solid rgba(255, 45, 120, 0.06);
+    color: var(--te-text);
+    opacity: 0.55;
+    letter-spacing: 0.4px;
+}
+
+/* Ticket footer — DATE PASS serial */
+.theater-ticket-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3px;
+    padding-top: 5px;
+    border-top: 1px solid rgba(200, 150, 170, 0.08);
+}
+.theater-ticket-entry {
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: var(--te-text-sub);
+    opacity: 0.25;
+    font-family: 'Inter', monospace;
+}
+.theater-ticket-serial {
+    font-size: 7px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: var(--te-text-sub);
+    opacity: 0.25;
+    font-family: 'Inter', monospace;
+}
+
+/* Add new ticket stub */
+.theater-ticket-add {
+    background: transparent;
+    border: 1.5px dashed rgba(255, 45, 120, 0.15);
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+.theater-ticket-add:active {
+    background: rgba(255, 240, 246, 0.4);
+    box-shadow: 0 0 20px rgba(255, 180, 210, 0.1);
+}
+.theater-ticket-add-inner {
+    text-align: center;
+    padding: 20px 10px;
+}
+.theater-ticket-add-icon {
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--te-hotpink);
+    opacity: 0.5;
+    margin-bottom: 8px;
+}
+.theater-ticket-add-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--te-text);
+    opacity: 0.6;
+}
+.theater-ticket-add-sub {
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--te-text-sub);
+    opacity: 0.45;
+    margin-top: 4px;
+}
+
+/* ── Back Button ── */
+
+.theater-back-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 45, 120, 0.12);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    color: var(--te-hotpink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theater-back-btn:active {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(0.92);
+}
+
+/* ── Director Event Overlay ── */
+
+.theater-event-overlay {
+    position: absolute;
+    top: 60px;
+    left: 12px;
+    right: 12px;
+    z-index: 80;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 107, 157, 0.2);
+    border-radius: 20px;
+    padding: 16px;
+    animation: theater-event-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.theater-event-overlay.collapsed {
+    opacity: 0.6;
+    transform: translateY(-8px) scale(0.95);
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.theater-event-type-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.theater-event-type-badge.ambient { background: rgba(100, 200, 255, 0.2); color: #64c8ff; }
+.theater-event-type-badge.encounter { background: rgba(255, 200, 50, 0.2); color: #ffc832; }
+.theater-event-type-badge.romantic { background: rgba(255, 107, 157, 0.2); color: #ff6b9d; }
+.theater-event-type-badge.callback { background: rgba(180, 130, 255, 0.2); color: #b482ff; }
+.theater-event-type-badge.conflict { background: rgba(255, 100, 100, 0.2); color: #ff6464; }
+.theater-event-type-badge.surprise { background: rgba(255, 215, 0, 0.2); color: #ffd700; }
+
+.theater-event-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+}
+
+/* ── Fate Dice Animation (命运骰子) ── */
+
+.theater-fate-dice {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    animation: theater-fade-in 0.2s ease;
+}
+
+.theater-fate-dice-inner {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--theater-pink), var(--theater-rose));
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    animation: theater-dice-spin 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 60px rgba(255, 107, 157, 0.5);
+}
+
+/* ── Time Transit Animation (时光流转) ── */
+
+.theater-time-transit {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    animation: theater-fade-in 0.3s ease;
+}
+
+.theater-time-transit-text {
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 8px;
+    color: rgba(255, 255, 255, 0.5);
+    animation: theater-text-glow 2s ease-in-out;
+}
+
+.theater-time-transit-icon {
+    font-size: 48px;
+    margin-top: 16px;
+    animation: theater-icon-rise 1s ease-out 0.3s both;
+}
+
+/* ── Petal Particles (花瓣飘落 — 520 限定) ── */
+
+.theater-petals {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 5;
+}
+
+.theater-petal {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(ellipse at 30% 30%, #ff8fb1, #ff6b9d);
+    border-radius: 50% 0 50% 50%;
+    opacity: 0;
+    animation: theater-petal-fall linear infinite;
+}
+
+.theater-petal:nth-child(1)  { left: 10%; animation-duration: 8s; animation-delay: 0s; width: 10px; height: 10px; }
+.theater-petal:nth-child(2)  { left: 25%; animation-duration: 10s; animation-delay: 1s; width: 14px; height: 14px; }
+.theater-petal:nth-child(3)  { left: 40%; animation-duration: 7s; animation-delay: 3s; width: 8px; height: 8px; }
+.theater-petal:nth-child(4)  { left: 55%; animation-duration: 11s; animation-delay: 2s; width: 12px; height: 12px; }
+.theater-petal:nth-child(5)  { left: 70%; animation-duration: 9s; animation-delay: 4s; width: 10px; height: 10px; }
+.theater-petal:nth-child(6)  { left: 85%; animation-duration: 8s; animation-delay: 1.5s; width: 14px; height: 14px; }
+.theater-petal:nth-child(7)  { left: 15%; animation-duration: 12s; animation-delay: 5s; width: 6px; height: 6px; }
+.theater-petal:nth-child(8)  { left: 60%; animation-duration: 9s; animation-delay: 3.5s; width: 10px; height: 10px; }
+
+/* ── Location Editor Modal ── */
+
+.theater-editor-field {
+    margin-bottom: 16px;
+}
+
+.theater-editor-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(60, 40, 50, 0.6);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.theater-editor-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    padding: 12px 16px;
+    color: #3a3a3a;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.theater-editor-input::placeholder {
+    color: rgba(0, 0, 0, 0.25);
+}
+
+.theater-editor-input:focus {
+    border-color: #E8869E;
+    box-shadow: 0 0 0 3px rgba(232, 134, 158, 0.1);
+}
+
+.theater-editor-textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
+}
+
+.theater-editor-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.theater-editor-tag-btn {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.02);
+    color: rgba(60, 40, 50, 0.55);
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    letter-spacing: 0.5px;
+}
+
+.theater-editor-tag-btn.selected {
+    background: rgba(232, 134, 158, 0.12);
+    border-color: #E8869E;
+    color: #C4748A;
+    font-weight: 600;
+}
+
+/* ── Image Upload ── */
+
+.theater-editor-upload-btn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 16px;
+    border-radius: 14px;
+    border: 1.5px dashed rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.02);
+    color: rgba(60, 40, 50, 0.4);
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theater-editor-upload-btn:active {
+    background: rgba(232, 134, 158, 0.06);
+    border-color: rgba(232, 134, 158, 0.3);
+    color: #C4748A;
+}
+
+.theater-editor-upload-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.theater-editor-upload-text {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.theater-editor-preview {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.theater-editor-preview-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+}
+
+.theater-editor-preview-actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    gap: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%);
+    padding: 24px 8px 8px;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.theater-editor-preview-btn {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    color: #555;
+}
+
+.theater-editor-preview-btn:active {
+    transform: scale(0.95);
+}
+
+.theater-editor-preview-btn--danger {
+    background: rgba(255, 80, 80, 0.15);
+    color: #d44;
+}
+
+/* ── Event Timeline (退出回顾) ── */
+
+.theater-timeline {
+    padding: 20px;
+}
+
+.theater-timeline-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-left: 2px solid rgba(255, 107, 157, 0.3);
+    padding-left: 16px;
+    margin-left: 8px;
+    position: relative;
+}
+
+.theater-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 16px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--theater-pink);
+    box-shadow: 0 0 8px rgba(255, 107, 157, 0.5);
+}
+
+.theater-timeline-location {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.theater-timeline-event {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+    margin-top: 4px;
+}
+
+/* ── Keyframes ── */
+
+@keyframes theater-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes theater-event-in {
+    from { opacity: 0; transform: translateY(-20px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes theater-dice-spin {
+    0% { transform: rotate(0deg) scale(0.3); opacity: 0; }
+    50% { transform: rotate(180deg) scale(1.2); opacity: 1; }
+    100% { transform: rotate(360deg) scale(1); opacity: 1; }
+}
+
+@keyframes theater-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes theater-text-glow {
+    0% { opacity: 0; transform: translateY(10px); }
+    30% { opacity: 1; transform: translateY(0); }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes theater-icon-rise {
+    from { opacity: 0; transform: translateY(20px) scale(0.5); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes theater-petal-fall {
+    0% {
+        opacity: 0;
+        transform: translateY(-10%) rotate(0deg) translateX(0);
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(110vh) rotate(720deg) translateX(80px);
+    }
+}
+
+/* ── Entry Page Keyframes (Hot Pink Sweet) ── */
+
+@keyframes te-hero-glow {
+    0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 45, 120, 0.25)); }
+    50% { filter: drop-shadow(0 0 36px rgba(255, 45, 120, 0.5)); }
+}
+
+@keyframes te-card-enter {
+    from { opacity: 0; transform: translateY(18px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes te-float-heart {
+    0% { opacity: 0; transform: translateY(0) scale(0.5); }
+    15% { opacity: 0.6; }
+    85% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-120px) scale(1) rotate(15deg); }
+}
+
+@keyframes te-orb-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(15px, -20px) scale(1.1); }
+    66% { transform: translate(-10px, 10px) scale(0.95); }
+}
+
+/* Entry floating decorations */
+.theater-entry-deco {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.theater-entry-orb {
+    position: absolute;
+    border-radius: 50%;
+    /* Replaced filter:blur(40px) with pre-blurred radial-gradient — same visual, no GPU blur cost */
+    opacity: 0.3;
+    animation: te-orb-drift 8s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.theater-entry-orb:nth-child(1) {
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(255, 45, 120, 0.2) 0%, rgba(255, 45, 120, 0.08) 40%, transparent 70%);
+    top: 10%; right: -30px;
+    animation-duration: 10s;
+}
+.theater-entry-orb:nth-child(2) {
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(232, 213, 245, 0.35) 0%, rgba(232, 213, 245, 0.14) 40%, transparent 70%);
+    bottom: 20%; left: -20px;
+    animation-duration: 12s;
+    animation-delay: -3s;
+}
+.theater-entry-orb:nth-child(3) {
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, rgba(255, 126, 179, 0.2) 0%, rgba(255, 126, 179, 0.08) 40%, transparent 70%);
+    top: 50%; left: 40%;
+    animation-duration: 9s;
+    animation-delay: -5s;
+}
+
+.theater-entry-float-heart {
+    position: absolute;
+    font-size: 14px;
+    opacity: 0;
+    animation: te-float-heart 6s ease-out infinite;
+    pointer-events: none;
+}
+.theater-entry-float-heart:nth-child(4) { left: 15%; bottom: 20%; animation-delay: 0s; animation-duration: 7s; font-size: 12px; }
+.theater-entry-float-heart:nth-child(5) { left: 75%; bottom: 15%; animation-delay: 2s; animation-duration: 8s; font-size: 16px; }
+.theater-entry-float-heart:nth-child(6) { left: 45%; bottom: 30%; animation-delay: 4s; animation-duration: 6s; font-size: 10px; }
+.theater-entry-float-heart:nth-child(7) { left: 85%; bottom: 40%; animation-delay: 1s; animation-duration: 9s; font-size: 13px; }
+
+/* ══════════════════════════════════════════════════════
+   VN Dialog Box — 光与夜之恋风格 · 无边框渐变融合
+   ══════════════════════════════════════════════════════ */
+
+/* ── Full-screen Gradient Mask (replaces panel background) ── */
+.theater-vn-gradient-mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 48%,
+        rgba(0, 0, 0, 0.06) 58%,
+        rgba(0, 0, 0, 0.30) 72%,
+        rgba(0, 0, 0, 0.58) 85%,
+        rgba(0, 0, 0, 0.76) 95%,
+        rgba(0, 0, 0, 0.82) 100%
+    );
+    z-index: 20;
+    transition: opacity 0.4s ease;
+}
+
+/* ── Dialog Container — borderless, text floats on gradient ── */
+.theater-vn-dialog {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    padding: 0 26px;
+    padding-bottom: 8px;
+    /* No background, no blur, no border */
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition: opacity 0.4s ease;
+}
+
+.theater-vn-dialog.dialog-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ── Speaker Badge ── */
+.theater-vn-speaker-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    max-width: min(70vw, 260px);
+    margin-bottom: 9px;
+    padding: 4px 10px 4px 5px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.62);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.theater-vn-speaker-badge.assistant {
+    align-self: flex-start;
+    border-color: rgba(255, 107, 157, 0.14);
+}
+
+.theater-vn-speaker-badge.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+    padding: 4px 5px 4px 10px;
+    border-color: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.theater-vn-speaker-badge span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.theater-vn-speaker-avatar {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    overflow: hidden;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.theater-vn-speaker-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ── Dialog Text ── */
+.theater-vn-text {
+    flex: 1;
+    overflow: hidden;
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    padding: 4px 0;
+    margin-top: 4px;
+}
+
+/* ── Page Type Styles ── */
+
+/* Dialogue: character's spoken words — brighter, more prominent */
+.theater-vn-text.dialogue {
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+/* Narration: descriptive text — softer, italic */
+.theater-vn-text.narration {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 300;
+    letter-spacing: 0.8px;
+    line-height: 2.1;
+}
+
+/* User: inner monologue */
+.theater-vn-text.user {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 300;
+}
+
+/* ── Decorative Quote Marks ── */
+.theater-vn-quote-mark {
+    font-size: 22px;
+    font-weight: 300;
+    color: rgba(255, 107, 157, 0.5);
+    line-height: 1;
+    vertical-align: text-bottom;
+}
+
+.theater-vn-quote-mark.open {
+    margin-right: 2px;
+}
+
+.theater-vn-quote-mark.close {
+    margin-left: 2px;
+}
+
+/* Typewriter cursor */
+.theater-vn-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: rgba(255, 255, 255, 0.7);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: theater-cursor-blink 0.8s ease-in-out infinite;
+}
+
+/* ── Click to Continue (CTC) ── */
+.theater-vn-ctc {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 1px;
+    animation: theater-ctc-pulse 1.5s ease-in-out infinite;
+}
+
+.theater-vn-ctc svg {
+    animation: theater-ctc-bounce 1.5s ease-in-out infinite;
+}
+
+/* ── VN Control Bar — bottom centered row (光夜风格) ── */
+.theater-vn-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 10px 0 max(env(safe-area-inset-bottom, 12px), 12px);
+    margin-top: 14px;
+    position: relative;
+    z-index: 35;
+}
+
+.theater-vn-ctrl-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 18px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    color: rgba(255, 255, 255, 0.35);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theater-vn-ctrl-btn:active {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.theater-vn-ctrl-btn.active {
+    color: var(--theater-pink);
+}
+
+.theater-vn-ctrl-btn svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.85;
+}
+
+/* ── VN Input Area — borderless, matching gradient style ── */
+.theater-vn-input-area {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    padding: 14px 20px max(env(safe-area-inset-bottom, 20px), 20px);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(28px) saturate(1.2);
+    -webkit-backdrop-filter: blur(28px) saturate(1.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0;
+    animation: theater-slide-up 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Structured Beat Composer ── */
+.theater-vn-beat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: min(38vh, 260px);
+    overflow-y: auto;
+    padding-right: 2px;
+    margin-bottom: 10px;
+    scrollbar-width: none;
+}
+
+.theater-vn-beat-list::-webkit-scrollbar {
+    display: none;
+}
+
+.theater-vn-beat-card {
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px;
+    transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.theater-vn-beat-card.speech {
+    border-color: rgba(255, 107, 157, 0.18);
+    background: rgba(255, 107, 157, 0.07);
+}
+
+.theater-vn-beat-card.action {
+    border-color: rgba(255, 255, 255, 0.075);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.theater-vn-beat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.theater-vn-beat-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.theater-vn-beat-toggle button {
+    min-width: 42px;
+    height: 24px;
+    padding: 0 9px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.34);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.theater-vn-beat-toggle button.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.theater-vn-beat-remove {
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.28);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theater-vn-beat-input-shell {
+    position: relative;
+}
+
+.theater-vn-beat-card textarea {
+    width: 100%;
+    min-height: 42px;
+    max-height: 92px;
+    background: transparent;
+    border: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    outline: none;
+    resize: none;
+    line-height: 1.5;
+    scrollbar-width: none;
+}
+
+.theater-vn-beat-card.speech textarea {
+    padding-left: 22px;
+    padding-right: 22px;
+}
+
+.theater-vn-beat-quote {
+    position: absolute;
+    top: 2px;
+    z-index: 1;
+    pointer-events: none;
+    color: rgba(255, 107, 157, 0.58);
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    line-height: 1;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.theater-vn-beat-quote.open {
+    left: 0;
+}
+
+.theater-vn-beat-quote.close {
+    right: 0;
+}
+
+.theater-vn-beat-card textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.theater-vn-beat-card textarea::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+    font-weight: 300;
+}
+
+.theater-vn-beat-actions {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.theater-vn-beat-actions button {
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theater-vn-beat-actions button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* ── Quick Punctuation Toolbar ── */
+.theater-vn-punct-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 2px;
+    margin-bottom: 10px;
+}
+
+.theater-vn-punct-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
+}
+
+.theater-vn-punct-btn:active {
+    transform: scale(0.94);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.theater-vn-punct-hero {
+    border-color: rgba(255, 107, 157, 0.25);
+    background: rgba(255, 107, 157, 0.08);
+    color: rgba(255, 107, 157, 0.85);
+}
+
+.theater-vn-punct-hero:active {
+    background: rgba(255, 107, 157, 0.18);
+}
+
+.theater-vn-punct-icon {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+.theater-vn-punct-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+}
+
+.theater-vn-punct-hint {
+    font-size: 9px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.18);
+    letter-spacing: 0.5px;
+    margin-left: auto;
+    white-space: nowrap;
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.theater-vn-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.theater-vn-input-row textarea {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 10px 16px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+    outline: none;
+    resize: none;
+    height: 44px;
+    max-height: 100px;
+    line-height: 1.5;
+    scrollbar-width: none;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.theater-vn-input-row textarea:focus {
+    border-color: rgba(255, 107, 157, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.theater-vn-input-row textarea::placeholder {
+    color: rgba(255, 255, 255, 0.18);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+.theater-vn-send-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 107, 157, 0.3);
+    background: rgba(255, 107, 157, 0.15);
+    color: rgba(255, 107, 157, 0.9);
+    cursor: pointer;
+    transition: all 0.25s;
+    -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(8px);
+}
+
+.theater-vn-send-btn:active {
+    transform: scale(0.93);
+    background: rgba(255, 107, 157, 0.3);
+}
+
+.theater-vn-send-btn:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}
+
+/* ── History Log Modal ── */
+.theater-vn-log-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    animation: theater-fade-in 0.25s ease;
+}
+
+.theater-vn-log-header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 56px 20px 12px;
+}
+
+.theater-vn-log-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 1px;
+}
+
+.theater-vn-log-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.theater-vn-log-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 20px 40px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.theater-vn-log-scroll::-webkit-scrollbar { display: none; }
+
+.theater-vn-log-item {
+    padding: 12px 0;
+    padding-right: 52px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.theater-vn-log-item.narration {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.theater-vn-log-item.narration + .theater-vn-log-item.narration {
+    border-top: 0;
+}
+
+.theater-vn-log-item-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--theater-pink);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.theater-vn-log-item-name.user {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.theater-vn-log-item-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 300;
+    white-space: pre-wrap;
+}
+
+.theater-vn-log-item.user .theater-vn-log-item-text {
+    color: rgba(255, 255, 255, 0.58);
+}
+
+.theater-vn-log-item.narration .theater-vn-log-item-text {
+    color: rgba(255, 255, 255, 0.46);
+    font-size: 13px;
+    line-height: 1.75;
+    padding-left: 12px;
+    border-left: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Fork button in log */
+.theater-vn-log-fork-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(52, 211, 153, 0.15);
+    background: rgba(52, 211, 153, 0.08);
+    color: rgba(52, 211, 153, 0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-weight: 500;
+}
+
+.theater-vn-log-item:hover .theater-vn-log-fork-btn,
+.theater-vn-log-fork-btn:focus {
+    opacity: 1;
+}
+
+/* Mobile: always show fork buttons */
+@media (hover: none) {
+    .theater-vn-log-fork-btn {
+        opacity: 0.5;
+    }
+}
+
+/* ── VN Loading Indicator ── */
+.theater-vn-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 0;
+    margin-top: 2px;
+}
+
+.theater-vn-loading-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.theater-vn-loading-dots span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.42);
+    box-shadow: 0 0 12px rgba(255, 107, 157, 0.16);
+    animation: theater-dot-bounce 1.4s ease-in-out infinite;
+}
+
+.theater-vn-loading-dots span:nth-child(2) { animation-delay: 0.16s; }
+.theater-vn-loading-dots span:nth-child(3) { animation-delay: 0.32s; }
+
+/* ── Inner Whispers (VN CYOA Options) ── */
+
+.theater-vn-whispers {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 24px 0;
+    margin-top: 6px;
+}
+
+.theater-vn-whisper-btn {
+    width: 100%;
+    text-align: left;
+    padding: 12px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(24px) saturate(1.2);
+    -webkit-backdrop-filter: blur(24px) saturate(1.2);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    -webkit-tap-highlight-color: transparent;
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    animation: theater-whisper-fadein 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.theater-vn-whisper-btn:active {
+    transform: scale(0.97);
+    background: rgba(255, 107, 157, 0.12);
+    border-color: rgba(255, 107, 157, 0.25);
+}
+
+.theater-vn-whisper-text {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.78);
+    letter-spacing: 0.4px;
+    line-height: 1.6;
+}
+
+.theater-vn-whisper-tone {
+    font-size: 9px;
+    font-weight: 500;
+    color: rgba(255, 107, 157, 0.45);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.theater-vn-whisper-free {
+    width: 100%;
+    text-align: center;
+    padding: 10px 18px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+    -webkit-tap-highlight-color: transparent;
+    animation: theater-whisper-fadein 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.theater-vn-whisper-free span {
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.22);
+    letter-spacing: 2px;
+}
+
+.theater-vn-whisper-free:active {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes theater-whisper-fadein {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── VN Keyframes ── */
+
+@keyframes theater-cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes theater-ctc-pulse {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes theater-ctc-bounce {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+}
+
+@keyframes theater-slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes theater-dot-bounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Background Crossfade Layers ── */
+
+.theater-bg-layer {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    will-change: opacity;
+}
+
+.theater-bg-crossfade-in {
+    animation: theater-bg-fade-in 600ms ease-out forwards;
+}
+
+.theater-bg-crossfade-out {
+    z-index: 1; /* briefly on top during dissolve */
+    animation: theater-bg-fade-out 600ms ease-out forwards;
+}
+
+@keyframes theater-bg-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes theater-bg-fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* ══════════════════════════════════════════════
+   Scene Transition Overlay — 电影转场
+   ══════════════════════════════════════════════ */
+
+.theater-transition-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: theater-transition-in 0.8s ease-out;
+}
+
+.theater-transition-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    animation: theater-transition-text 1.5s ease-out;
+}
+
+.theater-transition-location {
+    font-size: 22px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 6px;
+    text-align: center;
+}
+
+.theater-transition-sub {
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.theater-transition-line {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.4), transparent);
+}
+
+@keyframes theater-transition-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes theater-transition-text {
+    0% { opacity: 0; transform: translateY(15px); }
+    30% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 1; }
+}
+
+/* ── Director Location Suggestion Card ── */
+
+.theater-vn-location-suggest {
+    margin-top: 12px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 107, 157, 0.15);
+    background: rgba(255, 107, 157, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: theater-whisper-fadein 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.theater-vn-suggest-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.theater-vn-suggest-icon {
+    font-size: 16px;
+}
+
+.theater-vn-suggest-label {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.5px;
+}
+
+.theater-vn-suggest-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.theater-vn-suggest-accept {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 107, 157, 0.3);
+    background: rgba(255, 107, 157, 0.12);
+    color: rgba(255, 107, 157, 0.9);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.25s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theater-vn-suggest-accept:active {
+    transform: scale(0.96);
+    background: rgba(255, 107, 157, 0.25);
+}
+
+.theater-vn-suggest-decline {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.25s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theater-vn-suggest-decline:active {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Discovered Location Badge (地图票根) ── */
+
+.theater-ticket-discovered-badge {
+    font-size: 8px;
+    font-weight: 500;
+    color: rgba(255, 200, 50, 0.8);
+    background: rgba(255, 200, 50, 0.1);
+    border: 1px solid rgba(255, 200, 50, 0.2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 380px) {
+    .theater-card-grid {
+        gap: 8px;
+    }
+    .theater-card-name {
+        font-size: 14px;
+    }
+    .theater-vn-dialog {
+        padding: 0 18px;
+    }
+    .theater-vn-text {
+        font-size: 14px;
+        line-height: 1.85;
+    }
+    .theater-vn-ctrl-btn {
+        padding: 8px 12px;
+    }
+}
+
+/* ══════════════════════════════════════════════════════
+   Inline Location Sheet — 底部抽屉式场景选择器
+   粉色毛玻璃，在 session 内渲染
+   ══════════════════════════════════════════════════════ */
+
+/* Overlay */
+.tls-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 500;
+    background: rgba(0, 0, 0, 0.45);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Sheet container */
+.tls-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 510;
+    max-height: 72vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px 24px 0 0;
+    background: linear-gradient(180deg, rgba(255, 240, 248, 0.97) 0%, rgba(255, 230, 240, 0.97) 100%);
+    backdrop-filter: blur(40px) saturate(1.4);
+    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    box-shadow: 0 -8px 40px rgba(200, 100, 140, 0.2), 0 -2px 10px rgba(255, 143, 171, 0.15);
+    border-top: 1.5px solid rgba(255, 200, 220, 0.6);
+}
+
+/* Drag handle */
+.tls-handle-bar {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 4px;
+    flex-shrink: 0;
+}
+
+.tls-handle {
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(200, 140, 170, 0.3);
+}
+
+/* Header */
+.tls-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 18px 8px;
+    flex-shrink: 0;
+}
+
+.tls-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tls-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #5A3040;
+    letter-spacing: 1px;
+}
+
+.tls-time-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background: rgba(255, 200, 220, 0.4);
+    font-size: 11px;
+    font-weight: 600;
+    color: #B08090;
+}
+
+/* Current location indicator */
+.tls-current {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 16px 10px;
+    padding: 8px 14px;
+    border-radius: 12px;
+    background: rgba(255, 122, 162, 0.08);
+    border: 1px solid rgba(255, 122, 162, 0.15);
+    flex-shrink: 0;
+}
+
+.tls-current-pin { font-size: 12px; }
+.tls-current-label { font-size: 11px; color: #B08090; font-weight: 500; }
+.tls-current-name { font-size: 12px; color: #D4607A; font-weight: 700; letter-spacing: 0.5px; }
+
+/* Scrollable grid area */
+.tls-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 12px 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.tls-scroll::-webkit-scrollbar { display: none; }
+
+/* 2-column grid */
+.tls-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+/* Card */
+.tls-card {
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1.5px solid rgba(255, 180, 200, 0.3);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 8px rgba(200, 120, 150, 0.08);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tls-card:active {
+    transform: scale(0.96);
+    box-shadow: 0 1px 4px rgba(200, 120, 150, 0.12);
+}
+
+.tls-card--current {
+    border-color: rgba(212, 96, 122, 0.4);
+    box-shadow: 0 0 0 2px rgba(212, 96, 122, 0.12), 0 2px 8px rgba(200, 120, 150, 0.1);
+    pointer-events: none;
+    opacity: 0.65;
+}
+
+/* Card image area */
+.tls-card-img {
+    position: relative;
+    height: 70px;
+    overflow: hidden;
+}
+
+.tls-card-img-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.tls-card-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 20%, rgba(0, 0, 0, 0.55) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8px 10px;
+}
+
+.tls-card-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.5px;
+}
+
+.tls-card-name-en {
+    font-size: 8px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 1px;
+}
+
+.tls-card-current-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: rgba(212, 96, 122, 0.85);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Card info area */
+.tls-card-info {
+    padding: 7px 10px 8px;
+}
+
+.tls-card-hint {
+    font-size: 9px;
+    color: #B08090;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.tls-card-tags {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+}
+
+.tls-card-tag {
+    font-size: 8px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(255, 200, 220, 0.35);
+    color: #B08090;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+.tls-card-tag--custom {
+    background: rgba(255, 200, 50, 0.12);
+    color: rgba(200, 160, 50, 0.8);
+}
+
+/* Add new card */
+.tls-card--add {
+    border-style: dashed;
+    border-color: rgba(255, 170, 195, 0.35);
+    background: rgba(255, 240, 248, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 110px;
+}
+
+.tls-card-add-inner {
+    text-align: center;
+}
+
+.tls-card-add-icon {
+    font-size: 22px;
+    color: rgba(212, 96, 122, 0.4);
+    margin-bottom: 4px;
+}
+
+.tls-card-add-title {
+    font-size: 10px;
+    color: #B08090;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Footer */
+.tls-footer {
+    flex-shrink: 0;
+    padding: 6px 16px max(env(safe-area-inset-bottom, 12px), 12px);
+}
+
+.tls-close-btn {
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 12px;
+    border: 1px solid rgba(200, 160, 180, 0.3);
+    background: rgba(255, 230, 240, 0.5);
+    color: #B08090;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tls-close-btn:active {
+    transform: scale(0.97);
+    background: rgba(255, 210, 225, 0.6);
+}
+
+/* ══════════════════════════════════════════════════════
+   Floating Ball — Quick Location Pills (面板内快捷场景)
+   ══════════════════════════════════════════════════════ */
+
+.tlq-current {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(255, 122, 162, 0.1);
+    border: 1px solid rgba(255, 122, 162, 0.15);
+}
+
+.tlq-current-pin { font-size: 11px; }
+.tlq-current-label { font-size: 9px; color: rgba(180, 128, 144, 0.8); font-weight: 500; }
+.tlq-current-name {
+    font-size: 10px;
+    color: #D4607A;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.tlq-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.tlq-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 170, 195, 0.35);
+    background: rgba(255, 225, 238, 0.45);
+    cursor: pointer;
+    transition: all 0.18s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tlq-pill:active {
+    transform: scale(0.96);
+    background: rgba(255, 200, 220, 0.6);
+    border-color: rgba(255, 122, 162, 0.4);
+}
+
+.tlq-pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFB7C5, #FF8FAB);
+    flex-shrink: 0;
+}
+
+.tlq-pill-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: #5A3040;
+    letter-spacing: 0.3px;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tlq-pill-tags {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.tlq-pill-tag {
+    font-size: 7px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: rgba(255, 200, 220, 0.4);
+    color: #B08090;
+    font-weight: 500;
+}
+
+.tlq-pill-arrow {
+    font-size: 10px;
+    color: rgba(180, 128, 144, 0.5);
+    flex-shrink: 0;
+}
+
+.tlq-show-all {
+    width: 100%;
+    padding: 7px 0;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 143, 171, 0.2);
+    background: linear-gradient(135deg, rgba(255, 143, 171, 0.1), rgba(255, 107, 149, 0.05));
+    color: #D4607A;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tlq-show-all:active {
+    transform: scale(0.97);
+    background: rgba(255, 143, 171, 0.18);
+}
+
+.tlq-empty {
+    text-align: center;
+    padding: 8px 0;
+    font-size: 9px;
+    color: rgba(180, 128, 144, 0.5);
+    font-style: italic;
+}

@@ -1,0 +1,1818 @@
+/* ═══════════════════════════════════════════
+   Trajectory — 轨迹 · 星轨毛玻璃
+   Star-trail tracing beam + Glassmorphism + Decorative serif
+   ═══════════════════════════════════════════ */
+
+/* ── Palette Variables ── */
+:root {
+    --traj-black: #0d0b14;
+    --traj-deep: #151220;
+    --traj-panel: #1a1626;
+    --traj-surface: rgba(26, 22, 38, 0.55);
+    --traj-glass: rgba(30, 25, 48, 0.45);
+    --traj-glass-border: rgba(193, 160, 172, 0.08);
+    --traj-pink: #F0D9E4;
+    --traj-rose: #C1A0AC;
+    --traj-grey: #4A3F4B;
+    --traj-mauve: #806C79;
+    --traj-pink-10: rgba(240, 217, 228, 0.10);
+    --traj-pink-06: rgba(240, 217, 228, 0.06);
+    --traj-pink-15: rgba(240, 217, 228, 0.15);
+    --traj-pink-25: rgba(240, 217, 228, 0.25);
+    --traj-rose-40: rgba(193, 160, 172, 0.40);
+    --traj-rose-60: rgba(193, 160, 172, 0.60);
+    --traj-serif: 'Playfair Display', 'Georgia', serif;
+    --traj-beam-color: linear-gradient(180deg,
+        rgba(193, 160, 172, 0.05) 0%,
+        rgba(193, 160, 172, 0.35) 20%,
+        rgba(210, 170, 200, 0.5) 50%,
+        rgba(193, 160, 172, 0.35) 80%,
+        rgba(193, 160, 172, 0.05) 100%);
+}
+
+/* ── Container ── */
+
+.trajectory-app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--traj-black);
+    color: var(--traj-pink);
+    font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* Star dust particles via pseudo-element */
+.trajectory-app::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(1px 1px at 15% 25%, rgba(240, 217, 228, 0.25) 50%, transparent 50%),
+        radial-gradient(1px 1px at 45% 15%, rgba(193, 160, 172, 0.2) 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 75% 45%, rgba(240, 217, 228, 0.15) 50%, transparent 50%),
+        radial-gradient(1px 1px at 25% 65%, rgba(210, 180, 200, 0.2) 50%, transparent 50%),
+        radial-gradient(1px 1px at 85% 75%, rgba(193, 160, 172, 0.18) 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 55% 85%, rgba(240, 217, 228, 0.12) 50%, transparent 50%),
+        radial-gradient(1px 1px at 35% 40%, rgba(200, 170, 190, 0.15) 50%, transparent 50%),
+        radial-gradient(1px 1px at 65% 60%, rgba(220, 190, 210, 0.1) 50%, transparent 50%);
+    animation: traj-stardust-drift 30s linear infinite;
+}
+
+@keyframes traj-stardust-drift {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+
+.trajectory-app *::-webkit-scrollbar {
+    width: 0;
+    display: none;
+}
+
+/* ── Header Bar ── */
+
+.traj-header {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 12px;
+    background: linear-gradient(180deg, rgba(13, 11, 20, 0.95) 0%, rgba(13, 11, 20, 0.7) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(193, 160, 172, 0.05);
+}
+
+.traj-header-back {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    border: none;
+    background: var(--traj-glass);
+    backdrop-filter: blur(12px);
+    color: var(--traj-rose);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    border: 1px solid var(--traj-glass-border);
+}
+
+.traj-header-back:active {
+    transform: scale(0.9);
+    background: var(--traj-pink-10);
+}
+
+.traj-header-title {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--traj-pink);
+}
+
+.traj-header-subtitle {
+    font-family: var(--traj-serif);
+    font-style: italic;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--traj-mauve);
+    margin-top: 2px;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+}
+
+.traj-header-action {
+    height: 30px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(193, 160, 172, 0.1);
+    background: var(--traj-glass);
+    backdrop-filter: blur(12px);
+    color: var(--traj-rose);
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+    flex-shrink: 0;
+}
+
+.traj-header-action:active {
+    transform: scale(0.95);
+    background: rgba(193, 160, 172, 0.12);
+}
+
+/* ══════════════════════════════════════════════
+   Archive Index Page — 轨迹档案索引
+   Cold blue-grey palette, document/archive feel
+   ══════════════════════════════════════════════ */
+
+/* Override container bg on archive page */
+.traj-archive-page {
+    background: #090B10;
+    color: #EDF3F8;
+}
+
+/* Kill star-dust particles on archive page */
+.traj-archive-page::before {
+    display: none;
+}
+
+/* ── Archive Header ── */
+
+.traj-archive-header {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    gap: 14px;
+    background: linear-gradient(180deg, rgba(9, 11, 16, 0.97) 0%, rgba(9, 11, 16, 0.75) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(190, 205, 220, 0.06);
+}
+
+.traj-archive-page .traj-header-back {
+    background: rgba(17, 23, 34, 0.8);
+    border: 1px solid rgba(190, 205, 220, 0.1);
+    color: #8D9AAA;
+}
+
+.traj-archive-header-text {
+    flex: 1;
+}
+
+.traj-archive-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #EDF3F8;
+    letter-spacing: 0.08em;
+}
+
+.traj-archive-subtitle {
+    font-family: var(--traj-serif);
+    font-style: italic;
+    font-size: 10px;
+    font-weight: 400;
+    color: #6B7A8C;
+    letter-spacing: 0.14em;
+    margin-top: 2px;
+}
+
+/* ── Archive Scroll Container ── */
+
+.traj-archive-scroll {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 0 20px 100px 20px;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(95, 125, 150, 0.12), transparent 36%),
+        linear-gradient(180deg, #0c1118 0%, #090b10 100%);
+}
+
+/* ── Intro Text ── */
+
+.traj-archive-intro {
+    padding: 16px 0 20px 0;
+    font-size: 12px;
+    color: #586272;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+}
+
+/* ── Continue Card ── */
+
+.traj-continue-card {
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(21, 28, 40, 0.96), rgba(13, 17, 25, 0.96));
+    border: 1px solid rgba(159, 182, 201, 0.14);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    margin-bottom: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle top-left cold light */
+.traj-continue-card::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(159, 182, 201, 0.08), transparent 70%);
+    pointer-events: none;
+}
+
+.traj-continue-card:active {
+    transform: scale(0.98);
+    border-color: rgba(159, 182, 201, 0.22);
+}
+
+.traj-continue-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.traj-continue-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #9FB6C9;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.traj-continue-status {
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(159, 182, 201, 0.10);
+    color: #9FB6C9;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+.traj-continue-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #EDF3F8;
+    letter-spacing: 0.02em;
+    margin-bottom: 5px;
+}
+
+.traj-continue-last {
+    font-size: 12px;
+    color: #8D9AAA;
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+}
+
+.traj-continue-remaining {
+    font-size: 11px;
+    color: #586272;
+    margin-bottom: 10px;
+}
+
+.traj-continue-progress-bar {
+    width: 100%;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(159, 182, 201, 0.08);
+    overflow: hidden;
+}
+
+.traj-continue-progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #5F7D96, #9FB6C9);
+    transition: width 0.6s ease;
+}
+
+.traj-continue-progress-text {
+    font-size: 9px;
+    color: #586272;
+    text-align: right;
+    margin-top: 4px;
+    font-family: var(--traj-serif);
+    font-style: italic;
+    letter-spacing: 0.06em;
+}
+
+/* ── Crosstime Jump ── */
+
+.traj-crosstime-entry-wrap {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(159, 182, 201, 0.07);
+}
+
+.traj-crosstime-entry {
+    width: 100%;
+    padding: 16px 16px 14px 18px;
+    border: 1px solid rgba(159, 182, 201, 0.13);
+    border-radius: 12px;
+    background:
+        linear-gradient(90deg, rgba(143, 114, 255, 0.10), rgba(143, 114, 255, 0.015) 34%, rgba(12, 16, 24, 0) 72%),
+        linear-gradient(135deg, rgba(18, 23, 36, 0.94), rgba(10, 13, 20, 0.96));
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+}
+
+.traj-crosstime-entry::before {
+    content: '';
+    position: absolute;
+    inset: 14px auto 14px 0;
+    width: 2px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(183, 164, 255, 0.82), rgba(159, 182, 201, 0.12));
+}
+
+.traj-crosstime-entry:active {
+    transform: scale(0.985);
+    border-color: rgba(183, 164, 255, 0.28);
+}
+
+.traj-crosstime-entry-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.traj-crosstime-title {
+    font-size: 18px;
+    line-height: 1.25;
+    font-weight: 650;
+    color: #E7EAF1;
+    letter-spacing: 0.14em;
+}
+
+.traj-crosstime-subtitle {
+    margin-top: 3px;
+    font-family: var(--traj-serif);
+    font-size: 10px;
+    line-height: 1.35;
+    font-style: italic;
+    color: rgba(159, 182, 201, 0.58);
+    letter-spacing: 0.06em;
+}
+
+.traj-crosstime-action {
+    flex: 0 0 auto;
+    padding: 5px 9px;
+    border-radius: 999px;
+    border: 1px solid rgba(159, 182, 201, 0.14);
+    background: rgba(237, 243, 248, 0.045);
+    color: rgba(213, 220, 230, 0.78);
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.traj-crosstime-copy {
+    margin-top: 13px;
+    max-width: 18em;
+    color: #A8B0C0;
+    font-size: 13px;
+    line-height: 1.55;
+    font-weight: 520;
+    letter-spacing: 0.03em;
+}
+
+.traj-crosstime-axis {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: rgba(141, 154, 170, 0.56);
+    font-size: 8px;
+    line-height: 1;
+    font-weight: 650;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+}
+
+.traj-crosstime-axis span {
+    flex: 0 0 auto;
+}
+
+.traj-crosstime-axis i {
+    display: block;
+    flex: 1 1 12px;
+    min-width: 10px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(159, 182, 201, 0.08), rgba(159, 182, 201, 0.38), rgba(159, 182, 201, 0.08));
+}
+
+/* ── Section Title ── */
+
+.traj-archive-section-title {
+    padding: 16px 0 10px 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #586272;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+/* ── Archive Card List ── */
+
+.traj-archive-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* ── Archive Card ── */
+
+.traj-archive-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 16px 16px 14px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(21, 28, 40, 0.92), rgba(13, 17, 25, 0.92));
+    border: 1px solid rgba(190, 205, 220, 0.08);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.traj-archive-card:active {
+    transform: scale(0.97) translateY(1px);
+    border-color: rgba(190, 205, 220, 0.15);
+    background: linear-gradient(135deg, rgba(25, 34, 48, 0.95), rgba(15, 20, 30, 0.95));
+}
+
+.traj-archive-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    object-fit: cover;
+    background: #1a2030;
+    flex-shrink: 0;
+    border: 1px solid rgba(190, 205, 220, 0.1);
+}
+
+.traj-archive-card-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.traj-archive-card-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #EDF3F8;
+    letter-spacing: 0.02em;
+    margin-bottom: 3px;
+}
+
+.traj-archive-card-meta {
+    font-size: 11px;
+    color: #8D9AAA;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+}
+
+.traj-archive-card-meta--empty {
+    color: #586272;
+    font-style: italic;
+}
+
+.traj-archive-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.traj-archive-tag {
+    font-size: 9px;
+    padding: 1px 7px;
+    border-radius: 4px;
+    background: rgba(159, 182, 201, 0.06);
+    color: #6B7A8C;
+    letter-spacing: 0.02em;
+}
+
+.traj-archive-card-action {
+    font-size: 10px;
+    font-weight: 500;
+    color: #7A93A8;
+    letter-spacing: 0.04em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    opacity: 0.7;
+}
+
+.traj-archive-card-action--empty {
+    color: #4A5565;
+    opacity: 0.5;
+}
+
+/* ── Empty State ── */
+
+.traj-archive-empty {
+    text-align: center;
+    padding: 80px 20px 60px 20px;
+}
+
+.traj-archive-empty-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(17, 23, 34, 0.8);
+    border: 1px solid rgba(190, 205, 220, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px auto;
+    color: #586272;
+}
+
+.traj-archive-empty-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #8D9AAA;
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+}
+
+.traj-archive-empty-desc {
+    font-size: 12px;
+    color: #586272;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+}
+
+/* ── Timeline View ── */
+
+/* ══════════════════════════════════════════════
+   Detail Page — 轨迹档案详情 · 档案脊线
+   Cold blue-grey palette, archive spine timeline
+   ══════════════════════════════════════════════ */
+
+/* Override container for detail page */
+.traj-detail-page {
+    background: #090B10;
+    color: #EDF3F8;
+}
+
+.traj-detail-page::before {
+    display: none;
+}
+
+/* ── Detail Scroll Container ── */
+
+.traj-detail-scroll {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 20px 100px 20px;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(95, 125, 150, 0.14), transparent 34%),
+        linear-gradient(180deg, #0C1118 0%, #090B10 100%);
+}
+
+.traj-detail-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+    gap: 14px;
+    color: #586272;
+    font-size: 13px;
+}
+
+/* Reuse spinner but with cold blue tones */
+.traj-detail-page .traj-loading-spinner {
+    border: 2px solid rgba(159, 182, 201, 0.08);
+    border-top-color: rgba(159, 182, 201, 0.4);
+}
+
+/* ── Profile Card ── */
+
+.traj-profile-card {
+    padding: 14px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(21, 28, 40, 0.96), rgba(13, 17, 25, 0.96));
+    border: 1px solid rgba(190, 205, 220, 0.12);
+    margin: 14px 0 4px 0;
+}
+
+.traj-profile-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #EDF3F8;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+}
+
+.traj-profile-desc {
+    font-size: 11px;
+    color: #586272;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.traj-profile-stats {
+    font-size: 11px;
+    color: #8D9AAA;
+    letter-spacing: 0.02em;
+    margin-bottom: 12px;
+}
+
+.traj-profile-action {
+    padding: 7px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(159, 182, 201, 0.18);
+    background: rgba(159, 182, 201, 0.06);
+    color: #9FB6C9;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.traj-profile-action:active {
+    background: rgba(159, 182, 201, 0.14);
+    transform: scale(0.96);
+}
+
+/* ── Profile Actions Container ── */
+
+.traj-profile-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.traj-profile-actions .traj-profile-action {
+    flex: 1;
+}
+
+.traj-profile-action--secondary {
+    background: transparent;
+    border-color: rgba(159, 182, 201, 0.10);
+    color: #586272;
+}
+
+.traj-profile-action--secondary:active {
+    background: rgba(159, 182, 201, 0.06);
+    color: #7A8B9C;
+}
+
+.traj-chapter-intro {
+    padding: 24px 0 16px 0;
+}
+
+.traj-chapter-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #EDF3F8;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+}
+
+.traj-chapter-subtitle {
+    font-family: var(--traj-serif);
+    font-style: italic;
+    font-size: 10px;
+    color: #586272;
+    letter-spacing: 0.14em;
+    margin-bottom: 8px;
+}
+
+.traj-chapter-desc {
+    font-size: 11px;
+    color: #586272;
+    line-height: 1.6;
+}
+
+/* ── Archive Spine (vertical timeline) ── */
+
+.traj-spine {
+    position: relative;
+    padding-left: 28px;
+}
+
+/* Spine line — cold silver */
+.traj-spine::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg,
+        rgba(159, 182, 201, 0.06) 0%,
+        rgba(159, 182, 201, 0.32) 15%,
+        rgba(159, 182, 201, 0.32) 85%,
+        rgba(159, 182, 201, 0.06) 100%);
+}
+
+/* ── Spine Node ── */
+
+.traj-spine-node {
+    position: relative;
+    padding: 6px 0;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 0;
+    transform: translateY(14px);
+    animation: traj-spine-enter 0.45s ease forwards;
+}
+
+.traj-spine-node:nth-child(1) { animation-delay: 0.05s; }
+.traj-spine-node:nth-child(2) { animation-delay: 0.12s; }
+.traj-spine-node:nth-child(3) { animation-delay: 0.19s; }
+.traj-spine-node:nth-child(4) { animation-delay: 0.26s; }
+.traj-spine-node:nth-child(5) { animation-delay: 0.33s; }
+.traj-spine-node:nth-child(6) { animation-delay: 0.40s; }
+.traj-spine-node:nth-child(7) { animation-delay: 0.47s; }
+.traj-spine-node:nth-child(8) { animation-delay: 0.54s; }
+
+@keyframes traj-spine-enter {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.traj-spine-node:active {
+    transform: translateX(3px) scale(0.98);
+}
+
+/* ── Spine Dot — node type differentiation ── */
+
+.traj-spine-dot {
+    position: absolute;
+    left: -23px;
+    top: 18px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--spine-accent, #5F7D96);
+    border: 1.5px solid rgba(9, 11, 16, 0.8);
+    z-index: 2;
+    transition: all 0.3s;
+    box-shadow: 0 0 8px rgba(159, 182, 201, 0.12);
+}
+
+/* Unread node — hollow */
+.traj-spine-node:not(.traj-spine-node--read) .traj-spine-dot {
+    background: transparent;
+    border-color: var(--spine-accent, #5F7D96);
+    box-shadow: none;
+}
+
+/* Read node — filled with subtle glow */
+.traj-spine-node--read .traj-spine-dot {
+    box-shadow: 0 0 10px 2px rgba(159, 182, 201, 0.18);
+}
+
+/* Turning point — double ring */
+.traj-spine-node--turning .traj-spine-dot {
+    box-shadow: 0 0 0 3px rgba(9, 11, 16, 0.9), 0 0 0 4.5px rgba(184, 162, 122, 0.35);
+}
+
+/* Trauma — subtle dark red shadow */
+.traj-spine-node--trauma .traj-spine-dot {
+    box-shadow: 0 0 8px 2px rgba(138, 93, 93, 0.2);
+}
+
+/* ── Spine Card — memory fragment ── */
+
+.traj-spine-card {
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(21, 28, 40, 0.92), rgba(13, 17, 25, 0.92));
+    border: 1px solid rgba(190, 205, 220, 0.08);
+    border-left: 2px solid var(--spine-accent, #5F7D96);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.traj-spine-node:active .traj-spine-card {
+    background: linear-gradient(135deg, rgba(25, 34, 48, 0.95), rgba(15, 20, 30, 0.95));
+    border-color: rgba(190, 205, 220, 0.16);
+}
+
+/* Turning point card — stronger border */
+.traj-spine-node--turning .traj-spine-card {
+    border-color: rgba(184, 162, 122, 0.2);
+    border-left-color: #B8A27A;
+}
+
+/* Trauma card — keep readable, accent only via left-line and type chip */
+.traj-spine-node--trauma .traj-spine-card {
+    background: linear-gradient(135deg, rgba(21, 28, 40, 0.92), rgba(13, 17, 25, 0.92));
+    border-color: rgba(138, 93, 93, 0.1);
+    border-left-color: #8A5D5D;
+}
+
+/* Gentle card — green accent */
+.traj-spine-node--gentle .traj-spine-card {
+    border-left-color: #8FA99A;
+}
+
+/* Related card — cool silver blue */
+.traj-spine-node--related .traj-spine-card {
+    border-left-color: #C8D6E2;
+}
+
+/* ── Spine Card Internals ── */
+
+.traj-spine-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.traj-spine-age {
+    font-family: var(--traj-serif);
+    font-size: 10px;
+    font-weight: 700;
+    font-style: italic;
+    color: #586272;
+    letter-spacing: 0.1em;
+}
+
+.traj-spine-type {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 1px 7px;
+    border-radius: 4px;
+    background: rgba(159, 182, 201, 0.08);
+    opacity: 0.85;
+}
+
+.traj-spine-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #EDF3F8;
+    line-height: 1.5;
+    margin-bottom: 4px;
+}
+
+.traj-spine-excerpt {
+    font-size: 11px;
+    color: #7A8B9C;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    font-style: italic;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.traj-spine-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.traj-spine-tag {
+    font-size: 9px;
+    padding: 1px 7px;
+    border-radius: 4px;
+    background: rgba(159, 182, 201, 0.06);
+    color: #6B7A8C;
+    letter-spacing: 0.02em;
+}
+
+.traj-spine-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 9px;
+    color: #4A5565;
+    letter-spacing: 0.02em;
+}
+
+/* ── Meeting Point Divider ── */
+
+.traj-meeting-divider {
+    position: relative;
+    padding: 28px 0 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    animation: traj-spine-enter 0.6s ease forwards;
+}
+
+.traj-meeting-glow {
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(210, 180, 200, 0.35), transparent 70%);
+    animation: traj-meeting-pulse 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes traj-meeting-pulse {
+    0%, 100% { opacity: 0.5; transform: translateY(-50%) scale(1); }
+    50% { opacity: 1; transform: translateY(-50%) scale(1.3); }
+}
+
+.traj-meeting-dot {
+    position: absolute;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #C1A0AC, #D4B8C4);
+    border: 2px solid rgba(9, 11, 16, 0.9);
+    z-index: 3;
+    box-shadow:
+        0 0 12px 3px rgba(193, 160, 172, 0.25),
+        0 0 0 4px rgba(193, 160, 172, 0.08);
+}
+
+.traj-meeting-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-left: 4px;
+}
+
+.traj-meeting-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #C1A0AC;
+    letter-spacing: 0.35em;
+}
+
+.traj-meeting-label-en {
+    font-family: var(--traj-serif);
+    font-style: italic;
+    font-size: 9px;
+    color: #6B5A63;
+    letter-spacing: 0.14em;
+    font-weight: 400;
+}
+
+/* ── Add Node Button ── */
+
+.traj-detail-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border-radius: 16px;
+    border: 1px dashed rgba(159, 182, 201, 0.12);
+    background: transparent;
+    color: #586272;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.traj-detail-add-btn:active {
+    background: rgba(159, 182, 201, 0.04);
+    color: #8D9AAA;
+    border-color: rgba(159, 182, 201, 0.2);
+}
+
+/* ── Node Monologue View ── */
+
+.traj-monologue {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    background: var(--traj-black);
+    overflow: hidden;
+}
+
+/* Breathing mood gradient background */
+.traj-mono-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.25;
+    background:
+        radial-gradient(ellipse at 25% 15%, var(--mono-color, rgba(193, 160, 172, 0.2)) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 75%, rgba(74, 63, 75, 0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(193, 160, 172, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    animation: traj-mono-breathe 6s ease-in-out infinite alternate;
+}
+
+@keyframes traj-mono-breathe {
+    0% { opacity: 0.2; transform: scale(1); }
+    100% { opacity: 0.35; transform: scale(1.05); }
+}
+
+/* Large decorative mood word watermark */
+.traj-mono-watermark {
+    position: absolute;
+    top: 15%;
+    right: -10px;
+    font-family: var(--traj-serif);
+    font-style: italic;
+    font-size: 72px;
+    font-weight: 700;
+    color: rgba(193, 160, 172, 0.03);
+    letter-spacing: 0.05em;
+    writing-mode: vertical-rl;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+    line-height: 1;
+}
+
+.traj-mono-scroll {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 28px calc(190px + env(safe-area-inset-bottom, 0px)) 28px;
+}
+
+.traj-mono-header {
+    text-align: center;
+    padding: 28px 0 40px 0;
+    position: relative;
+}
+
+.traj-mono-age {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--traj-rose);
+    margin-bottom: 12px;
+    opacity: 0.6;
+    text-transform: uppercase;
+}
+
+.traj-mono-age-en {
+    font-family: var(--traj-serif);
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0.5;
+    margin-left: 6px;
+    letter-spacing: 0.12em;
+}
+
+.traj-mono-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--traj-pink);
+    line-height: 1.35;
+    letter-spacing: 0.03em;
+}
+
+/* Mood verse in italic serif glass strip */
+.traj-mono-mood {
+    display: inline-block;
+    font-family: var(--traj-serif);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--traj-mauve);
+    margin-top: 14px;
+    opacity: 0.55;
+    padding: 6px 16px;
+    border-radius: 20px;
+    background: var(--traj-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--traj-glass-border);
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+}
+
+/* Monologue Text */
+
+.traj-mono-text {
+    font-size: 15px;
+    line-height: 2.2;
+    color: rgba(240, 217, 228, 0.72);
+    letter-spacing: 0.03em;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.traj-mono-paragraph {
+    margin-bottom: 26px;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: traj-para-in 0.8s ease forwards;
+}
+
+/* First paragraph drop-cap effect */
+.traj-mono-paragraph:first-child::first-letter {
+    font-size: 2em;
+    font-family: var(--traj-serif);
+    font-weight: 700;
+    color: var(--traj-pink);
+    float: left;
+    line-height: 1;
+    margin-right: 6px;
+    margin-top: 4px;
+}
+
+@keyframes traj-para-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.traj-mono-generating {
+    text-align: center;
+    padding: 80px 0;
+    color: var(--traj-mauve);
+    font-size: 13px;
+    font-family: var(--traj-serif);
+    font-style: italic;
+}
+
+/* Monologue Bottom Bar — glassmorphism */
+
+.traj-mono-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 18px 16px;
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+    background: linear-gradient(0deg, rgba(13, 11, 20, 0.95) 30%, rgba(13, 11, 20, 0) 100%);
+    box-sizing: border-box;
+}
+
+.traj-mono-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 112px;
+    height: 42px;
+    padding: 0 10px;
+    border-radius: 14px;
+    border: 1px solid rgba(193, 160, 172, 0.1);
+    background: var(--traj-glass);
+    backdrop-filter: blur(16px);
+    color: var(--traj-rose);
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+.traj-mono-btn svg,
+.traj-mono-btn .traj-tts-wave {
+    flex: 0 0 auto;
+}
+
+.traj-mono-btn:active {
+    transform: scale(0.95);
+    background: rgba(74, 63, 75, 0.4);
+}
+
+.traj-mono-btn--primary {
+    background: rgba(193, 160, 172, 0.12);
+    border-color: rgba(193, 160, 172, 0.18);
+    color: var(--traj-pink);
+    box-shadow: 0 0 12px rgba(193, 160, 172, 0.06);
+}
+
+.traj-mono-btn--primary:active {
+    background: rgba(193, 160, 172, 0.22);
+}
+
+.traj-mono-btn--playing {
+    background: rgba(193, 160, 172, 0.15);
+    border-color: rgba(193, 160, 172, 0.25);
+    color: var(--traj-pink);
+    animation: traj-playing-glow 2s ease-in-out infinite;
+}
+
+@keyframes traj-playing-glow {
+    0%, 100% { box-shadow: 0 0 0 rgba(193, 160, 172, 0); }
+    50% { box-shadow: 0 0 12px rgba(193, 160, 172, 0.15); }
+}
+
+/* ── Whisper ── */
+
+.traj-whisper-zone {
+    padding: 24px 4px;
+    animation: traj-para-in 0.5s ease forwards;
+    transition: all 0.3s;
+}
+
+/* ── Signal Strength Indicator ── */
+
+.traj-whisper-signal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+}
+
+.traj-whisper-signal-label {
+    font-size: 9px;
+    color: var(--traj-mauve);
+    letter-spacing: 0.08em;
+    font-weight: 500;
+}
+
+.traj-whisper-signal-dots {
+    display: flex;
+    gap: 3px;
+}
+
+.traj-whisper-signal-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(128, 108, 121, 0.15);
+    transition: all 0.3s;
+}
+
+.traj-whisper-signal-dot.active {
+    background: var(--traj-rose);
+    box-shadow: 0 0 4px rgba(193, 160, 172, 0.3);
+}
+
+/* ── Whisper History (Chat Bubbles) ── */
+
+.traj-whisper-history {
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 0 4px 12px 4px;
+    margin-bottom: 12px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.traj-whisper-history::-webkit-scrollbar {
+    width: 2px;
+}
+
+.traj-whisper-history::-webkit-scrollbar-thumb {
+    background: rgba(193, 160, 172, 0.1);
+    border-radius: 1px;
+}
+
+.traj-whisper-exchange {
+    margin-bottom: 10px;
+    animation: traj-whisper-appear 0.4s ease forwards;
+}
+
+.traj-whisper-bubble {
+    max-width: 80%;
+    padding: 8px 14px;
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 4px;
+    word-break: break-word;
+}
+
+.traj-whisper-bubble--user {
+    margin-left: auto;
+    background: rgba(193, 160, 172, 0.12);
+    border: 1px solid rgba(193, 160, 172, 0.1);
+    color: var(--traj-pink);
+    border-bottom-right-radius: 4px;
+    text-align: right;
+}
+
+.traj-whisper-bubble--char {
+    margin-right: auto;
+    background: linear-gradient(135deg, rgba(74, 63, 75, 0.2) 0%, rgba(40, 34, 50, 0.25) 100%);
+    border: 1px solid rgba(128, 108, 121, 0.08);
+    color: rgba(240, 217, 228, 0.55);
+    border-bottom-left-radius: 4px;
+    font-style: italic;
+    filter: blur(0.15px);
+}
+
+/* ── Signal Decay Visual Effects ── */
+
+.traj-whisper-signal-weak {
+    animation: traj-signal-shake 4s ease-in-out infinite;
+}
+
+.traj-whisper-signal-critical {
+    animation: traj-signal-shake 2s ease-in-out infinite;
+}
+
+.traj-whisper-signal-critical .traj-whisper-signal-dot.active {
+    background: #C88090;
+    animation: traj-dot-flicker 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes traj-signal-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-0.5px); }
+    50% { transform: translateX(0.5px); }
+    75% { transform: translateX(-0.3px); }
+}
+
+@keyframes traj-dot-flicker {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 0.8; }
+}
+
+/* Glitch effect on char bubbles after round 7 */
+.traj-whisper-glitch {
+    animation: traj-glitch-text 3s ease-in-out infinite;
+}
+
+@keyframes traj-glitch-text {
+    0%, 95%, 100% { transform: translateX(0); filter: blur(0.15px); }
+    96% { transform: translateX(-1px); filter: blur(0.8px); }
+    97% { transform: translateX(1px); filter: blur(0.3px); }
+    98% { transform: translateX(-0.5px); filter: blur(0.5px); }
+}
+
+/* ── Whisper Input ── */
+
+.traj-whisper-prompt {
+    font-size: 13px;
+    color: var(--traj-mauve);
+    margin-bottom: 18px;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    text-align: center;
+}
+
+.traj-whisper-input-row {
+    display: flex;
+    gap: 8px;
+    max-width: 340px;
+    margin: 0 auto;
+}
+
+.traj-whisper-input {
+    flex: 1;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(193, 160, 172, 0.1);
+    background: rgba(74, 63, 75, 0.15);
+    color: var(--traj-pink);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.traj-whisper-input::placeholder {
+    color: rgba(128, 108, 121, 0.5);
+}
+
+.traj-whisper-input:focus {
+    border-color: rgba(193, 160, 172, 0.25);
+}
+
+.traj-whisper-send {
+    height: 40px;
+    width: 40px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(193, 160, 172, 0.12);
+    color: var(--traj-rose);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.traj-whisper-send:active {
+    transform: scale(0.9);
+    background: rgba(193, 160, 172, 0.22);
+}
+
+/* ── Sealed State ── */
+
+.traj-whisper-sealed {
+    text-align: center;
+    padding: 24px 16px;
+    animation: traj-para-in 0.6s ease forwards;
+}
+
+.traj-whisper-collapse-pending {
+    margin: 22px auto 6px;
+    text-align: center;
+    color: rgba(224, 212, 220, 0.46);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-shadow: 0 0 14px rgba(193, 160, 172, 0.16);
+    animation: traj-collapse-pending-pulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes traj-collapse-pending-pulse {
+    from {
+        opacity: 0.38;
+        filter: blur(0.4px);
+        transform: translateY(1px);
+    }
+
+    to {
+        opacity: 0.78;
+        filter: blur(0);
+        transform: translateY(0);
+    }
+}
+
+.traj-whisper-sealed-icon {
+    color: rgba(128, 108, 121, 0.35);
+    margin-bottom: 12px;
+}
+
+.traj-whisper-sealed-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(193, 160, 172, 0.4);
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+}
+
+.traj-whisper-sealed-sub {
+    font-size: 11px;
+    color: rgba(128, 108, 121, 0.35);
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.traj-whisper-close {
+    margin-top: 20px;
+    font-size: 11px;
+    color: rgba(128, 108, 121, 0.4);
+    cursor: pointer;
+    transition: color 0.2s;
+    letter-spacing: 0.08em;
+    text-align: center;
+}
+
+.traj-whisper-close:active {
+    color: var(--traj-mauve);
+}
+
+/* ── Sealed Button in Bottom Bar ── */
+
+.traj-mono-btn--sealed {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: rgba(74, 63, 75, 0.1);
+    border-color: rgba(128, 108, 121, 0.08);
+    color: rgba(128, 108, 121, 0.5);
+}
+
+/* ── Time-Space Turbulence Overlay ── */
+
+.traj-turbulence-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(9, 7, 14, 0.92);
+    animation: traj-turbulence-in 0.4s ease forwards;
+}
+
+@keyframes traj-turbulence-in {
+    0% { opacity: 0; backdrop-filter: blur(0); }
+    100% { opacity: 1; backdrop-filter: blur(20px); }
+}
+
+.traj-turbulence-crack {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg,
+            transparent 30%,
+            rgba(193, 130, 150, 0.03) 45%,
+            transparent 46%,
+            transparent 54%,
+            rgba(193, 130, 150, 0.04) 55%,
+            transparent 70%);
+    animation: traj-crack-scan 2s ease-in-out infinite;
+}
+
+@keyframes traj-crack-scan {
+    0% { transform: translateX(-100%); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
+}
+
+.traj-turbulence-text {
+    text-align: center;
+    z-index: 2;
+    animation: traj-turbulence-text-in 0.6s ease 0.3s forwards;
+    opacity: 0;
+}
+
+@keyframes traj-turbulence-text-in {
+    0% { opacity: 0; transform: scale(0.9); filter: blur(8px); }
+    100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+.traj-turbulence-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(193, 130, 150, 0.7);
+    letter-spacing: 0.4em;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(193, 130, 150, 0.2);
+}
+
+.traj-turbulence-sub {
+    font-size: 11px;
+    color: rgba(128, 108, 121, 0.45);
+    letter-spacing: 0.15em;
+    font-family: var(--traj-serif);
+    font-style: italic;
+}
+
+@keyframes traj-whisper-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+        filter: blur(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* ── Add Node Modal ── */
+
+.traj-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(22, 19, 31, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: traj-fade-in 0.2s ease;
+}
+
+@keyframes traj-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.traj-modal {
+    width: 100%;
+    max-width: 340px;
+    border-radius: 22px;
+    background: linear-gradient(160deg, rgba(33, 29, 46, 0.97) 0%, rgba(22, 19, 31, 0.98) 100%);
+    border: 1px solid rgba(193, 160, 172, 0.08);
+    padding: 24px 20px;
+    animation: traj-slide-up 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes traj-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.traj-modal-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--traj-pink);
+    margin-bottom: 18px;
+    text-align: center;
+    letter-spacing: 0.04em;
+}
+
+.traj-modal-field {
+    margin-bottom: 14px;
+}
+
+.traj-modal-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--traj-mauve);
+    margin-bottom: 6px;
+}
+
+.traj-modal-input {
+    width: 100%;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(193, 160, 172, 0.08);
+    background: rgba(74, 63, 75, 0.15);
+    color: var(--traj-pink);
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.traj-modal-input:focus {
+    border-color: rgba(193, 160, 172, 0.2);
+}
+
+.traj-modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.traj-modal-btn {
+    flex: 1;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(193, 160, 172, 0.08);
+    background: rgba(74, 63, 75, 0.15);
+    color: var(--traj-mauve);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.traj-modal-btn:active {
+    transform: scale(0.97);
+}
+
+.traj-modal-btn--primary {
+    background: rgba(193, 160, 172, 0.12);
+    border-color: rgba(193, 160, 172, 0.15);
+    color: var(--traj-pink);
+}
+
+.traj-modal-btn--primary:active {
+    background: rgba(193, 160, 172, 0.2);
+}
+
+/* ── TTS Waveform Animation ── */
+
+.traj-tts-wave {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 14px;
+    margin-right: 4px;
+}
+
+.traj-tts-wave-bar {
+    width: 2px;
+    border-radius: 1px;
+    background: currentColor;
+    animation: traj-wave 0.6s ease-in-out infinite;
+}
+
+.traj-tts-wave-bar:nth-child(1) { height: 40%; animation-delay: 0s; }
+.traj-tts-wave-bar:nth-child(2) { height: 70%; animation-delay: 0.1s; }
+.traj-tts-wave-bar:nth-child(3) { height: 100%; animation-delay: 0.2s; }
+.traj-tts-wave-bar:nth-child(4) { height: 60%; animation-delay: 0.3s; }
+
+@keyframes traj-wave {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+}
+
+/* ── Regenerate Confirmation ── */
+
+.traj-regen-toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 40;
+    padding: 12px 20px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(33, 29, 46, 0.95) 0%, rgba(22, 19, 31, 0.95) 100%);
+    border: 1px solid rgba(193, 160, 172, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    font-size: 12px;
+    color: var(--traj-rose);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: traj-slide-up 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.traj-regen-toast-btn {
+    padding: 5px 14px;
+    border-radius: 8px;
+    border: none;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.traj-regen-toast-btn--cancel {
+    background: rgba(74, 63, 75, 0.3);
+    color: var(--traj-mauve);
+}
+
+.traj-regen-toast-btn--confirm {
+    background: rgba(193, 130, 140, 0.15);
+    color: #e0a0a8;
+}
+
+.traj-regen-toast-btn:active {
+    transform: scale(0.95);
+}
+
+/* ── Danger Button (Delete Node) ── */
+
+.traj-mono-btn--danger {
+    color: #b87070;
+    border-color: rgba(184, 112, 112, 0.15);
+}
+
+.traj-mono-btn--danger:active {
+    background: rgba(184, 112, 112, 0.12);
+    border-color: rgba(184, 112, 112, 0.25);
+}

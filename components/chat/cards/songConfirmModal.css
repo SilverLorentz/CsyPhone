@@ -1,0 +1,125 @@
+.song-open-confirm-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: song-confirm-fade-in 0.2s ease;
+}
+
+@keyframes song-confirm-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.song-open-confirm-card {
+    width: min(280px, calc(100vw - 48px));
+    background: rgba(38, 38, 40, 0.92);
+    backdrop-filter: blur(40px) saturate(1.6);
+    -webkit-backdrop-filter: blur(40px) saturate(1.6);
+    border-radius: 20px;
+    padding: 28px 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow:
+        0 24px 48px rgba(0, 0, 0, 0.4),
+        0 0 0 0.5px rgba(255, 255, 255, 0.1);
+    animation: song-confirm-slide-up 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes song-confirm-slide-up {
+    from { transform: translateY(40px) scale(0.95); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.song-open-confirm-cover {
+    width: 120px;
+    height: 120px;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.song-open-confirm-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.song-open-confirm-cover-fallback {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ec4141, #c03030);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 36px;
+}
+
+.song-open-confirm-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.song-open-confirm-artist {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 24px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.song-open-confirm-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.song-open-confirm-btn {
+    width: 100%;
+    height: 44px;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.song-open-confirm-btn:active {
+    transform: scale(0.96);
+}
+
+.song-open-confirm-btn--primary {
+    background: #ec4141;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(236, 65, 65, 0.35);
+}
+
+.song-open-confirm-btn--secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+}

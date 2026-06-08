@@ -1,0 +1,85 @@
+                {/* ── WORKSHOP TAB ── */}
+                {activeTab === 'workshop' && (
+                    <div className="flex-1 overflow-y-auto no-scrollbar relative" style={{ background: 'linear-gradient(175deg, #0C0B0F 0%, #111015 45%, #0D0C11 100%)' }}>
+                        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+                            <img src="/images/collage/mood-collage.png" alt="" className="absolute -top-6 -right-10 w-72 opacity-[0.03] mix-blend-screen" style={{ filter: 'invert(1)', transform: 'rotate(8deg)' }} />
+                            <img src="/images/collage/flower-cosmos.png" alt="" className="absolute top-[16%] -left-14 w-44 opacity-[0.04] mix-blend-screen" style={{ filter: 'invert(1)', transform: 'rotate(-25deg)' }} />
+                            <img src="/images/collage/butterfly-sparkle.png" alt="" className="absolute bottom-[6%] -right-10 w-56 opacity-[0.035] mix-blend-screen" style={{ filter: 'invert(1)', transform: 'rotate(15deg)' }} />
+                        </div>
+                        <div className="relative z-10 px-5 pt-16 pb-20">
+                            <div className="text-center mb-2 relative">
+                                <div className="absolute top-0 right-1 w-9 h-11 border border-dashed border-white/[0.04] rounded-sm flex flex-col items-center justify-center gap-0.5 pointer-events-none select-none">
+                                    <div className="w-5 h-5 rounded-full border border-white/[0.03]" />
+                                    <span className="text-[4px] text-white/[0.05] tracking-widest font-mono">POST</span>
+                                </div>
+                                <h2 className="text-[36px] font-bold text-white/80 tracking-[0.5em] leading-none" style={{ fontFamily: "'Ma Shan Zheng', 'Noto Serif SC', serif" }}>拾 念</h2>
+                                <p className="text-[9px] text-white/20 mt-3 tracking-[0.25em] italic leading-relaxed" style={{ fontFamily: "'Noto Serif SC', serif" }}>有些事不说，心里也记得住</p>
+                            </div>
+                            <div className="flex justify-center gap-2 overflow-x-auto no-scrollbar mt-6 mb-10 -mx-5 px-5">
+                                {characters.map(c => (
+                                    <button key={c.id} onClick={() => { setSelectedCharId(c.id); haptic.light(); }}
+                                        className={`shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-full text-[10px] font-medium transition-all ${selectedCharId === c.id ? 'bg-white/90 text-[#1E1E20] shadow-[0_4px_20px_rgba(255,255,255,0.12)]' : 'bg-white/[0.04] text-white/35 border border-white/[0.06] hover:bg-white/[0.08]'}`}>
+                                        <img src={c.avatar} alt={c.name} className="w-4 h-4 rounded-full object-cover" />
+                                        {c.name}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="relative">
+                                <span className="absolute -top-3 right-4 text-[8px] text-white/[0.06] italic tracking-[0.15em] select-none pointer-events-none" style={{ fontFamily: "Georgia, serif", transform: 'rotate(2deg)' }}>Good night</span>
+                                <span className="absolute top-[44%] -left-1 text-[7px] text-white/[0.05] tracking-[0.3em] select-none pointer-events-none" style={{ fontFamily: "Georgia, serif", writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>falls.</span>
+                                <span className="absolute bottom-[18%] right-2 text-[7px] text-white/[0.04] italic tracking-[0.2em] select-none pointer-events-none" style={{ fontFamily: "'Noto Serif SC', serif", transform: 'rotate(-1deg)' }}>只是被时间温柔收藏</span>
+                                <div className="relative mb-10" style={{ transform: 'rotate(-1.2deg)', marginLeft: '6%', marginRight: '1%' }}>
+                                    <span className="absolute -top-6 -left-1 text-[56px] font-extralight text-white/[0.04] select-none pointer-events-none z-0" style={{ fontFamily: "'Ma Shan Zheng', serif", letterSpacing: '0.05em' }}>01</span>
+                                    <div className="absolute -top-1.5 right-10 w-14 h-3.5 rounded-[1px] z-20 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 15%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.05) 85%, transparent 100%)', transform: 'rotate(4deg)' }} />
+                                    <div className="bg-[#FFFBF7]/[0.94] backdrop-blur-xl rounded-2xl border border-white/25 overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.55),0_2px_10px_rgba(0,0,0,0.35)] relative z-10">
+                                        <div className="flex items-stretch gap-0 p-0 min-h-[140px]">
+                                            <div className="w-[38%] shrink-0 overflow-hidden"><img src="/images/workshop-birds.jpg" alt="" className="w-full h-full object-cover" style={{ filter: 'brightness(0.88) contrast(1.08)' }} /></div>
+                                            <div className="flex-1 flex flex-col justify-between p-4 min-w-0">
+                                                <div><h4 className="text-[13px] font-bold text-[#1E1C22] tracking-wide mb-1.5" style={{ fontFamily: "'Noto Serif SC', serif" }}>时光编织</h4><p className="text-[10px] text-[#6B6675] leading-[1.7]">把每一次相遇串成时间轴上的珠子，让前因后果自然相连。</p></div>
+                                                <div className="flex justify-end mt-2"><button onClick={() => { setShowConfirm('temporal'); haptic.light(); }} disabled={backfilling || !selectedCharId} className="px-4 py-1.5 rounded-full text-[10px] font-semibold text-white bg-[#2A2830] hover:bg-[#1E1C22] active:scale-[0.97] transition-all disabled:opacity-40">{backfilling ? '编织中…' : '纺线 →'}</button></div>
+                                            </div>
+                                        </div>
+                                        {backfillResult && !backfilling && (<div className="mx-5 mb-5 pt-4 border-t border-[#EEEDF0]"><ResultCard title="编织报告" isDryRun={false} stats={[{value:backfillResult.totals?.memories??0,label:'跨越片段'},{value:backfillResult.totals?.linksCreated??0,label:'丝线成型'},{value:backfillResult.totals?.edgesCreated??0,label:'因果落定'}]} items={[]} note={undefined} /></div>)}
+                                    </div>
+                                    <img src="/images/collage/clock-airmail.png" alt="" className="absolute -bottom-10 -right-3 w-28 opacity-[0.07] mix-blend-screen pointer-events-none z-0" style={{ filter: 'invert(1)', transform: 'rotate(10deg)' }} />
+                                </div>
+                                <div className="relative mb-10" style={{ transform: 'rotate(0.8deg)', marginRight: '6%', marginLeft: '1%' }}>
+                                    <span className="absolute -top-6 -left-1 text-[56px] font-extralight text-white/[0.04] select-none pointer-events-none z-0" style={{ fontFamily: "'Ma Shan Zheng', serif", letterSpacing: '0.05em' }}>02</span>
+                                    <div className="absolute -bottom-1 left-8 w-12 h-3.5 rounded-[1px] z-20 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 15%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.04) 85%, transparent 100%)', transform: 'rotate(-3deg)' }} />
+                                    <img src="/images/collage/lace-butterfly-dark.png" alt="" className="absolute -top-14 -right-5 w-24 opacity-[0.06] mix-blend-screen pointer-events-none z-0" style={{ filter: 'invert(1)', transform: 'rotate(-8deg)' }} />
+                                    <div className="bg-[#FFFBF7]/[0.94] backdrop-blur-xl rounded-2xl border border-white/25 overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.55),0_2px_10px_rgba(0,0,0,0.35)] relative z-10">
+                                        <div className="flex items-stretch gap-0 p-0 min-h-[140px]">
+                                            <div className="w-[38%] shrink-0 overflow-hidden"><img src="/images/workshop-window.jpg" alt="" className="w-full h-full object-cover" style={{ filter: 'brightness(0.88) contrast(1.08)' }} /></div>
+                                            <div className="flex-1 flex flex-col justify-between p-4 min-w-0">
+                                                <div><h4 className="text-[13px] font-bold text-[#1E1C22] tracking-wide mb-1.5" style={{ fontFamily: "'Noto Serif SC', serif" }}>心意提取</h4><p className="text-[10px] text-[#6B6675] leading-[1.7]">捕捉话语间微妙的情感共振，找到那些不曾说出口的默契。</p></div>
+                                                <div className="flex justify-end gap-1.5 mt-2 flex-wrap">
+                                                    {queueStatus?.running && queueStatus.canAbort && !queueStatus.aborted && (<button onClick={handleAbortSemantic} className="px-3 py-1.5 rounded-full text-[10px] font-medium text-[#C48070] border border-[#E0DDE4] hover:bg-[#F5F4F6] transition-all">暂停</button>)}
+                                                    <button onClick={() => { setShowConfirm('semanticRebuild'); haptic.light(); }} disabled={semanticRebuilding || !selectedCharId} className="px-3 py-1.5 rounded-full text-[10px] font-medium text-[#6B6675] border border-[#E0DDE4] hover:bg-[#F5F4F6] active:scale-[0.97] transition-all disabled:opacity-40">全部重来</button>
+                                                    <button onClick={() => { setShowConfirm('semantic'); haptic.light(); }} disabled={semanticRunning || !selectedCharId} className="px-4 py-1.5 rounded-full text-[10px] font-semibold text-white bg-[#2A2830] hover:bg-[#1E1C22] active:scale-[0.97] transition-all disabled:opacity-40">{semanticRunning && !semanticRebuilding ? '感应中…' : '执行 →'}</button>
+                                                </div></div></div></div></div>
+                                <div className="relative mb-6" style={{ transform: 'rotate(-0.5deg)', marginLeft: '4%', marginRight: '3%' }}>
+                                    <span className="absolute -top-6 -left-1 text-[56px] font-extralight text-white/[0.04] select-none pointer-events-none z-0" style={{ fontFamily: "'Ma Shan Zheng', serif", letterSpacing: '0.05em' }}>03</span>
+                                    <div className="absolute -top-1 left-6 w-16 h-3.5 rounded-[1px] z-20 pointer-events-none" style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 15%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.04) 85%, transparent 100%)', transform: 'rotate(-2deg)' }} />
+                                    <div className="bg-[#FFFBF7]/[0.94] backdrop-blur-xl rounded-2xl border border-white/25 overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.55),0_2px_10px_rgba(0,0,0,0.35)] relative z-10">
+                                        <div className="flex items-stretch gap-0 p-0 min-h-[140px]">
+                                            <div className="w-[38%] shrink-0 overflow-hidden"><img src="/images/workshop-papers.jpg" alt="" className="w-full h-full object-cover" style={{ filter: 'brightness(0.88) contrast(1.08)' }} /></div>
+                                            <div className="flex-1 flex flex-col justify-between p-4 min-w-0">
+                                                <div><h4 className="text-[13px] font-bold text-[#1E1C22] tracking-wide mb-1.5" style={{ fontFamily: "'Noto Serif SC', serif" }}>回忆结晶</h4><p className="text-[10px] text-[#6B6675] leading-[1.7]">将零碎的日常沉淀成一枚枚恒久的印象，像琥珀封住光阴。</p></div>
+                                                <div className="flex justify-end gap-1.5 mt-2">
+                                                    <button onClick={() => { setShowConfirm('distillRebuild'); haptic.light(); }} disabled={distillRebuilding || !selectedCharId} className="px-3 py-1.5 rounded-full text-[10px] font-medium text-[#6B6675] border border-[#E0DDE4] hover:bg-[#F5F4F6] active:scale-[0.97] transition-all disabled:opacity-40">打碑重聚</button>
+                                                    <button onClick={() => { setShowConfirm('distill'); haptic.light(); }} disabled={distilling || !selectedCharId} className="px-4 py-1.5 rounded-full text-[10px] font-semibold text-white bg-[#2A2830] hover:bg-[#1E1C22] active:scale-[0.97] transition-all disabled:opacity-40">{distilling ? '结晶中…' : '萃取印象 →'}</button>
+                                                </div></div></div>
+                                        {distillResult && !distilling && (distillResult.l1Created > 0 || distillResult.l1Merged > 0) && (<div className="mx-5 mb-5 pt-4 border-t border-[#EEEDF0]"><ResultCard title="结晶报告" isDryRun={false} stats={[{value:distillResult.l1Created,label:'L1 新建'},{value:distillResult.l1Merged,label:'合并'},{value:distillResult.l0Linked,label:'L0 关联'}]} items={[]} note={undefined} /></div>)}
+                                    </div>
+                                    <img src="/images/collage/lace-ribbon-butterfly.png" alt="" className="absolute -bottom-14 -left-3 w-32 opacity-[0.06] mix-blend-screen pointer-events-none z-0" style={{ filter: 'invert(1)', transform: 'rotate(-5deg)' }} />
+                                </div>
+                                {queueStatus && (<div className="bg-white/[0.05] backdrop-blur-xl border border-white/[0.06] text-white/90 rounded-2xl p-5 overflow-hidden mt-4" style={{ transform: 'rotate(0.3deg)' }}>
+                                    <div className="flex justify-between items-center mb-3"><h4 className="text-[12px] font-semibold tracking-wider flex items-center gap-2"><span className={`w-1.5 h-1.5 rounded-full ${queueStatus.running ? 'bg-emerald-400 animate-pulse' : 'bg-white/30'}`} />处理进度</h4><span className="text-[9px] text-white/40 font-mono">{queueStatus.aborted ? '已暂停' : queueStatus.running ? '进行中' : '完成'}</span></div>
+                                    <div className="relative h-1 bg-white/10 rounded-full overflow-hidden mb-4"><div className="absolute top-0 left-0 h-full bg-white/50 rounded-full transition-all duration-500" style={{ width: `${queueStatus.total > 0 ? ((queueStatus.done + queueStatus.errors) / queueStatus.total) * 100 : 0}%` }} /></div>
+                                    <div className="flex justify-between text-[10px] text-white/50"><span>{queueStatus.done} / {queueStatus.total} 完成</span>{queueStatus.errors > 0 && <span className="text-rose-300">{queueStatus.errors} 异常</span>}{(queueStatus.totalRelations ?? 0) > 0 && <span>{queueStatus.totalRelations} 关联</span>}</div>
+                                    {queueStatus.lastError && (<div className="mt-3 text-[9px] text-rose-300/80 font-mono break-words bg-white/5 p-2 rounded-lg">{queueStatus.lastError}</div>)}
+                                </div>)}
+                            </div>
+                            <div className="mt-20 mb-4 text-center"><div className="w-10 h-px bg-white/[0.06] mx-auto mb-5" /><p className="text-[8px] text-white/[0.1] tracking-[0.3em] italic leading-loose" style={{ fontFamily: "'Noto Serif SC', serif" }}>记忆从不褪色，只是被时间温柔收藏。</p><p className="text-[7px] text-white/[0.05] tracking-[0.15em] mt-3 italic" style={{ fontFamily: "Georgia, serif" }}>Cognitive Engine</p></div>
+                        </div></div>
+                )}

@@ -1,0 +1,6 @@
+# Cloudflare Pages config for the real frontend project.
+# This is the frontend source of truth for direct Pages deploys.
+
+name = "sully-frontend"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-04-05"

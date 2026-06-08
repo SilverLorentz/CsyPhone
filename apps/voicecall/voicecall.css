@@ -1,0 +1,1491 @@
+/* ═══════════════════════════════════════════════════════════════════
+   voicecall.css — 水墨 Glassmorphism 情感陪伴风  (ink-wash × frosted glass)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── 设计令牌 ─── */
+.voice-call-root {
+    --vc-bg-dark: #1c1a18;
+    --vc-bg-panel: rgba(255, 255, 255, 0.09);
+    --vc-glass-border: rgba(255, 255, 255, 0.20);
+    --vc-glass-border-strong: rgba(255, 255, 255, 0.30);
+    --vc-glass-inner-glow: inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 0 0 24px rgba(255, 255, 255, 0.04);
+    --vc-text-primary: #f0ede9;
+    --vc-text-secondary: rgba(240, 237, 233, 0.55);
+    --vc-text-muted: rgba(240, 237, 233, 0.35);
+    --vc-ink-wash-1: rgba(210, 185, 140, 0.30);
+    --vc-ink-wash-2: rgba(190, 170, 130, 0.22);
+    --vc-ink-wash-3: rgba(220, 195, 150, 0.18);
+    --vc-warm-accent: rgba(220, 195, 155, 0.35);
+}
+
+/* ─── 背景底图层 ─── */
+.vc-bg-ink-wash {
+    background-size: cover;
+    background-position: center;
+    filter: saturate(1.05) brightness(0.9);
+    transform: scale(1.02);
+}
+
+/* ─── 光影流动色斑 ─── */
+@keyframes vc-glow-drift-1 {
+    0%   { transform: translate(0, 0) scale(1);     opacity: 0.30; }
+    33%  { transform: translate(25px, -35px) scale(1.12); opacity: 0.45; }
+    66%  { transform: translate(-18px, 18px) scale(0.95); opacity: 0.28; }
+    100% { transform: translate(0, 0) scale(1);     opacity: 0.30; }
+}
+
+@keyframes vc-glow-drift-2 {
+    0%   { transform: translate(0, 0) scale(1.08);   opacity: 0.25; }
+    50%  { transform: translate(-35px, 25px) scale(0.88); opacity: 0.40; }
+    100% { transform: translate(0, 0) scale(1.08);   opacity: 0.25; }
+}
+
+@keyframes vc-glow-drift-3 {
+    0%   { transform: translate(0, 0) scale(0.92);   opacity: 0.22; }
+    40%  { transform: translate(20px, 30px) scale(1.15); opacity: 0.38; }
+    80%  { transform: translate(-25px, -12px) scale(1); opacity: 0.20; }
+    100% { transform: translate(0, 0) scale(0.92);   opacity: 0.22; }
+}
+
+.vc-ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    will-change: transform, opacity;
+    pointer-events: none;
+}
+
+.vc-ambient-orb--1 {
+    width: 300px;
+    height: 300px;
+    top: -8%;
+    right: -12%;
+    background: radial-gradient(circle, var(--vc-ink-wash-1) 0%, rgba(210, 185, 140, 0.06) 65%, transparent 100%);
+    animation: vc-glow-drift-1 14s ease-in-out infinite;
+}
+
+.vc-ambient-orb--2 {
+    width: 260px;
+    height: 260px;
+    bottom: 12%;
+    left: -8%;
+    background: radial-gradient(circle, var(--vc-ink-wash-2) 0%, rgba(190, 170, 130, 0.05) 65%, transparent 100%);
+    animation: vc-glow-drift-2 18s ease-in-out infinite;
+}
+
+.vc-ambient-orb--3 {
+    width: 200px;
+    height: 200px;
+    top: 38%;
+    left: 25%;
+    background: radial-gradient(circle, var(--vc-ink-wash-3) 0%, rgba(220, 195, 150, 0.04) 65%, transparent 100%);
+    animation: vc-glow-drift-3 12s ease-in-out infinite;
+}
+
+/* ─── 基础入场动画 ─── */
+@keyframes vc-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes vc-slide-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes vc-scale-in {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.vc-animate-fade {
+    animation: vc-fade-in 0.5s ease-out forwards;
+}
+
+.vc-animate-slide-up {
+    animation: vc-slide-up 0.55s cubic-bezier(0.22, 0.9, 0.36, 1) forwards;
+}
+
+.vc-animate-scale {
+    animation: vc-scale-in 0.5s cubic-bezier(0.22, 0.9, 0.36, 1) forwards;
+}
+
+/* ─── Glassmorphism 基础样式 ─── */
+.vc-glass-panel {
+    background: var(--vc-bg-panel);
+    backdrop-filter: blur(36px) saturate(120%) brightness(1.05);
+    -webkit-backdrop-filter: blur(36px) saturate(120%) brightness(1.05);
+    border: 1px solid var(--vc-glass-border);
+    box-shadow: var(--vc-glass-inner-glow), 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.vc-glass-card {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.10) 40%,
+        rgba(255, 255, 255, 0.07) 100%
+    );
+    backdrop-filter: blur(40px) saturate(135%) brightness(1.35);
+    -webkit-backdrop-filter: blur(40px) saturate(135%) brightness(1.35);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-top-color: rgba(255, 255, 255, 0.40);
+    border-radius: 28px;
+    box-shadow:
+        var(--vc-glass-inner-glow),
+        0 0 18px rgba(255, 255, 255, 0.06),
+        0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.35s cubic-bezier(0.22, 0.9, 0.36, 1);
+}
+
+.vc-glass-button {
+    backdrop-filter: blur(28px) saturate(120%) brightness(1.05);
+    -webkit-backdrop-filter: blur(28px) saturate(120%) brightness(1.05);
+    border: 1px solid var(--vc-glass-border);
+    box-shadow: var(--vc-glass-inner-glow);
+    transition: all 0.3s cubic-bezier(0.22, 0.9, 0.36, 1);
+}
+
+.vc-glass-button:active {
+    transform: scale(0.92);
+}
+
+/* ─── 头像呼吸脉冲（ringing/dialing） ─── */
+@keyframes vc-avatar-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(200, 192, 182, 0.22);
+        transform: scale(1);
+    }
+    70% {
+        box-shadow: 0 0 0 55px rgba(200, 192, 182, 0);
+        transform: scale(1.02);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(200, 192, 182, 0);
+        transform: scale(1);
+    }
+}
+
+/* ─── 头像雾化光晕 — 通话中 ─── */
+@keyframes vc-halo-breathe {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50%      { opacity: 0.7; transform: scale(1.04); }
+}
+
+.vc-avatar-halo {
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(210, 200, 188, 0.3) 0%, rgba(210, 200, 188, 0.05) 60%, transparent 80%);
+    filter: blur(12px);
+    animation: vc-halo-breathe 3.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.vc-avatar-halo--speaking {
+    animation-duration: 1.8s;
+    background: radial-gradient(circle, rgba(220, 210, 198, 0.45) 0%, rgba(220, 210, 198, 0.08) 55%, transparent 80%);
+    filter: blur(14px);
+}
+
+/* ─── 流水灯光环（通话中头像特效） ─── */
+@property --vc-ring-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes vc-ring-spin {
+    to { --vc-ring-angle: 360deg; }
+}
+
+@keyframes vc-ring-glow-pulse {
+    0%, 100% { opacity: 0.6; filter: blur(0.5px); }
+    50%      { opacity: 1;   filter: blur(0px); }
+}
+
+.vc-stream-ring {
+    background: conic-gradient(from var(--vc-ring-angle),
+            transparent 0deg,
+            transparent 90deg,
+            rgba(200, 192, 182, 0.06) 120deg,
+            rgba(190, 180, 168, 0.25) 150deg,
+            rgba(210, 200, 188, 0.8) 180deg,
+            rgba(225, 218, 208, 1) 190deg,
+            rgba(210, 200, 188, 0.8) 200deg,
+            rgba(190, 180, 168, 0.25) 210deg,
+            rgba(200, 192, 182, 0.06) 240deg,
+            transparent 270deg,
+            transparent 360deg);
+
+    animation:
+        vc-ring-spin 3.5s linear infinite,
+        vc-ring-glow-pulse 2.5s ease-in-out infinite;
+
+    -webkit-mask:
+        radial-gradient(farthest-side,
+            transparent calc(100% - 3px),
+            #000 calc(100% - 2.5px),
+            #000 calc(100% - 0.5px),
+            transparent 100%);
+    mask:
+        radial-gradient(farthest-side,
+            transparent calc(100% - 3px),
+            #000 calc(100% - 2.5px),
+            #000 calc(100% - 0.5px),
+            transparent 100%);
+
+    box-shadow:
+        0 0 12px 2px rgba(200, 192, 182, 0.15),
+        0 0 30px 4px rgba(210, 200, 188, 0.06);
+
+    transition: box-shadow 0.6s ease, filter 0.6s ease;
+}
+
+.vc-stream-ring--speaking {
+    box-shadow:
+        0 0 20px 5px rgba(210, 200, 188, 0.3),
+        0 0 45px 10px rgba(220, 210, 198, 0.12);
+    filter: brightness(1.25);
+}
+
+/* ─── 呼吸脉冲文字 ─── */
+@keyframes vc-calling-pulse {
+    0%, 100% { opacity: 0.45; }
+    50%      { opacity: 1; }
+}
+
+.vc-calling-text {
+    animation: vc-calling-pulse 2.2s ease-in-out infinite;
+}
+
+.vc-dot {
+    display: inline-block;
+    animation: vc-calling-pulse 1.4s ease-in-out infinite;
+}
+.vc-dot:nth-child(1) { animation-delay: 0s; }
+.vc-dot:nth-child(2) { animation-delay: 0.2s; }
+.vc-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ─── 接通闪光 ─── */
+@keyframes vc-connect-flash {
+    0%   { opacity: 0; transform: scale(0.8); }
+    30%  { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0; transform: scale(2.5); }
+}
+
+.vc-connect-flash {
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgba(220, 215, 208, 0.5) 0%, transparent 70%);
+    animation: vc-connect-flash 0.8s ease-out forwards;
+}
+
+/* ─── 状态呼吸光点 ─── */
+.vc-status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #b8d4b0;
+    box-shadow: 0 0 5px 1px rgba(184, 212, 176, 0.3);
+    animation: vc-calling-pulse 2.5s ease-in-out infinite;
+}
+
+/* ─── 悬浮字幕 ─── */
+@keyframes vc-subtitle-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes vc-subtitle-idle {
+    0%, 100% { opacity: 0.35; }
+    50%      { opacity: 0.50; }
+}
+
+.vc-subtitle-container {
+    position: relative;
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+}
+
+.vc-subtitle {
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.65;
+    letter-spacing: 0.02em;
+    max-width: 85%;
+    word-break: break-all;
+    white-space: pre-wrap;
+    animation: vc-subtitle-in 0.4s ease-out forwards;
+}
+
+.vc-subtitle--user {
+    color: rgba(240, 237, 233, 0.75);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+}
+
+.vc-subtitle--ai {
+    color: rgba(240, 235, 225, 0.92);
+    text-shadow: 0 0 12px rgba(210, 200, 188, 0.15), 0 1px 6px rgba(0, 0, 0, 0.15);
+}
+
+.vc-subtitle--hint {
+    color: var(--vc-text-muted);
+    font-size: 13px;
+    animation: vc-subtitle-idle 3s ease-in-out infinite;
+}
+
+.vc-subtitle-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--vc-text-muted);
+    margin-bottom: 2px;
+}
+
+.vc-subtitle-label--ai {
+    color: rgba(210, 200, 188, 0.5);
+}
+
+.vc-subtitle-history {
+    width: min(88%, 360px);
+    max-height: 150px;
+    margin: 0 auto 12px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 14px;
+    background: rgba(12, 10, 8, 0.20);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(14px);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.vc-subtitle-history::-webkit-scrollbar {
+    display: none;
+}
+
+.vc-subtitle-history-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    max-width: 86%;
+    padding: 6px 9px;
+    border-radius: 12px;
+    animation: vc-subtitle-in 0.28s ease-out forwards;
+}
+
+.vc-subtitle-history-entry--user {
+    align-self: flex-end;
+    background: rgba(160, 210, 190, 0.12);
+    color: rgba(236, 255, 246, 0.82);
+}
+
+.vc-subtitle-history-entry--assistant {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(240, 235, 225, 0.88);
+}
+
+.vc-subtitle-history-label {
+    font-size: 9px;
+    line-height: 1.2;
+    color: rgba(240, 235, 225, 0.42);
+    letter-spacing: 0.08em;
+}
+
+.vc-subtitle-history-text {
+    font-size: 12px;
+    line-height: 1.55;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.vc-subtitle-history-translation {
+    font-size: 11px;
+    line-height: 1.45;
+    color: rgba(240, 235, 225, 0.54);
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.vc-voice-draft {
+    width: min(88%, 360px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(160, 210, 190, 0.12);
+    border: 1px solid rgba(190, 235, 215, 0.18);
+    backdrop-filter: blur(18px) saturate(115%);
+    -webkit-backdrop-filter: blur(18px) saturate(115%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    animation: vc-subtitle-in 0.3s ease-out forwards;
+}
+
+.vc-voice-draft-text {
+    width: 100%;
+    max-height: 96px;
+    margin: 0;
+    overflow-y: auto;
+    color: rgba(236, 255, 246, 0.88);
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+    word-break: break-word;
+    white-space: pre-wrap;
+    scrollbar-width: none;
+}
+
+.vc-voice-draft-text::-webkit-scrollbar {
+    display: none;
+}
+
+.vc-voice-draft-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.vc-voice-draft-btn {
+    min-width: 76px;
+    min-height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 13px;
+    line-height: 1;
+    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.vc-voice-draft-btn:active {
+    transform: scale(0.94);
+}
+
+.vc-voice-draft-btn--ghost {
+    color: rgba(240, 237, 233, 0.64);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.vc-voice-draft-btn--send {
+    color: #25342d;
+    background: rgba(218, 244, 226, 0.88);
+    border-color: rgba(230, 255, 238, 0.52);
+}
+
+/* ─── 药丸 Dock 控制栏 ─── */
+.vc-dock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(30px) saturate(110%);
+    -webkit-backdrop-filter: blur(30px) saturate(110%);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+        var(--vc-glass-inner-glow),
+        0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.vc-dock-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--vc-text-primary);
+    transition: all 0.25s cubic-bezier(0.22, 0.9, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.vc-dock-btn:active {
+    transform: scale(0.88);
+}
+
+.vc-dock-btn--active {
+    background: rgba(255, 255, 255, 0.88);
+    color: #3a3530;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.18);
+}
+
+.vc-dock-btn--muted {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.vc-dock-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 0 4px;
+}
+
+.vc-dock-hangup {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(220, 100, 100, 0.75), rgba(180, 60, 60, 0.85));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 120, 120, 0.2);
+    color: white;
+    box-shadow:
+        0 4px 18px rgba(200, 80, 80, 0.25),
+        var(--vc-glass-inner-glow);
+    transition: all 0.25s cubic-bezier(0.22, 0.9, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.vc-dock-hangup:active {
+    transform: scale(0.88);
+}
+
+/* ─── 挂断按钮 ripple ─── */
+@keyframes vc-hangup-ripple {
+    0%   { transform: scale(1);   opacity: 0.45; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ─── 通话结束动画 ─── */
+@keyframes vc-ended-avatar {
+    0%   { transform: scale(1);    opacity: 1; }
+    100% { transform: scale(0.88); opacity: 0.5; }
+}
+
+.vc-ended-avatar {
+    animation: vc-ended-avatar 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes vc-ended-slide {
+    0%   { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.vc-ended-text {
+    animation: vc-ended-slide 0.5s ease-out 0.3s forwards;
+    opacity: 0;
+}
+
+/* ─── 引擎状态 ─── */
+.vc-state-badge {
+    transition: opacity 0.3s ease;
+}
+
+.vc-mic-pulse {
+    animation: vc-calling-pulse 1.2s ease-in-out infinite;
+}
+
+/* ─── 通话质量反馈提示 ─── */
+.vc-quality-hint {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: rgba(210, 200, 188, 0.55);
+    padding: 4px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 6px;
+}
+
+.vc-quality-hint--warn {
+    color: rgba(245, 180, 100, 0.7);
+    background: rgba(245, 180, 100, 0.06);
+    border-color: rgba(245, 180, 100, 0.12);
+}
+
+/* ─── 模式选择项 — 暗色磨砂毛玻璃卡片 ─── */
+/* 三层叠加原理：
+   ① 暗色半透明底 rgba(20,18,16,0.72) → 确保文字可读
+   ② backdrop-filter: blur(40px)       → 背景光影微微渗透
+   ③ ::before 噪点纹理                  → 磨砂颗粒质感的来源 */
+.vc-mode-item {
+    cursor: pointer;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+    /* ① 暗色半透明底 — 保证白色文字清晰 */
+    background: linear-gradient(
+        160deg,
+        rgba(38, 35, 32, 0.78) 0%,
+        rgba(28, 26, 24, 0.72) 50%,
+        rgba(22, 20, 18, 0.68) 100%
+    );
+    /* ② 高斯模糊 — 让暗底之下的背景光影微微渗透出来 */
+    backdrop-filter: blur(40px) saturate(110%);
+    -webkit-backdrop-filter: blur(40px) saturate(110%);
+    /* 边框：模拟光照方向的高光描边 */
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-top-color: rgba(255, 255, 255, 0.22);
+    border-left-color: rgba(255, 255, 255, 0.15);
+    border-radius: 22px;
+    /* 内发光 + 外阴影 → 厚重漂浮感 */
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 0 20px rgba(255, 255, 255, 0.02),
+        0 8px 32px rgba(0, 0, 0, 0.30),
+        0 2px 6px rgba(0, 0, 0, 0.20);
+    transition: all 0.35s cubic-bezier(0.22, 0.9, 0.36, 1);
+}
+
+/* ③ 噪点纹理覆盖层 — 磨砂颗粒质感 */
+.vc-mode-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0.28;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+}
+
+/* 卡片内容需要置于噪点层之上 */
+.vc-mode-item > * {
+    position: relative;
+    z-index: 1;
+}
+
+.vc-mode-item:hover {
+    transform: translateY(-3px) scale(1.005);
+    border-color: rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.32);
+    background: linear-gradient(
+        160deg,
+        rgba(48, 44, 40, 0.80) 0%,
+        rgba(36, 33, 30, 0.75) 50%,
+        rgba(28, 26, 24, 0.72) 100%
+    ) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.18),
+        inset 0 0 24px rgba(255, 255, 255, 0.03),
+        0 12px 40px rgba(0, 0, 0, 0.35),
+        0 4px 10px rgba(0, 0, 0, 0.22),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.vc-mode-item:active {
+    transform: scale(0.97);
+    border-color: rgba(255, 255, 255, 0.10);
+    background: linear-gradient(
+        160deg,
+        rgba(30, 28, 26, 0.82) 0%,
+        rgba(22, 20, 18, 0.78) 50%,
+        rgba(18, 16, 14, 0.75) 100%
+    ) !important;
+    box-shadow:
+        inset 0 2px 6px rgba(0, 0, 0, 0.30),
+        inset 0 0 16px rgba(255, 255, 255, 0.01),
+        0 2px 8px rgba(0, 0, 0, 0.20);
+}
+
+/* ─── 模式卡片图标气泡 ─── */
+.vc-mode-icon-bubble {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    color: rgba(220, 210, 198, 0.85);
+    transition: all 0.3s ease;
+}
+
+.vc-mode-item:hover .vc-mode-icon-bubble {
+    background: linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+    color: rgba(230, 222, 212, 1);
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* ─── 通话结束玻璃面板 ─── */
+.vc-ended-panel {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.07) 40%,
+        rgba(255, 255, 255, 0.04) 100%
+    );
+    backdrop-filter: blur(40px) saturate(130%) brightness(1.12);
+    -webkit-backdrop-filter: blur(40px) saturate(130%) brightness(1.12);
+    border: 1px solid var(--vc-glass-border-strong);
+    border-top-color: rgba(255, 255, 255, 0.35);
+    border-radius: 28px;
+    box-shadow: var(--vc-glass-inner-glow), 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 28px 32px;
+}
+
+/* ─── iOS 风格通话按钮 — 拒绝/取消 ─── */
+.vc-droplet-reject {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    /* iOS 红 #FF3B30 */
+    background: #FF3B30;
+    box-shadow: 0 4px 14px rgba(255, 59, 48, 0.35);
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 去掉噪点纹理,改为干净的 iOS 高光 */
+.vc-droplet-reject::before,
+.vc-droplet-accept::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    /* 上半部分微妙高光 — iOS 风格 */
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.05) 45%,
+        transparent 50%
+    );
+    opacity: 1;
+    mix-blend-mode: normal;
+    background-image: none;
+    background-size: unset;
+}
+
+.vc-droplet-reject > *,
+.vc-droplet-accept > * {
+    position: relative;
+    z-index: 1;
+}
+
+.vc-droplet-reject:active {
+    transform: scale(0.88);
+    opacity: 0.85;
+    box-shadow: 0 2px 8px rgba(255, 59, 48, 0.25);
+}
+
+/* ─── iOS 风格通话按钮 — 接听 ─── */
+.vc-droplet-accept {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    /* iOS 绿 #34C759 */
+    background: #34C759;
+    box-shadow: 0 4px 14px rgba(52, 199, 89, 0.35);
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vc-droplet-accept:active {
+    transform: scale(0.88);
+    opacity: 0.85;
+    box-shadow: 0 2px 8px rgba(52, 199, 89, 0.25);
+}
+
+/* ─── 文字输入区 ─── */
+@keyframes vc-text-input-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scaleY(0.92);
+        transform-origin: bottom;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scaleY(1);
+    }
+}
+
+.vc-text-input-area {
+    width: calc(100% - 48px);
+    max-width: 360px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px 9px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(30px) saturate(110%);
+    -webkit-backdrop-filter: blur(30px) saturate(110%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow: var(--vc-glass-inner-glow), 0 4px 20px rgba(0, 0, 0, 0.12);
+
+    /* 默认隐藏 */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22, 0.9, 0.36, 1);
+    max-height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.vc-text-input-area--visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    max-height: 56px;
+    padding: 9px 10px 9px 16px;
+    animation: vc-text-input-in 0.28s cubic-bezier(0.22, 0.9, 0.36, 1) forwards;
+}
+
+.vc-text-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--vc-text-primary);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    caret-color: rgba(210, 200, 188, 0.8);
+}
+
+.vc-text-input::placeholder {
+    color: var(--vc-text-muted);
+    font-size: 13px;
+}
+
+.vc-text-send-btn {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(210, 200, 188, 0.18);
+    border: 1px solid rgba(210, 200, 188, 0.18);
+    color: rgba(240, 237, 233, 0.75);
+    transition: all 0.2s ease;
+}
+
+.vc-text-send-btn:not(:disabled):hover {
+    background: rgba(210, 200, 188, 0.30);
+    color: var(--vc-text-primary);
+}
+
+.vc-text-send-btn:not(:disabled):active {
+    transform: scale(0.88);
+}
+
+.vc-text-send-btn:disabled {
+    opacity: 0.30;
+    cursor: default;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TTS 降级 — 魅魔沉浸文字区（酒红渐变 + 跳动爱心 + 毛玻璃卡片）
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── 入场动画 ─── */
+@keyframes vc-degraded-in {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── 降级区容器 ─── */
+.vc-degraded-zone {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    animation: vc-degraded-in 0.6s cubic-bezier(0.22, 0.9, 0.36, 1) forwards;
+    /* 隐藏滚动条 */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.vc-degraded-zone::-webkit-scrollbar { display: none; }
+
+/* ─── 酒红→黑渐变背景覆盖 ─── */
+.vc-degraded-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(107, 26, 42, 0.55) 0%,
+        rgba(70, 15, 30, 0.45) 35%,
+        rgba(30, 8, 16, 0.50) 65%,
+        rgba(10, 6, 8, 0.60) 100%
+    );
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+/* ─── 跳动发光爱心粒子系统 ─── */
+
+/* 爱心跳动 */
+@keyframes vc-heart-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    20%      { transform: translateY(-12px) scale(1.15); }
+    40%      { transform: translateY(-4px) scale(1.05); }
+    60%      { transform: translateY(-8px) scale(1.10); }
+    80%      { transform: translateY(-2px) scale(1.02); }
+}
+
+/* 爱心发光脉冲 */
+@keyframes vc-heart-glow {
+    0%, 100% { opacity: 0.5; filter: drop-shadow(0 0 6px rgba(255, 77, 141, 0.4)); }
+    50%      { opacity: 0.9; filter: drop-shadow(0 0 14px rgba(255, 77, 141, 0.7)) drop-shadow(0 0 30px rgba(255, 77, 141, 0.3)); }
+}
+
+.vc-hearts {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 每个 span 是一个爱心 — Unicode ♥ */
+.vc-hearts span {
+    position: absolute;
+    display: block;
+    will-change: transform, opacity;
+    color: #ff4d8d;
+    line-height: 1;
+}
+.vc-hearts span::before {
+    content: '♥';
+}
+
+/* ── 7 颗爱心：各自位置 / 大小 / 动画参数 ── */
+
+.vc-hearts span:nth-child(1) {
+    font-size: 18px;
+    top: 12%; left: 6%;
+    animation: vc-heart-bounce 2.2s ease-in-out infinite, vc-heart-glow 2.8s ease-in-out infinite;
+    animation-delay: 0s, 0.3s;
+}
+
+.vc-hearts span:nth-child(2) {
+    font-size: 13px;
+    top: 28%; right: 10%;
+    animation: vc-heart-bounce 2.6s ease-in-out infinite, vc-heart-glow 3.2s ease-in-out infinite;
+    animation-delay: 0.4s, 0.7s;
+}
+
+.vc-hearts span:nth-child(3) {
+    font-size: 22px;
+    top: 52%; left: 12%;
+    animation: vc-heart-bounce 3.0s ease-in-out infinite, vc-heart-glow 2.4s ease-in-out infinite;
+    animation-delay: 0.8s, 0.2s;
+}
+
+.vc-hearts span:nth-child(4) {
+    font-size: 14px;
+    top: 8%; right: 22%;
+    animation: vc-heart-bounce 2.0s ease-in-out infinite, vc-heart-glow 3.5s ease-in-out infinite;
+    animation-delay: 1.2s, 0.5s;
+}
+
+.vc-hearts span:nth-child(5) {
+    font-size: 20px;
+    bottom: 18%; right: 6%;
+    animation: vc-heart-bounce 2.8s ease-in-out infinite, vc-heart-glow 2.6s ease-in-out infinite;
+    animation-delay: 0.6s, 1.0s;
+}
+
+.vc-hearts span:nth-child(6) {
+    font-size: 10px;
+    top: 68%; left: 28%;
+    animation: vc-heart-bounce 3.4s ease-in-out infinite, vc-heart-glow 2.0s ease-in-out infinite;
+    animation-delay: 1.5s, 0.8s;
+}
+
+.vc-hearts span:nth-child(7) {
+    font-size: 15px;
+    bottom: 32%; left: 62%;
+    animation: vc-heart-bounce 2.4s ease-in-out infinite, vc-heart-glow 3.0s ease-in-out infinite;
+    animation-delay: 0.2s, 1.2s;
+}
+
+/* ─── 优雅降级提示胶囊 ─── */
+@keyframes vc-hint-fade {
+    0%   { opacity: 0; transform: translateY(6px); }
+    15%  { opacity: 0.85; transform: translateY(0); }
+    70%  { opacity: 0.85; }
+    100% { opacity: 0; }
+}
+
+.vc-degraded-hint {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(255, 77, 141, 0.10);
+    border: 1px solid rgba(255, 77, 141, 0.18);
+    color: rgba(255, 180, 200, 0.85);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    animation: vc-hint-fade 4s ease-in-out forwards;
+    pointer-events: none;
+}
+
+/* ─── 暗红毛玻璃阅读卡片 ─── */
+@keyframes vc-card-glow {
+    0%, 100% { box-shadow: inset 0 1px 0 rgba(255, 200, 210, 0.08), 0 0 20px rgba(180, 40, 70, 0.08), 0 4px 20px rgba(0, 0, 0, 0.15); }
+    50%      { box-shadow: inset 0 1px 0 rgba(255, 200, 210, 0.12), 0 0 35px rgba(180, 40, 70, 0.15), 0 4px 20px rgba(0, 0, 0, 0.15); }
+}
+
+.vc-degraded-card {
+    position: relative;
+    z-index: 2;
+    width: calc(100% - 8px);
+    max-width: 340px;
+    padding: 18px 22px;
+    border-radius: 20px;
+    background: rgba(100, 20, 40, 0.22);
+    backdrop-filter: blur(28px) saturate(120%);
+    -webkit-backdrop-filter: blur(28px) saturate(120%);
+    border: 1px solid rgba(255, 77, 141, 0.12);
+    border-top-color: rgba(255, 120, 160, 0.18);
+    animation: vc-card-glow 3.5s ease-in-out infinite, vc-degraded-in 0.5s ease-out forwards;
+    animation-delay: 0s, 0.15s;
+}
+
+/* ─── 降级文字样式 ─── */
+.vc-degraded-text {
+    font-size: 15.5px;
+    line-height: 1.85;
+    letter-spacing: 0.03em;
+    color: rgba(245, 235, 240, 0.90);
+    text-shadow: 0 0 18px rgba(255, 77, 141, 0.06), 0 1px 4px rgba(0, 0, 0, 0.18);
+    word-break: break-all;
+    white-space: pre-wrap;
+    margin: 0;
+}
+
+/* ─── 打字机闪烁光标 ─── */
+@keyframes vc-cursor-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.vc-typewriter-cursor {
+    display: inline;
+    color: rgba(255, 120, 160, 0.65);
+    font-weight: 300;
+    animation: vc-cursor-blink 1s step-end infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   外语模式 (Foreign Language) — 翻译字幕样式
+   ═══════════════════════════════════════════════════════════════════ */
+
+.vc-subtitle--translation {
+    color: rgba(240, 235, 225, 0.55);
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    margin-top: 6px;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+    animation: vc-subtitle-in 0.35s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   通话报错浮窗 — 半透明玻璃拟态 + 可展开原始报错
+   ═══════════════════════════════════════════════════════════════════ */
+
+@keyframes vc-error-slide-in {
+    from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes vc-error-slide-out {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to   { opacity: 0; transform: translateY(-14px) scale(0.95); }
+}
+
+@keyframes vc-error-spinner {
+    to { transform: rotate(360deg); }
+}
+
+.vc-error-overlay {
+    position: absolute;
+    top: 64px;
+    left: 16px;
+    right: 16px;
+    z-index: 80;
+    pointer-events: auto;
+}
+
+.vc-error-overlay--visible {
+    animation: vc-error-slide-in 0.35s cubic-bezier(0.22, 0.9, 0.36, 1) forwards;
+}
+
+.vc-error-overlay--hidden {
+    animation: vc-error-slide-out 0.3s ease-in forwards;
+    pointer-events: none;
+}
+
+.vc-error-card {
+    background: linear-gradient(
+        145deg,
+        rgba(60, 20, 20, 0.75) 0%,
+        rgba(40, 15, 15, 0.70) 50%,
+        rgba(30, 12, 12, 0.68) 100%
+    );
+    backdrop-filter: blur(40px) saturate(120%);
+    -webkit-backdrop-filter: blur(40px) saturate(120%);
+    border: 1px solid rgba(255, 100, 100, 0.18);
+    border-top-color: rgba(255, 120, 120, 0.28);
+    border-radius: 18px;
+    padding: 14px 16px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 150, 150, 0.08),
+        0 8px 32px rgba(0, 0, 0, 0.30),
+        0 0 0 1px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+}
+
+.vc-error-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.vc-error-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 80, 80, 0.15);
+    border: 1px solid rgba(255, 100, 100, 0.15);
+    color: rgba(255, 150, 140, 0.90);
+}
+
+.vc-error-spinner {
+    animation: vc-error-spinner 1s linear infinite;
+}
+
+.vc-error-message {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.55;
+    color: rgba(255, 220, 215, 0.90);
+    letter-spacing: 0.02em;
+    margin: 0;
+    padding-top: 4px;
+}
+
+.vc-error-close {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: rgba(255, 180, 170, 0.50);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.vc-error-close:hover {
+    color: rgba(255, 180, 170, 0.85);
+    background: rgba(255, 100, 100, 0.10);
+}
+
+.vc-error-toggle {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 6px 0;
+    background: transparent;
+    border: none;
+    border-top: 1px solid rgba(255, 100, 100, 0.10);
+    color: rgba(255, 180, 170, 0.55);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    text-align: center;
+}
+
+.vc-error-toggle:hover {
+    color: rgba(255, 180, 170, 0.85);
+}
+
+.vc-error-detail {
+    margin-top: 8px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 100, 100, 0.08);
+    max-height: 180px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 100, 100, 0.15) transparent;
+}
+
+.vc-error-detail pre {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(255, 200, 195, 0.70);
+    font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   音量弹出滑条 (Volume Popup Slider)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.vc-volume-popup {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 10px 10px;
+    border-radius: 16px;
+    background: rgba(30, 30, 40, 0.75);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    animation: vc-volume-in 0.2s cubic-bezier(0.22, 0.9, 0.36, 1) forwards;
+    z-index: 100;
+}
+
+@keyframes vc-volume-in {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px) scale(0.92); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+/* 垂直滑条 — 旋转 range input */
+.vc-volume-slider {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    width: 28px;
+    height: 120px;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.vc-volume-slider::-webkit-slider-runnable-track {
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.08));
+    border-radius: 2px;
+}
+
+.vc-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    margin-left: -6px;
+    cursor: grab;
+}
+
+.vc-volume-slider::-moz-range-track {
+    width: 4px;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.08));
+    border-radius: 2px;
+    border: none;
+}
+
+.vc-volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    border: none;
+    cursor: grab;
+}
+
+.vc-volume-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   "对方正在想…" 思考动画 (Thinking Dots)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.vc-thinking-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 20px;
+    animation: vc-fade-in-soft 0.4s ease forwards;
+}
+
+.vc-thinking-dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    animation: vc-thinking-pulse 1.4s ease-in-out infinite;
+}
+
+.vc-thinking-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.vc-thinking-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes vc-thinking-pulse {
+    0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes vc-fade-in-soft {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Connecting Overlay — 来电接听过渡动画（暖金调）
+   ═══════════════════════════════════════════════════════════════════ */
+
+.vc-connect-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 16px 6px 12px;
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 0.9, 0.36, 1);
+}
+
+.vc-connect-step--active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.vc-connect-step--current {
+    background: rgba(210, 195, 170, 0.08);
+    border: 1px solid rgba(210, 195, 170, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.vc-connect-step-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(200, 185, 160, 0.25);
+    flex-shrink: 0;
+    transition: all 0.4s ease;
+}
+
+.vc-connect-step--active .vc-connect-step-dot {
+    background: rgba(220, 200, 170, 0.7);
+    box-shadow: 0 0 8px rgba(220, 200, 170, 0.3);
+}
+
+.vc-connect-step--current .vc-connect-step-dot {
+    background: rgba(230, 210, 180, 0.9);
+    box-shadow: 0 0 12px rgba(230, 210, 180, 0.4), 0 0 4px rgba(230, 210, 180, 0.6);
+    animation: vc-step-dot-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes vc-step-dot-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(230, 210, 180, 0.3); transform: scale(1); }
+    50%      { box-shadow: 0 0 14px rgba(230, 210, 180, 0.5); transform: scale(1.2); }
+}
+
+.vc-connect-step-text {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: rgba(210, 200, 188, 0.35);
+    transition: color 0.4s ease;
+}
+
+.vc-connect-step--active .vc-connect-step-text {
+    color: rgba(230, 222, 210, 0.55);
+}
+
+.vc-connect-step--current .vc-connect-step-text {
+    color: rgba(240, 235, 225, 0.85);
+}

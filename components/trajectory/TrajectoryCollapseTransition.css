@@ -1,0 +1,297 @@
+.traj-collapse-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 240;
+    overflow: hidden;
+    pointer-events: auto;
+    user-select: none;
+    background:
+        radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.08), transparent 32%),
+        radial-gradient(circle at 50% 72%, rgba(78, 70, 82, 0.2), transparent 42%),
+        linear-gradient(180deg, #050506 0%, #08070a 48%, #010101 100%);
+    color: rgba(244, 241, 238, 0.96);
+    font-family: "明朝汇文体", "Source Han Serif SC", "Noto Serif SC", "Songti SC", serif;
+    animation: traj-collapse-stage 5800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    isolation: isolate;
+}
+
+.traj-collapse-transition::before,
+.traj-collapse-transition::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.traj-collapse-transition::before {
+    z-index: 2;
+    background:
+        linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.035) 43%, transparent 58%),
+        radial-gradient(ellipse at 50% 48%, transparent 0%, rgba(0, 0, 0, 0.46) 78%, rgba(0, 0, 0, 0.88) 100%);
+    opacity: 0.88;
+}
+
+.traj-collapse-transition::after {
+    z-index: 5;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.032) 0,
+            rgba(255, 255, 255, 0.032) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    opacity: 0.2;
+    mix-blend-mode: screen;
+}
+
+.traj-collapse-transition__void {
+    position: absolute;
+    inset: -12%;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at 50% 20%, rgba(214, 204, 210, 0.12), transparent 30%),
+        radial-gradient(ellipse at 48% 88%, rgba(255, 255, 255, 0.12), transparent 31%);
+    filter: blur(26px);
+    opacity: 0;
+    transform: scale(0.92);
+    animation: traj-collapse-void-in 3600ms ease forwards;
+}
+
+.traj-collapse-transition__hands-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.traj-collapse-transition__hands-glow {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    width: min(98vw, 30rem);
+    height: min(64svh, 30rem);
+    border-radius: 999px;
+    background: radial-gradient(ellipse at center, rgba(245, 242, 238, 0.2), rgba(95, 86, 96, 0.12) 42%, transparent 72%);
+    filter: blur(30px);
+    opacity: 0;
+    transform: translateX(-50%) scale(0.86);
+    animation: traj-collapse-hands-glow 3800ms ease 520ms forwards;
+}
+
+.traj-collapse-transition__hands {
+    position: absolute;
+    left: 50%;
+    bottom: -8%;
+    z-index: 1;
+    width: min(132vw, 35rem);
+    max-width: none;
+    height: auto;
+    opacity: 0;
+    object-fit: contain;
+    object-position: center bottom;
+    transform: translate3d(-50%, 2.4rem, 0) scale(1.05);
+    filter:
+        brightness(0.72)
+        contrast(1.28)
+        drop-shadow(0 -8px 20px rgba(255, 255, 255, 0.05))
+        drop-shadow(0 0 34px rgba(0, 0, 0, 0.72));
+    animation: traj-collapse-hands-in 4100ms cubic-bezier(0.18, 0.72, 0.16, 1) 360ms forwards;
+}
+
+.traj-collapse-transition__ink {
+    position: absolute;
+    left: 50%;
+    bottom: -12%;
+    z-index: 2;
+    width: 118%;
+    height: 42%;
+    border-radius: 50%;
+    background:
+        radial-gradient(ellipse at center, rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.48) 47%, transparent 72%);
+    filter: blur(22px);
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.72);
+    animation: traj-collapse-ink-rise 4200ms ease 720ms forwards;
+}
+
+.traj-collapse-transition__copy {
+    position: absolute;
+    left: 50%;
+    top: 32%;
+    z-index: 4;
+    width: min(86vw, 25rem);
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+.traj-collapse-transition__caption {
+    margin-bottom: clamp(0.86rem, 2.2svh, 1.15rem);
+    color: rgba(214, 204, 210, 0.28);
+    font-family: "Times New Roman", serif;
+    font-size: clamp(0.52rem, 1.7vw, 0.66rem);
+    font-style: italic;
+    letter-spacing: 0.22em;
+    opacity: 0;
+    animation: traj-collapse-caption-in 1200ms ease 420ms forwards;
+}
+
+.traj-collapse-transition__line {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    white-space: nowrap;
+    color: rgba(246, 244, 240, 0.92);
+    font-size: clamp(1.08rem, 4.4vw, 1.5rem);
+    line-height: 1.32;
+    letter-spacing: 0.02em;
+    text-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.7),
+        0 0 10px rgba(255, 255, 255, 0.18),
+        0 0 28px rgba(214, 204, 210, 0.16);
+}
+
+.traj-collapse-transition__line--nowhere {
+    margin-top: clamp(0.54rem, 1.3svh, 0.75rem);
+    font-size: clamp(1.38rem, 5.7vw, 1.95rem);
+}
+
+.traj-collapse-transition__line--find-him {
+    margin-top: clamp(0.52rem, 1.2svh, 0.72rem);
+}
+
+.traj-collapse-transition__char {
+    display: inline-block;
+    opacity: 0;
+    transform: translate3d(0, calc(0.72rem + var(--traj-collapse-y)), 0) scale(0.96);
+    filter: blur(7px);
+    animation: traj-collapse-char-in 1400ms cubic-bezier(0.18, 0.72, 0.22, 1) forwards;
+    animation-delay: var(--traj-collapse-delay);
+    will-change: opacity, transform, filter;
+}
+
+.traj-collapse-transition__char--emphasis {
+    color: rgba(255, 255, 255, 1);
+    text-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.74),
+        0 0 12px rgba(255, 255, 255, 0.32),
+        0 0 30px rgba(228, 222, 224, 0.22);
+    transform-origin: 50% 64%;
+}
+
+@keyframes traj-collapse-stage {
+    0% { opacity: 0; }
+    7% { opacity: 1; }
+    87% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes traj-collapse-void-in {
+    0% { opacity: 0; transform: scale(0.92) rotate(0deg); }
+    45% { opacity: 0.74; }
+    100% { opacity: 0.42; transform: scale(1.12) rotate(-4deg); }
+}
+
+@keyframes traj-collapse-hands-glow {
+    0% { opacity: 0; transform: translateX(-50%) scale(0.86); }
+    42% { opacity: 0.72; }
+    100% { opacity: 0.38; transform: translateX(-50%) scale(1.1); }
+}
+
+@keyframes traj-collapse-hands-in {
+    0% {
+        opacity: 0;
+        transform: translate3d(-50%, 2.4rem, 0) scale(1.05);
+        filter: brightness(0.5) contrast(1.38) blur(4px);
+    }
+
+    34% {
+        opacity: 0.86;
+        filter:
+            brightness(0.74)
+            contrast(1.28)
+            blur(0.3px)
+            drop-shadow(0 -8px 20px rgba(255, 255, 255, 0.05))
+            drop-shadow(0 0 34px rgba(0, 0, 0, 0.72));
+    }
+
+    100% {
+        opacity: 0.78;
+        transform: translate3d(-50%, -0.2rem, 0) scale(1.01);
+        filter:
+            brightness(0.68)
+            contrast(1.32)
+            blur(0)
+            drop-shadow(0 -8px 20px rgba(255, 255, 255, 0.05))
+            drop-shadow(0 0 34px rgba(0, 0, 0, 0.72));
+    }
+}
+
+@keyframes traj-collapse-ink-rise {
+    0% { opacity: 0; transform: translateX(-50%) translateY(1.4rem) scaleX(0.72); }
+    38% { opacity: 0.74; }
+    100% { opacity: 0.56; transform: translateX(-50%) translateY(-0.3rem) scaleX(1.04); }
+}
+
+@keyframes traj-collapse-caption-in {
+    0% { opacity: 0; transform: translateY(0.5rem); filter: blur(5px); }
+    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes traj-collapse-char-in {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, calc(0.72rem + var(--traj-collapse-y)), 0) scale(0.96);
+        filter: blur(7px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate3d(0, var(--traj-collapse-y), 0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@media (max-height: 660px) {
+    .traj-collapse-transition__copy {
+        top: 29%;
+    }
+
+    .traj-collapse-transition__hands {
+        bottom: -13%;
+        width: min(124vw, 31rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .traj-collapse-transition,
+    .traj-collapse-transition__void,
+    .traj-collapse-transition__hands-glow,
+    .traj-collapse-transition__hands,
+    .traj-collapse-transition__ink,
+    .traj-collapse-transition__caption,
+    .traj-collapse-transition__char {
+        animation: none;
+    }
+
+    .traj-collapse-transition {
+        opacity: 1;
+    }
+
+    .traj-collapse-transition__void,
+    .traj-collapse-transition__hands-glow,
+    .traj-collapse-transition__hands,
+    .traj-collapse-transition__ink,
+    .traj-collapse-transition__caption,
+    .traj-collapse-transition__char {
+        opacity: 1;
+        filter: none;
+        transform: none;
+    }
+
+    .traj-collapse-transition__hands,
+    .traj-collapse-transition__hands-glow,
+    .traj-collapse-transition__ink {
+        transform: translateX(-50%);
+    }
+}
