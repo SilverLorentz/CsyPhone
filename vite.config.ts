@@ -36,7 +36,7 @@ function assertRequiredBuildEnv(mode: string, env: Record<string, string>) {
   }
 
   const missingKeys = REQUIRED_REMOTE_BUILD_ENV_KEYS.filter((key) => {
-    const value = env[key];
+    const value = env[key] || process.env[key];
     return !value || /replace-me|<your-|<set-/i.test(value);
   });
 
