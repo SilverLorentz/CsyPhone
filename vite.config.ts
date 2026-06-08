@@ -40,6 +40,13 @@ function assertRequiredBuildEnv(mode: string, env: Record<string, string>) {
     return !value || /replace-me|<your-|<set-/i.test(value);
   });
 
+  if (process.env.CF_PAGES === '1') {
+    if (missingKeys.length > 0) {
+      console.warn(`[build env] Warning: Missing ${mode} variables in Cloudflare Pages build. Build will continue.`);
+    }
+    return;
+  }
+
   if (missingKeys.length === 0) {
     return;
   }
@@ -251,13 +258,11 @@ export default defineConfig(({ mode, command }) => {
             proxy.on('proxyReq', forwardElevenLabsApiKey);
           },
         },
-        // XHS Bridge 模式 (xiaohongshu-skills REST server)
         '/xhs-api': {
           target: 'http://localhost:18061',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/xhs-api/, '/api'),
         },
-        // XHS MCP 模式 (xiaohongshu-mcp Go server)
         '/xhs-mcp': {
           target: 'http://localhost:18060',
           changeOrigin: true,
@@ -280,8 +285,6 @@ export default defineConfig(({ mode, command }) => {
       outDir: 'dist',
       assetsDir: 'assets',
       rollupOptions: {
-        // Exclude onnxruntime-web from bundling — let @ricky0123/vad-web's
-        // pre-bundled copy resolve WASM files from public/vad/onnx/ at runtime
         external: ['onnxruntime-web'],
         output: {
           paths: {
