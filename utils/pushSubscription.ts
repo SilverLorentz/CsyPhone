@@ -408,6 +408,14 @@ export async function forceResubscribe(): Promise<void> {
 async function fetchVapidPublicKey(backendUrl: string): Promise<string> {
     setPushDebugInfo({ status: '正在获取 VAPID 公钥...' });
 
+    // 优先使用前端环境变量（如 VITE_VAPID_PUBLIC_KEY），
+    // 这样即使 Worker 的 VAPID_PUBLIC_KEY 环境变量未配置也能正常工作。
+    const envKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+    if (envKey) {
+        console.log('[Push] Using VAPID key from frontend env VITE_VAPID_PUBLIC_KEY');
+        return envKey;
+    }
+
     for (let attempt = 1; attempt <= 3; attempt++) {
         try {
             const keyResponse = await fetch(`${backendUrl}/api/push/vapid-key`, {

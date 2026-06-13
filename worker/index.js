@@ -14,8 +14,8 @@ const XHS_PUBLISH_HOST_CANDIDATES = [
 function corsHeaders(origin) {
   return {
     "Access-Control-Allow-Origin": origin || "*",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, X-Brave-API-Key, X-Notion-API-Key, X-Feishu-Token, X-Xhs-Cookie",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "*",
     "Access-Control-Max-Age": "86400",
   };
 }
@@ -567,6 +567,20 @@ export default {
     // CORS preflight
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
+    }
+
+    // ========== Health check ==========
+    if (url.pathname === '/health') {
+      return new Response("OK", {
+        status: 200,
+        headers: { "Content-Type": "text/plain", ...corsHeaders(origin) }
+      });
+    }
+
+    // ========== VAPID Public Key for Web Push ==========
+    if (url.pathname === '/api/push/vapid-key') {
+      const vapidPublicKey = env.VAPID_PUBLIC_KEY || "BIZ3rE35fQbTqa3J7T6zGqQ8yV0RcN5dWfX9kL2mP4sS6uA8wD0eH1jK3lO5pR7t";
+      return jsonResponse({ vapidPublicKey }, { origin });
     }
 
     // ========== Notion 代理 ==========
