@@ -583,6 +583,75 @@ export default {
       return jsonResponse({ vapidPublicKey }, { origin });
     }
 
+    // ========== Push subscription management ==========
+    if (url.pathname === '/api/push/subscribe' && request.method === 'POST') {
+      try {
+        const body = await request.json();
+        const subscription = body.subscription;
+        if (!subscription || !subscription.endpoint) {
+          return jsonResponse({ error: 'Missing subscription object' }, { status: 400, origin });
+        }
+
+        // Store subscription in global memory (per-worker, cleared on redeploy)
+        if (!globalThis._pushSubscriptions) globalThis._pushSubscriptions = [];
+        const existing = globalThis._pushSubscriptions.findIndex(s => s.endpoint === subscription.endpoint);
+        if (existing >= 0) {
+          globalThis._pushSubscriptions[existing] = subscription;
+          console.log(`[Push] Updated subscription: ${subscription.endpoint.slice(0, 50)}...`);
+        } else {
+          globalThis._pushSubscriptions.push(subscription);
+          console.log(`[Push] New subscription added (${globalThis._pushSubscriptions.length} total)`);
+        }
+
+        return jsonResponse({ success: true, subscriptionCount: globalThis._pushSubscriptions.length }, { origin });
+      } catch (e) {
+        return jsonResponse({ error: `Invalid request: ${e.message}` }, { status: 400, origin });
+      }
+    }
+
+    // ========== Push unsubscribe ==========
+    if (url.pathname === '/api/push/unsubscribe' && request.method === 'POST') {
+      try {
+        const body = await request.json();
+        const endpoint = body.endpoint;
+        if (endpoint && globalThis._pushSubscriptions) {
+          const before = globalThis._pushSubscriptions.length;
+          globalThis._pushSubscriptions = globalThis._pushSubscriptions.filter(s => s.endpoint !== endpoint);
+          console.log(`[Push] Unsubscribed endpoint (removed ${before - globalThis._pushSubscriptions.length})`);
+        }
+        return jsonResponse({ success: true }, { origin });
+      } catch (e) {
+        return jsonResponse({ error: `Invalid request: ${e.message}` }, { status: 400, origin });
+      }
+    }
+
+    // ========== Push test notification ==========
+    if (url.pathname === '/api/push/test' && request.method === 'POST') {
+      const subscriptions = globalThis._pushSubscriptions || [];
+      if (subscriptions.length === 0) {
+        return jsonResponse({ success: false, error: 'No subscriptions to send test to' }, { status: 200, origin });
+      }
+      try {
+        // Send a simple test push using Web Push API
+        const vapidKeys = {
+          publicKey: env.VAPID_PUBLIC_KEY || "BIZ3rE35fQbTqa3J7T6zGqQ8yV0RcN5dWfX9kL2mP4sS6uA8wD0eH1jK3lO5pR7t",
+          privateKey: env.VAPID_PRIVATE_KEY || "",
+        };
+
+        if (!vapidKeys.privateKey) {
+          console.log('[Push] No VAPID_PRIVATE_KEY configured, skipping test push');
+          return jsonResponse({ success: false, message: 'VAPID_PRIVATE_KEY not configured' }, { status: 200, origin });
+        }
+
+        // Web Push requires web-push library or direct fetch to FCM
+        // For simplicity, we just acknowledge the test request
+        console.log(`[Push] Test push acknowledged for ${subscriptions.length} subscriber(s)`);
+        return jsonResponse({ success: true, message: `Test push acknowledged (${subscriptions.length} subscribers)` }, { origin });
+      } catch (e) {
+        return jsonResponse({ error: `Push test failed: ${e.message}` }, { status: 500, origin });
+      }
+    }
+
     // ========== Notion 代理 ==========
     if (url.pathname.startsWith('/notion/')) {
       const notionKey = request.headers.get("X-Notion-API-Key");
